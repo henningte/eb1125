@@ -1,0 +1,104 @@
+---
+output: github_document
+bibliography: targets/leaching/references.bib
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+```{r packages, echo = FALSE, include=FALSE}
+# packages
+library(magrittr)
+library(stringr)
+library(purrr)
+```
+
+
+```{r metadata-manuscript, echo = FALSE, include=FALSE}
+# Manuscript metadata
+manuscript_yaml <-
+  purrr::map_chr(list.dirs("targets", recursive = FALSE, full.names = TRUE), function(.x) {
+    list.files(path = .x, pattern =  ".+-paper\\.Rmd$", full.names = TRUE, recursive = FALSE)
+  }) |>
+  purrr::map(rmarkdown::yaml_front_matter)
+  
+manuscript_authors <- 
+  purrr::map_chr(manuscript_yaml, function(.x) {
+    purrr::map_chr(.x$author, function(.y) {
+      names(.y)
+    }) |>
+      knitr::combine_words(and = " and ")
+  })
+
+manuscript_title <- 
+  purrr::map_chr(manuscript_yaml, function(.x) {
+    .x$title
+  })
+
+manuscript_year <- rep("2024", 2L)
+```
+
+<!--[![DOI](https://zenodo.org/badge/465653387.svg)](https://zenodo.org/badge/latestdoi/465653387) ![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-brightgreen.svg)-->
+
+# eb1125
+
+This repository contains the data and code for our two manuscripts:
+
+`r manuscript_authors[[2]]` (`r manuscript_year[[2]]`): `r manuscript_title[[2]]`. Preprint.
+
+`r manuscript_authors[[1]]` (`r manuscript_year[[1]]`): `r manuscript_title[[1]]`. Preprint.
+
+### How to cite
+
+Please cite this compendium as:
+
+> Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr, (`r format(Sys.Date(), "%Y")`). Compendium of R code and data for `r manuscript_title %>% paste0('"', ., '"') %>% knitr::combine_words()`. Accessed `r format(Sys.Date(), "%d %b %Y")`. Online at [---todo: add link]
+
+
+## Contents
+
+Code to reproduce each manuscript is in the folder in [:file\_folder: targets](targets):  
+    - [:file\_folder: leaching](targets/leaching): > `r manuscript_authors[[2]]` (`r manuscript_year[[2]]`): _`r manuscript_title[[2]]`_. Preprint.  
+    - [:file\_folder: hpm_decomposition](targets/hpm_decomposition): > `r manuscript_authors[[1]]` (`r manuscript_year[[1]]`): _`r manuscript_title[[1]]`_. Preprint.  
+    
+To reproduce the manuscripts, run the 'targets' workflow by executing `run.R` in above folders.
+
+
+## How to run in your broswer or download and run locally
+
+You can download the compendium as a zip from from these URLs: <[---todo: add]>
+
+
+### Licenses
+
+**Text and figures :**  [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
+
+**Code :** See the [DESCRIPTION](DESCRIPTION) file
+
+**Data :** [CC-0](http://creativecommons.org/publicdomain/zero/1.0/) attribution requested in reuse. See the sources section for licenses for data derived from external sources and how to give credit to the original author(s) and the source.
+
+
+### Sources
+
+- [:file\_folder: evo12547-sup-0001-suppmat(1)-Tab-S2.csv](targets/leaching/derived_data/evo12547-sup-0001-suppmat(1)-Tab-S2.csv): This file is from the [supporting information of @Johnson.2015](https://academic.oup.com/evolut/article/69/1/90/6851823#supplementary-data).
+- [:file\_folder: dpeatdecomposition_snapshot.rds](targets/leaching/derived_data/dpeatdecomposition_snapshot.rds): This file is a snapshot from the Peat Decomposition Database [---todo:ref].
+
+
+### Contributions
+
+We welcome contributions from everyone. Before you get started, please see our [contributor guidelines](CONTRIBUTING.md). Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+### Funding
+
+This study was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) grant no. KN 929/23-1 to Klaus-Holger Knorr and grant no. PE 1632/18-1 to Edzer Pebesma.
+
+### References
+
+

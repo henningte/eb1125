@@ -1,0 +1,379 @@
+---
+title: "Supporting information to: `r rmarkdown::yaml_front_matter('hpmd-paper.Rmd')$title`"
+author:
+  - Henning Teickner:
+      email: henning.teickner@uni-muenster.de
+      institute: [iloek]
+      correspondence: true
+  - Edzer Pebesma:
+      email: email
+      institute: [ifgi]
+  - Klaus-Holger Knorr:
+      email: khknorr@uni-muenster.de
+      institute: [iloek]   
+institute:
+  - iloek: ILÖK, Ecohydrology & Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany
+  - ifgi: IfGI, Spatiotemporal Modelling Lab, Institute for Geoinformatics, University of Münster, 48149, Germany
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    bookdown::pdf_document2:
+      latex_engine: xelatex
+      fig_caption: yes
+      keep_tex: true
+      pandoc_args:
+      - --lua-filter=templates/scholarly-metadata.lua
+      - --lua-filter=templates/author-info-blocks.lua
+      - --lua-filter=templates/pagebreak.lua
+bibliography: references.bib
+link-citations: true
+csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
+header-includes:
+  - \usepackage{float}
+  - \usepackage[version=4]{mhchem}
+  - \usepackage{booktabs}
+  - \usepackage{multirow}
+  - \usepackage{bm}
+  - \usepackage{xr} \externaldocument{hpmd-paper}
+fontsize: 12pt
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.pos = 'H', fig.align = 'center')
+
+# packages
+library(ggplot2)
+library(tibble)
+library(dplyr)
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(ggtext)
+library(patchwork)
+library(quantities)
+library(units)
+library(posterior)
+library(targets)
+
+lapply(list.files("R", full.names = TRUE, recursive = TRUE), source)
+mass_relative_mass_offset <- 0.0001
+
+# global options for plots
+ggplot2::theme_set(ggplot2::theme_classic())
+units::units_options(negative_power = TRUE, group = c("(", ")"))
+```
+
+```{r res-import}
+# model checks
+tar_load(hpmd_stan_checks)
+
+# tables
+hpmd_tables <- tar_read(hpmd_tables)
+
+# checks
+tar_load(hpmd_stan_checks)
+
+# model estimates
+# hpmd_stan_draws_1 <- readRDS_rvars(tar_read(hpmd_stan_draws_1))
+# hpmd_stan_draws_2 <- readRDS_rvars(tar_read(hpmd_stan_draws_2))
+# hpmd_stan_draws_3 <- readRDS_rvars(tar_read(hpmd_stan_draws_3))
+# hpmd_stan_draws_4 <- readRDS_rvars(tar_read(hpmd_stan_draws_4))
+# hpmd_stan_draws_5 <- readRDS_rvars(hpmd_stan_draws_5)
+
+# simulation study
+hpmd_simulation_1_newdata_6 <- readRDS_rvars(tar_read(hpmd_simulation_1_newdata_6))
+
+# get parameter values
+hpmd_peat_properties <-
+  hpmd_get_peat_properties()
+
+hpmd_hpm_standard_parameter_values <-
+  hpmd_get_hpm_standard_parameter_values()
+```
+
+
+# Model equations {#sup-1}
+
+The litterbag decomposition model combined with each modification of the HPM is obtained from @Teickner.2024 (model 1-4, see the supporting information to @Teickner.2024 for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in supporting Tab. S\@ref(tab:sup-out-d-sdm-all-models-priors-1).
+
+In models `r hpmd_model_id_to_name(c("3-2", "3-3", "3-4")) |> knitr::combine_words(and = " and ")`, decomposition rates estimated from litterbag data ($k\_2_{\text{sample}}$) are modeled with decomposition rates predicted by the HPM decomposition module (equation \@ref(eq:sup-model-1)):
+
+\begin{equation}
+\begin{aligned}
+k\_2_{\text{sample}} & \sim & \text{gamma}\left(hpm\_k\_2\_p1, \frac{hpm\_k\_2\_p1}{hpm\_k\_2_{\text{sample}}} \right)\\
+hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
+hpm\_k\_2_{\text{sample}} & = & f(ldos\_1_{\text{sample}}, lwtds\_1_{\text{sample}}\\
+          && m69\_p1, m69\_p2, m68\_p1, m68\_p2, m68\_p3\_2_{\text{sample}})\\
+          && (\text{HPM decomposition module})\\
+ldos\_1_{\text{sample}} & = & g(layer\_depth\_midpoint\_1_{\text{sample}},
+        lwtds\_1_{\text{sample}},\\
+          && layer\_total\_porosity\_1_{\text{sample}},\\
+          && lmdosas\_1)\\
+          && (\text{Modified Granberg model})\\
+layer\_total\_porosity\_1_{\text{sample}} & \sim & \text{beta}(layer\_total\_porosity\_1\_p1, layer\_total\_porosity\_1\_p2)\\
+lmdosas\_1_{\text{sample}} & \sim & \text{beta}(lmdosas\_1\_p1, lmdosas\_1\_p2)\\
+lwtds\_1_{\text{sample}} & \sim & \text{normal}(lwtds\_1\_p1_{\text{sample}}, lwtds\_1\_p2)\\
+hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
+(\#eq:sup-model-1)
+\end{aligned}
+\end{equation}
+
+$ldos\_1$ is short for $layer\_degree\_of\_saturation\_1$. $lmdosas\_1$ is short for $layer\_minimum\_degree\_of\_saturation\_at\_surface\_1$. $lwtds\_1$ is short for $layer\_water\_table\_depth\_at\_surface\_1$. The HPM decomposition module is described in @Frolking.2010 (equations (7) to (9)). The Modified Granberg model is described in @Granberg.1999 (equations (1) to (3)) and @Kettridge.2007 (equations (6) to (9)).
+
+In `r hpmd_model_id_to_name(c("3-3", "3-4")) |> knitr::combine_words(and = " and ")`, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions (equation \@ref(eq:sup-model-2)):
+
+\begin{equation}
+\begin{aligned}
+m68\_p3\_2_{\text{sample}} & = & \exp(m68\_p3\_2\_p2_{\text{species[sample]}})\\
+m69\_p1 & \sim & \text{beta}(m69\_p1\_p1, m69\_p1\_p2)\\
+m69\_p2 & \sim & \text{gamma}(m69\_p2\_p1, m69\_p2\_p2)\\
+m68\_p1 & \sim & \text{gamma}(m68\_p1\_p1, m68\_p1\_p2)\\
+m68\_p2 & \sim & \text{gamma}(m68\_p2\_p1, m68\_p2\_p2)\\
+m68\_p3\_2\_p2 & \sim & \text{normal}(m68\_p3\_2\_p2\_p1, 68\_p3\_2\_p2\_p2)\\
+(\#eq:sup-model-2)
+\end{aligned}
+\end{equation}
+
+`r hpmd_model_id_to_name("3-4")` in addition modeled the initial leaching loss of *Sphagnum* species as a maximum possible initial leaching loss per species ($hpm\_l\_2\_p1$) which is modified by the degree of saturation (equation \@ref(eq:sup-model-3)):
+
+\begin{equation}
+\begin{aligned}
+l\_2_{\text{sample}} & \sim & \text{beta}(hpm\_l\_2~hpm\_l\_2\_p3, (1 - hpm\_l\_2)~hpm\_l\_2\_p3)\\
+hpm\_l\_2_{\text{sample}} & = & \text{logit}^{-1}(hpm\_l\_2\_p1_{\text{species[sample]}} + hpm\_l\_2\_p2~ldos\_1_{\text{sample}})\\
+hpm\_l\_2\_p1 & \sim & \text{normal}(hpm\_l\_2\_p1\_p1, hpm\_l\_2\_p1\_p2)\\
+hpm\_l\_2\_p2 & \sim & \text{normal}(hpm\_l\_2\_p2\_p1, hpm\_l\_2\_p2\_p2)\\
+hpm\_l\_2\_p3 & \sim & \text{gamma}(hpm\_l\_2\_p3\_p1, hpm\_l\_2\_p3\_p2)\\
+(\#eq:sup-model-3)
+\end{aligned}
+\end{equation}
+
+
+# Prior choices and justification {#sup-2}
+
+(ref:sup-out-d-sdm-all-priors-1-layer-total-porosity) The total porosity was not reported in any study and therefore we  assumed an average value of `r hpmd_peat_properties$layer_total_porosity_1_average * 100`% with a standard deviation of `r hpmd_peat_properties$layer_total_porosity_1_error * 100`%, roughly based on values reported for low-density *Sphagnum* peat [@Liu.2019].
+
+(ref:sup-out-d-sdm-all-models-priors-1-caption) Prior distributions of all Bayesian models and their justifications. "HPM parameter" is the name of the corresponding parameter in the Holocene Peatland Model [@Frolking.2010]. When there is no value for "Justification", the prior was chosen based on prior predictive checks against the data. This prior predictive check tests whether the models can produce distributions of measured variables we expect based on prior knowledge. 
+
+```{r sup-out-d-sdm-all-models-priors-1, tab.cap = "(ref:sup-out-d-sdm-all-models-priors-1-caption)"}
+hpmd_tables$prior_justification %>%
+  kableExtra::kable(
+    col.names = c("Parameter", "HPM parameter", "Unit", "Prior distribution", "Justification"), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) %>%
+  # kableExtra::column_spec(1, width = "5cm") %>%
+  kableExtra::column_spec(5, width = "7cm")
+```
+
+
+# Further Information on Bayesian Data Analysis {#sup-12}
+
+#### Monte Carlo Standard Errors {.unnumbered}
+
+Monte Carlo standard errors (MSCE) [@Vehtari.2021] for the median were at most `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "k_2") |> dplyr::pull(MCSE_Q50) |> max() |> round(3)` yr$^{-1}$ for $k_0$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "l_2") |> dplyr::pull(MCSE_Q50) |> max() |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "alpha_2") |> dplyr::pull(MCSE_Q50) |> max() |> round(3)` for $\alpha$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m_rep") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for the remaining mass, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m69_p1") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> round(3)` L$_\text{water}$ L$_\text{pores}^{-1}$ for $W_{opt}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m69_p2") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> round(3)` for $c_{1}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m68_p1") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> round(3)` yr$^{-1}$ for $f_{min}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m68_p2") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> round(3)` m for $c_{2}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "hpm_k_2") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> round(3)` yr$^{-1}$ for $k_0$ predicted by the HPM modifications, and `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "hpm_k_2") |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$ predicted by `r hpmd_model_id_to_name("3-4")`. For the 2.5% and 97.5% quantiles, MCSE were at most `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "k_2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> round(3)` yr$^{-1}$ for $k_0$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "l_2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "alpha_2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> round(3)` for $\alpha$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m_rep") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for the remaining mass, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m69_p1") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> round(3)` L$_\text{water}$ L$_\text{pores}^{-1}$ for $W_{opt}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m69_p2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> round(3)` for $c_{1}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m68_p1") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> round(3)` yr$^{-1}$ for $f_{min}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "m68_p2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> round(3)` m for $c_{2}$, `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "hpm_k_2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> round(3)` yr$^{-1}$ for $k_0$ predicted by the HPM modifications, and `r hpmd_stan_checks$tables$hpmd_table_mcse_summary |> dplyr::filter(base_par == "hpm_k_2") |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$ predicted by `r hpmd_model_id_to_name("3-4")`.
+
+#### Power-scaling {.unnumbered}
+
+Power-scaling exponentiates prior (to analyze prior sensitivity) or likelihood (to analyze likelihood sensitivity) distributions by different constants $\alpha>0$, where $\alpha>1$ means that the scaled component gets more important relative to the other component, and $\alpha<1$ means it gets less important [@Kallioinen.2024]. We varied $\alpha$ from $0.99$ to $1.01$ (default option) and identified sensitivity with the cumulative Jensen-Shannon distance and a threshold of 0.05, as suggested in @Kallioinen.2024.
+
+The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For $W_{opt}$, $c_{1}$, and $c_{2}$ the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For $k_{0,i}$, the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information [@Teickner.2024] which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
+
+
+#### Software {.unnumbered}
+
+All other computations were done in R (`r paste(c(R.Version()$major, R.Version()$minor), collapse = ".")`) [@RCoreTeam.2022]. We computed prior and posterior predictive checks with the bayesplot package (`r packageVersion("bayesplot")`) [@Gabry.2022] (supporting section \@ref(sup-3)). Data were handled with tidyverse packages [@Wickham.2019], MCMC samples with the posterior (`r packageVersion("posterior")`) [@Burkner.2023] and tidybayes (`r packageVersion("tidybayes")`) [@Kay.2022] packages. Graphics were created with ggplot2 (`r packageVersion("ggplot2")`) [@Wickham.2016], ggdist (`r packageVersion("ggdist")`) [@Kay.2022a] and patchwork (`r packageVersion("patchwork")`) [@Pedersen.2020].
+
+
+# Prior and posterior predictive checks {#sup-3}
+
+(ref:sup-hpmd-plot-ppc-prior-m-caption) Density estimate of 100 sets of remaining masses sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-prior-m, fig.cap='(ref:sup-hpmd-plot-ppc-prior-m-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_prior_m)
+```
+
+(ref:sup-hpmd-plot-ppc-posterior-m-caption) Density estimate of 100 sets of remaining masses sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-posterior-m, fig.cap='(ref:sup-hpmd-plot-ppc-posterior-m-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_m)
+```
+
+
+(ref:sup-hpmd-plot-ppc-prior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-prior-phi, fig.cap='(ref:sup-hpmd-plot-ppc-prior-phi-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_prior_phi)
+```
+
+
+(ref:sup-hpmd-plot-ppc-posterior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-posterior-phi, fig.cap='(ref:sup-hpmd-plot-ppc-posterior-phi-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_phi)
+```
+
+(ref:sup-hpmd-plot-ppc-prior-hpm-k-2-caption) Density estimate of 100 sets of decomposition rates ($k_0$) predicted by the HPM modifications sampled from the prior distribution of each model (light blue lines) versus density estimate of the decomposition rates estimated from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-prior-hpm-k-2, fig.cap='(ref:sup-hpmd-plot-ppc-prior-hpm-k-2-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_prior_hpm_k_2)
+```
+
+
+(ref:sup-hpmd-plot-ppc-posterior-hpm-k-2-caption) Density estimate of 100 sets of decomposition rates ($k_0$) predicted by the HPM modifications sampled from the posterior distribution of each model (light blue lines) versus density estimate of the decomposition rates estimated from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-posterior-hpm-k-2, fig.cap='(ref:sup-hpmd-plot-ppc-posterior-hpm-k-2-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_hpm_k_2)
+```
+
+(ref:sup-hpmd-plot-ppc-prior-hpm-l-2-caption) Density estimate of 100 sets of initial leaching losses ($l_0$) predicted by `r hpmd_model_id_to_name("3-4")` sampled from the prior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-prior-hpm-l-2, fig.cap='(ref:sup-hpmd-plot-ppc-prior-hpm-l-2-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_prior_hpm_l_2)
+```
+
+
+(ref:sup-hpmd-plot-ppc-posterior-hpm-l-2-caption) Density estimate of 100 sets of initial leaching losses ($l_0$) predicted by `r hpmd_model_id_to_name("3-4")` sampled from the posterior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.
+
+```{r sup-hpmd-plot-ppc-posterior-hpm-l-2, fig.cap='(ref:sup-hpmd-plot-ppc-posterior-hpm-l-2-caption)', out.width="100%"}
+knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_hpm_l_2)
+```
+
+
+# $k_{0,i}$ estimates in `r hpmd_model_id_to_name("3-3")` and in `r hpmd_model_id_to_name("3-4")` {#sup-4}
+
+(ref:sup-hpmd-plot-6-caption) $k_{0,i}$ estimates in `r hpmd_model_id_to_name("3-4")` and in `r hpmd_model_id_to_name("3-4")` for each *Sphagnum* species. Points are average values and error bars are 95% confidence intervals. *Sphagnum* spec. are samples which have been identified only to the genus level and there are two values here because we defined two separate species in the HPM to estimate maximum possible decomposition rates separately for initial peat samples collected from 10 or 20 cm depth in @Prevost.1997. 
+
+```{r sup-hpmd-plot-6, fig.cap='(ref:sup-hpmd-plot-6-caption)', out.width="60%"}
+knitr::include_graphics(tar_read(hpmd_plot_6))
+```
+
+
+
+
+# Marginal posterior distributions of HPM parameters in `r hpmd_model_id_to_name(c("3-3", "3-4")) |> knitr::combine_words(and = " and ")` {#sup-5}
+
+(ref:sup-hpmd-plot-4-3-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name("3-3")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+
+```{r sup-hpmd-plot-4-3, fig.cap='(ref:sup-hpmd-plot-4-3-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_4_3))
+```
+
+(ref:sup-hpmd-plot-4-4-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name("3-4")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+
+```{r sup-hpmd-plot-4-4, fig.cap='(ref:sup-hpmd-plot-4-4-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_4_4))
+```
+
+
+(ref:sup-hpmd-plot-5-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name("3-4")` during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) $k_{0,i}$ estimated for each species for which data were removed during the cross-validation. (b) other HPM parameters. 
+
+```{r sup-hpmd-plot-5, fig.cap='(ref:sup-hpmd-plot-5-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_5))
+```
+
+
+# $l_0$ versus estimated water table depths below the litter samples {#sup-6}
+
+(ref:sup-hpmd-plot-7-caption) Estimated for $l_0$ from the litterbag data (Predicted with HPM = No) and predicted by different versions of the HPM decomposition module (Predicted with HPM = Yes) (`r hpmd_model_id_to_name(c("3-1", "3-2", "3-3")) |> knitr::combine_words(and = " and ")`) versus reported (`r hpmd_model_id_to_name("3-1")`) or estimated (`r hpmd_model_id_to_name(c("3-2", "3-3")) |> knitr::combine_words(and = " and ")`) average water table depths below the litterbags. Points represent average estimates and error bars 95% posterior intervals. Lines are predictions of linear models fitted to the average estimates. *Sphagnum* spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown.
+
+
+```{r sup-hpmd-plot-7, fig.cap='(ref:sup-hpmd-plot-7-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_7))
+```
+
+
+
+# $k_0$ predicted by the HPM versus water table depth below the litter for different studies and species {#sup-8}
+
+(ref:sup-hpmd-plot-8-1-caption) $k_0$ estimated with the litterbag decomposition model from @Teickner.2024 (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (`r hpmd_model_id_to_name("3-1")`, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95% posterior intervals. Lines are predictions of linear models fitted to the average estimates. *Sphagnum* spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr$^{-1}$ are clipped.
+
+```{r sup-hpmd-plot-8-1, fig.cap='(ref:sup-hpmd-plot-8-1-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_8_1))
+```
+
+(ref:sup-hpmd-plot-8-4-caption) $k_0$ estimated with the litterbag decomposition model in `r hpmd_model_id_to_name("3-4")` from the litterbag data (Predicted with HPM = No) and predicted by the HPM decomposition module with parameter values estimated from the litterbag data (`r hpmd_model_id_to_name("3-4")`, Predicted with HPM = Yes) versus estimated average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95% posterior intervals. Lines are predictions of linear models fitted to the average estimates. *Sphagnum* spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr$^{-1}$ are clipped.
+
+```{r sup-hpmd-plot-8-4, fig.cap='(ref:sup-hpmd-plot-8-4-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_8_4))
+```
+
+
+# Depth profiles of predicted decomposition rates with $W_{opt}$ estimated by `r hpmd_model_id_to_name("3-4")` or set to its standard value for *S. fallax* {#sup-9}
+
+(ref:sup-hpmd-simulation-1-plot-5-caption) Decomposition rates predicted with `r hpmd_model_id_to_name("3-4")` ($k_{0,\text{modified}}(\text{`r hpmd_model_id_to_name("3-4")`})$) for *S. fallax* (hollows), using either the standard value for $W_{opt}$ or the $W_{opt}$ value estimated by `r hpmd_model_id_to_name("3-4")` versus depth of the litter below the peat surface. The horizontal line is the average water table depth.
+
+```{r sup-hpmd-simulation-1-plot-5, fig.cap='(ref:sup-hpmd-simulation-1-plot-5-caption)', out.width="60%"}
+knitr::include_graphics(tar_read(hpmd_simulation_1_plot_5))
+```
+
+
+# Results for `r hpmd_model_id_to_name("3-5")`  {#sup-10}
+
+(ref:sup-hpmd-plot-4-9-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name("3-5")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+
+```{r sup-hpmd-plot-4-9, fig.cap='(ref:sup-hpmd-plot-4-9-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_plot_4_9))
+```
+
+
+# Prediction uncertainties of `r hpmd_model_id_to_name("3-4")` {#sup-11}
+
+To illustrate that the HPM decomposition module implies large uncertainties if its parameters are estimated from available litter bag data, we simulate decomposition of *S, fallax* and *S. fuscum* litter during 50 years, either incubated under a degree of saturation of 0.6 L$_\text{water}$ L$_\text{pores}^{-1}$, or 20 cm below the water table. The results are shown in Fig. \@ref(fig:sup-hpmd-simulation-1-plot-6).
+
+(ref:sup-hpmd-simulation-1-plot-6-caption) Fraction of initial mass remaining of *S. fuscum* and *S. fallax* versus incubation duration as predicted by `r hpmd_model_id_to_name("3-4")`, assuming average species $\alpha$ and uncertainty of remaining masses averaged across litterbag experiments. (a) Shows predicted fractions of initial mass remaining and (b) predicted fractions of initial mass remaining for one individual sample. Samples are either incubated in the saturated zone `r hpmd_simulation_1_newdata_6 |> dplyr::filter(layer_degree_of_saturation_1 == 1) |> dplyr::slice(1) |> dplyr::mutate(layer_water_table_depth_1 = layer_water_table_depth_to_surface_1 - sample_depth_lower) |> dplyr::pull(layer_water_table_depth_1) |> abs()` cm below the water table, or in the unsaturated zone `r hpmd_simulation_1_newdata_6 |> dplyr::filter(layer_degree_of_saturation_1 == 0.6) |> dplyr::slice(1) |> dplyr::mutate(layer_water_table_depth_1 = layer_water_table_depth_to_surface_1 - sample_depth_lower) |> dplyr::pull(layer_water_table_depth_1)` cm above the water table. Shaded areas are 50, 80, and 95% confidence and prediction intervals, respectively.
+
+```{r sup-hpmd-simulation-1-plot-6, fig.cap='(ref:sup-hpmd-simulation-1-plot-6-caption)', out.width="100%"}
+knitr::include_graphics(tar_read(hpmd_simulation_1_plot_6))
+```
+
+
+
+# R code to predict $k_0$, $l_0$, and remaining masses with `r hpmd_model_id_to_name("3-4")` {#sup-7}
+
+`r hpmd_model_id_to_name("3-4")` and functions to predict $k_0$ and $l_0$ for different species and water table levels are available via the R package hpmdpredict [@Teickner.2024b]. To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for *S. fuscum* incubated at a degree of saturation of 0.6 L$_\text{water}$ L$_\text{pores}^{-1}$ during the first five years.
+
+```{r sup-hpmd-hpmdpredict-1, eval=TRUE, echo=TRUE}
+d <- 
+  tibble::tibble(
+    incubation_duration = seq(from = 0, to = 5, length.out = 30),
+    m0 = 1,
+    layer_degree_of_saturation_1 = 0.6,
+    layer_water_table_depth_to_surface_1 = 20,
+    sample_depth_lower = 10,
+    hpm_taxon_rank_value = "Sphagnum fuscum"
+  )
+```
+
+Next, one can pass this data frame to `hpmd_predict_fit_4()` which makes the predictions.
+
+```{r sup-hpmd-hpmdpredict-2, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+library(hpmdpredict)
+d <- hpmdpredict::hpmd_predict_fit_4(newdata = d)
+```
+
+To illustrate the result, we plot predicted remaining masses versus incubation time:
+
+```{r sup-hpmd-hpmdpredict-3, eval=TRUE, echo=TRUE, fig.width=5, fig.height=2.2, out.width="80%", warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggdist)
+
+d |>
+  ggplot(aes(ydist = mass_relative_mass * 100, x = incubation_duration)) +
+  stat_lineribbon() +
+  scale_fill_brewer() +
+  labs(
+    y = "Fraction of initial mass (%)",
+    x = "Incubation duration (yr)"
+  )
+```
+
+Further information are available from the package documentation.
+
+
+# References {.unnumbered}
+
+
+

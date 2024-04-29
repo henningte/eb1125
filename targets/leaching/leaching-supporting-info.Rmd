@@ -1,0 +1,658 @@
+---
+title: "Supporting information to: `r rmarkdown::yaml_front_matter('leaching-paper.Rmd')$title`"
+author:
+  - Henning Teickner:
+      email: henning.teickner@uni-muenster.de
+      institute: [iloek]
+      correspondence: true
+  - Edzer Pebesma:
+      email: email
+      institute: [ifgi]
+  - Klaus-Holger Knorr:
+      email: khknorr@uni-muenster.de
+      institute: [iloek]   
+institute:
+  - iloek: ILÖK, Ecohydrology & Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany
+  - ifgi: IfGI, Spatiotemporal Modelling Lab, Institute for Geoinformatics, University of Münster, 48149, Germany
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    bookdown::pdf_document2:
+      latex_engine: xelatex
+      fig_caption: yes
+      keep_tex: true
+      pandoc_args:
+      - --lua-filter=templates/scholarly-metadata.lua
+      - --lua-filter=templates/author-info-blocks.lua
+      - --lua-filter=templates/pagebreak.lua
+bibliography: references.bib
+link-citations: true
+csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
+header-includes:
+  - \usepackage{float}
+  - \usepackage[version=4]{mhchem}
+  - \usepackage{booktabs}
+  - \usepackage{multirow}
+  - \usepackage{bm}
+  - \usepackage{xr} \externaldocument{leaching-paper}
+fontsize: 12pt
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.pos = 'H', fig.align = 'center')
+
+# packages
+library(ggplot2)
+library(tibble)
+library(dplyr)
+library(knitr)
+library(tidyr)
+library(dplyr)
+library(ggtext)
+library(patchwork)
+library(quantities)
+library(units)
+library(posterior)
+library(targets)
+
+lapply(list.files("R", full.names = TRUE, recursive = TRUE), source)
+mass_relative_mass_offset <- 0.0001
+
+# global options for plots
+ggplot2::theme_set(ggplot2::theme_classic())
+units::units_options(negative_power = TRUE, group = c("(", ")"))
+```
+
+```{r res-import}
+# tables
+tar_load(leaching_tables)
+
+# model checks
+tar_load(leaching_stan_checks)
+
+# model estimates
+tar_load(leaching_stan_draws_1)
+tar_load(leaching_stan_draws_2)
+tar_load(leaching_stan_draws_3)
+tar_load(leaching_stan_draws_4)
+tar_load(leaching_stan_draws_5)
+tar_load(leaching_stan_draws_6)
+tar_load(leaching_stan_draws_7)
+tar_load(leaching_stan_draws_8)
+tar_load(leaching_stan_draws_13)
+tar_load(leaching_stan_draws_14)
+leaching_stan_draws_1 <- readRDS_rvars(leaching_stan_draws_1)
+leaching_stan_draws_2 <- readRDS_rvars(leaching_stan_draws_2)
+leaching_stan_draws_3 <- readRDS_rvars(leaching_stan_draws_3)
+leaching_stan_draws_4 <- readRDS_rvars(leaching_stan_draws_4)
+leaching_stan_draws_5 <- readRDS_rvars(leaching_stan_draws_5)
+leaching_stan_draws_6 <- readRDS_rvars(leaching_stan_draws_6)
+leaching_stan_draws_7 <- readRDS_rvars(leaching_stan_draws_7)
+leaching_stan_draws_8 <- readRDS_rvars(leaching_stan_draws_8)
+leaching_stan_draws_13 <- readRDS_rvars(leaching_stan_draws_13)
+leaching_stan_draws_14 <- readRDS_rvars(leaching_stan_draws_14)
+```
+
+
+# Initial leaching losses as estimated in @Moore.2007 {#sup-1}
+
+```{r}
+# intercepts for Sphagnum from Moore.2007 as estimate of leaching losses
+d_Moore.2007 <- 
+  tibble::tibble(
+    taxon_rank_value = c("Sphagnum magellanicum", "Sphagnum fallax", "Sphagnum capillifolium", "Sphagnum angustifolium", "Sphagnum capillifolium", "Sphagnum angustifolium", "Sphagnum capillifolium", "Sphagnum angustifolium", "Sphagnum capillifolium", "Sphagnum angustifolium"),
+    site_name = c("SF", "SF", "MB fen", "MB fen", "MB bog", "MB bog", "MB margin", "MB margin", "MB pond", "MB pond"),
+    a = c(4.487, 4.428, 4.602, 4.555, 4.539, 4.573, 4.567, 4.536, 4.62, 4.606) |> exp(),
+    k = c(0.015, 0.046, 0.136, 0.08, 0.021, 0.054, 0.061, -0.038, 0.185, -0.023),
+    k_se =c(0.007, 0.014, 0.024, 0.006, 0.008, 0.009, 0.014, 0.019, 0.04, 0.027),
+    l = (100 - a)
+  )
+```
+
+In @Moore.2007 decomposition rates are estimated from a logarithmic version of the one-pool exponential decomposition model, where the remaining mass at the start is estimated as intercept $a$:
+
+$$
+\ln(m(t)) = a - k_0t\\
+$$
+
+Because initial leaching losses happen shortly after the start of the incubation, this intercept is smaller than 100 percent of the initial mass and $\exp(a)$ is an estimate for initial leaching losses. With data from Tab. 2 in  @Moore.2007, initial leaching losses for *S. magellanicum*, *S. fallax*, *S. capillifolium*, and *S. angustifolium* are within the range `r d_Moore.2007 |> dplyr::pull(l) |> min() |> round()` to `r d_Moore.2007 |> dplyr::pull(l) |> max() |> round()` percent of the initial mass. Samples in the pond had the lowest initial leaching losses (on average `r d_Moore.2007 |> dplyr::filter(site_name == "MB pond") |> dplyr::pull(l) |> mean() |> round()` percent of the initial mass) and samples in the fen the largest (on average `r d_Moore.2007 |> dplyr::filter(site_name == "MB fen") |> dplyr::pull(l) |> mean() |> round()` percent of the initial mass).
+
+
+# Model equations {#sup-13}
+
+Tab. S\@ref(tab:m-litterbag-synthesis-models) lists the models we computed for this study. Here, we also assign identifiers to the models to make it easier to trace parts of the supporting information back to the specific model used to compute it. In the main text, models 1-2 and 2-2 are used in section \@ref(methods-bias-real-1), and model 1-4 in section \@ref(methods-estimate-real-1). Models 1-5 and 1-6 were computed for the sensitivity analysis described in section \@ref(methods-estimate-real-1) in the main text. The other models were computed to analyze the influence of estimating $\alpha$ from the data and the influence of including or excluding data from @Bengtsson.2017, as described in the main text.  
+
+(ref:bengtsson2017-direct) @Bengtsson.2017
+(ref:frolking2010-indirect) [@Frolking.2010]
+
+(ref:eq-decomposition-solution-1-no-leaching-1) \@ref(eq:decomposition-solution-1-no-leaching-1)
+(ref:eq-decomposition-solution-1-with-leaching-1) \@ref(eq:decomposition-solution-1-with-leaching-1)
+(ref:eq-decomposition-solution-2-no-leaching-1) \@ref(eq:decomposition-solution-2-no-leaching-1)
+(ref:eq-decomposition-solution-2-with-leaching-1) \@ref(eq:decomposition-solution-2-with-leaching-1)
+
+(ref:m-litterbag-synthesis-models-caption) Overview of models computed in this study on synthesized litterbag data. "Decomposition equation" is the equation the models use to describe remaining masses over time for litterbag experiments. Equations for the model components are shown in supporting information \@ref(sup-13).
+
+```{r m-litterbag-synthesis-models, tab.cap="(ref:m-litterbag-synthesis-models-caption)"}
+tibble::tibble(
+  id_model = c("model 1-1", "model 1-2", "model 1-3", "model 1-4", "model 1-5", "model 1-6", "model 2-1", "model 2-2", "model 2-3", "model 2-4"),
+  considers_leaching = c(rep("Yes", 6), rep("No", 4)),
+  decomposition_equation = c(rep("(ref:eq-decomposition-solution-1-with-leaching-1)", 2), rep("(ref:eq-decomposition-solution-2-with-leaching-1)", 4), rep("(ref:eq-decomposition-solution-1-no-leaching-1)", 2),
+rep("(ref:eq-decomposition-solution-2-no-leaching-1)", 2)),
+  description = c("One-pool exponential decomposition model which estimates decomposition rates and initial leaching losses. The model is a hierarchical model and estimates decomposition rates and initial leaching losses for individual litterbag replicates, combinations of species and studies, and species.", "Same as model 1-1.", "Same as model 1-1, but uses equation (ref:eq-decomposition-solution-2-with-leaching-1).", "Same as model 1-3.", "Same as model 1-3.", "Same as model 1-3.", "Same as model 1-1, but ignores initial leaching losses.", "Same as model 2-1.", "Same as model 2-1, but uses equation (ref:eq-decomposition-solution-2-no-leaching-1).", "Same as model 2-3."),
+  data = c("Full dataset.", "Full dataset excluding data from (ref:bengtsson2017-direct).", "Full dataset.", "Full dataset excluding data from (ref:bengtsson2017-direct).", "Simulated data.", "Simulated data, created with parameter values sampled from the posterior of model 1-4.", "Full dataset.", "Full dataset, excluding data from (ref:bengtsson2017-direct).", "Full dataset.", "Full dataset, excluding data from (ref:bengtsson2017-direct).")
+) |>
+  kableExtra::kable(
+    col.names = c("Model version", "Considers $l_0$?", "Decomposition equation", "Description", "Dataset"), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) |>
+  kableExtra::column_spec(4, width = "7cm") |>
+  kableExtra::column_spec(5, width = "7cm")
+```
+
+All models used the following components to model the remaining mass of litterbag replicate $i$ conditional on the average remaining mass ($\mu_i$) , the precision of remaining masses ($\phi_i$), and decomposition rates ($k\_1_i$) (equation \@ref(eq:sup-model-1)):
+
+\begin{equation}
+\begin{aligned}
+m_i & \sim & \text{Beta}(\mu_i\phi_{i},(1 - \mu_i)\phi_{i})\\
+\phi_{i} & = & \begin{cases}
+\text{precision}_i & \text{if}~\text{precision}_i~\text{is available}\\
+\phi\_1_{i} & \text{otherwise}\\
+\end{cases}\\
+\phi\_1_{i} & = & \phi\_2_{\text{sample}[i]}\\
+\text{precision}_i & \sim & \text{Gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
+\phi\_2_{\text{sample}} & \sim & \text{Gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
+\phi\_2\_p2_{\text{sample}} & = & \exp(\phi\_2\_p2\_p1 + \phi\_2\_p2\_p2_{\text{species[sample]}} + \\
+                                && \phi\_2\_p2\_p3_{\text{species x studies[sample]}})\\
+\phi\_2\_p2\_p1 & \sim & \text{Normal}(\phi\_2\_p2\_p1\_p1, \phi\_2\_p2\_p1\_p2)\\
+\phi\_2\_p2\_p2_{\text{species}} & \sim & \text{Normal}(\phi\_2\_p2\_p2\_p1, \phi\_2\_p2\_p2\_p2)\\
+\phi\_2\_p2\_p3_{\text{species x studies}} & \sim & \text{Normal}(\phi\_2\_p2\_p3\_p1, \phi\_2\_p2\_p3\_p2)\\
+\phi\_2\_p1 & \sim & \text{Gamma}(\phi\_2\_p1\_p1, \phi\_2\_p1\_p2)\\
+\phi\_2\_p2\_p1\_p2 & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p1\_p2_p1)\\
+\phi\_2\_p2\_p2\_p2_{\text{species}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p2\_p2\_p1)\\
+\phi\_2\_p2\_p3\_p2_{\text{species x studies}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p3\_p2\_p1)\\
+\phi\_2\_p2\_p4\_p2_{\text{samples}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p4\_p2\_p1)\\
+k\_1_i & = & k\_2_{\text{sample}[i]}\\
+k\_2_{\text{sample}} & = & \text{exp}(k\_2\_p1 + k\_2\_p2_{\text{species[sample]}} + \\
+                         && k\_2\_p3_{\text{species x study[sample]}} + \\
+                         && k\_2\_p4_{\text{samples}})\\
+k\_2\_p1 & \sim & \text{Normal}(k\_2\_p1\_p1, k\_2\_p1\_p2)\\
+k\_2\_p2_{\text{species}} & \sim & \text{Normal}(k\_2\_p2\_p1, k\_2\_p2\_p2)\\
+k\_2\_p3_{\text{species x studies}} & \sim & \text{Normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
+k\_2\_p4_{\text{samples}} & \sim & \text{Normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
+k\_2\_p1\_p2 & \sim &  \text{Normal}^+(0, k\_2\_p1\_p2\_p1)\\
+k\_2\_p2\_p2_{\text{species}} & \sim &  \text{Normal}^+(0, k\_2\_p2\_p2\_p1)\\
+k\_2\_p3\_p2_{\text{species x studies}} & \sim &  \text{Normal}^+(0, k\_2\_p3\_p2\_p1)\\
+k\_2\_p4\_p2_{\text{samples}} & \sim &  \text{Normal}^+(0, k\_2\_p4\_p2\_p1)\\
+(\#eq:sup-model-1)
+\end{aligned}
+\end{equation}
+
+Where $\mu_i$ is the average mass remaining for sample $i$, $\sigma_i$ is the reported standard deviation for the mass remaining for sample $i$, and $\text{precision}_i = \frac{\mu_i(1 - \mu_i)}{\sigma_i^2} -1$.
+
+The formula for the average remaining mass ($\mu_i$) when $\alpha=1$ and there are no initial leaching losses (models 2-1 and 2-2), according to equation \@ref(eq:decomposition-solution-1-no-leaching-1) in the main text, are (equation \@ref(eq:sup-model-2)):
+
+\begin{equation}
+\begin{aligned}
+\mu_i & = & \begin{cases} 
+1 - s & \text{if}~t_i=0\\
+(1 - s) \exp(k t) + s & \text{if}~t_i>0
+\end{cases}\\
+s & = & `r mass_relative_mass_offset`\\
+(\#eq:sup-model-2)
+\end{aligned}
+\end{equation}
+
+The formula for the average remaining mass ($\mu_i$) when $\alpha=1$ and there are initial leaching losses (models 1-1 and 1-2), according to equation \@ref(eq:decomposition-solution-1-with-leaching-1) in the main text, are (equation \@ref(eq:sup-model-3)):
+
+\begin{equation}
+\begin{aligned}
+\mu_i & = & \begin{cases} 
+1 - s & \text{if}~t_i=0\\
+(1 - l\_1_i - s) \exp(k t) + s & \text{if}~t_i>0
+\end{cases}\\
+s & = & `r mass_relative_mass_offset`\\
+(\#eq:sup-model-3)
+\end{aligned}
+\end{equation}
+
+The formula for the average remaining mass ($\mu_i$) when $\alpha$ is estimated from the litterbag data and there are no initial leaching losses (models 2-3 and 2-4), according to equation \@ref(eq:decomposition-solution-2-no-leaching-1) in the main text, are (equation \@ref(eq:sup-model-4)):
+
+\begin{equation}
+\begin{aligned}
+\mu_i & = & \begin{cases} 
+1 - s & \text{if}~t_i=0\\
+\frac{(1 - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
+\end{cases}\\
+s & = & `r mass_relative_mass_offset`\\
+(\#eq:sup-model-4)
+\end{aligned}
+\end{equation}
+
+
+The formula for the average remaining mass ($\mu_i$) when $\alpha$ is estimated from the litterbag data and there are initial leaching losses (models 1-3, 1-4), according to equation \@ref(eq:decomposition-solution-2-with-leaching-1) in the main text, are (equation \@ref(eq:sup-model-5)):
+
+\begin{equation}
+\begin{aligned}
+\mu_i & = & \begin{cases} 
+1 - s & \text{if}~t_i=0\\
+\frac{(1 - l\_1_i - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
+\end{cases}\\
+s & = & `r mass_relative_mass_offset`\\
+(\#eq:sup-model-5)
+\end{aligned}
+\end{equation}
+
+$\alpha$ is modeled in the same way as $\phi$ (models 1-3, 1-4, 2-3, 2-4) (equation \@ref(eq:sup-model-6)):
+
+\begin{equation}
+\begin{aligned}
+\alpha\_1_i & = & \alpha\_2_{\text{sample}[i]}\\
+\alpha\_2_{\text{sample}} & = & 1 + \text{exp}(\alpha\_2\_p1 + \alpha\_2\_p2_{\text{species[sample]}} + \\
+                         && \alpha\_2\_p3_{\text{species x study[sample]}} + \\
+                         && \alpha\_2\_p4_{\text{samples}})\\
+\alpha\_2\_p1 & \sim & \text{Normal}(\alpha\_2\_p1\_p1, \alpha\_2\_p1\_p2)\\
+\alpha\_2\_p2_{\text{species}} & \sim & \text{Normal}(\alpha\_2\_p2\_p1, \alpha\_2\_p2\_p2)\\
+\alpha\_2\_p3_{\text{species x studies}} & \sim & \text{Normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
+\alpha\_2\_p4_{\text{samples}} & \sim & \text{Normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
+(\#eq:sup-model-6)
+\end{aligned}
+\end{equation}
+
+
+Initial leaching losses are modeled in the same way as $\phi$ (models 1-3, 1-4) (equation \@ref(eq:sup-model-7)):
+
+\begin{equation}
+\begin{aligned}
+l\_1_i & = & l\_2_{\text{sample}[i]}\\
+l\_2_{\text{sample}} & = & \text{inv\_logit}(l\_2\_p1 + l\_2\_p2_{\text{species[sample]}} + \\
+                        && l\_2\_p3_{\text{species x study[sample]}} + \\                              && l\_2\_p4_{\text{samples}})\\
+l\_2\_p1 & \sim & \text{Normal}(l\_2\_p1\_p1, l\_2\_p1\_p2)\\
+l\_2\_p2_{\text{species}} & \sim & \text{Normal}(l\_2\_p2\_p1, l\_2\_p2\_p2)\\
+l\_2\_p3_{\text{species x study}} & \sim & \text{Normal}(l\_2\_p3\_p1, l\_2\_p3\_p2)\\
+l\_2\_p4_{\text{samples}} & \sim & \text{Normal}(l\_2\_p4\_p1, l\_2\_p4\_p2)\\
+l\_2\_p1\_p2 & \sim & \text{Normal}^+(0, l\_2\_p1\_p2\_p1)\\
+l\_2\_p2\_p2_{\text{species}} & \sim & \text{Normal}^+(0, l\_2\_p2\_p2\_p1)\\
+l\_2\_p3\_p2_{\text{species x study}} & \sim & \text{Normal}^+(0, l\_2\_p3\_p2\_p1)\\
+l\_2\_p4\_p2_{\text{samples}} & \sim & \text{Normal}^+(0, l\_2\_p4\_p2\_p1)\\
+(\#eq:sup-model-7)
+\end{aligned}
+\end{equation}
+
+
+# Estimates of $k_0$ and $\alpha$ from available litterbag data while ignoring initial leaching losses {#sup-2}
+
+```{r}
+tar_load(leaching_plot_1_7)
+tar_load(leaching_plot_1_8)
+```
+
+In the main text (section \@ref(out-methods-1)) we mentioned that estimating $\alpha$ from the litterbag data while ignoring initial leaching losses causes even larger bias of $k_0$ estimates than when $\alpha$ is set to $1$. Here, we present additional analyses to support this claim.
+
+When equation \@ref(eq:decomposition-solution-2-with-leaching-1) in the main text is used to estimate one-pool decomposition rates from litterbag experiments with large initial mass losses as caused by initial leaching, estimates for $k_0$ and $\alpha$ are much larger, indicating that under these conditions parameters intended to describe how decomposition rates decrease over time incorporate the effect of mass losses due to initial leaching. Fig. S\@ref(fig:sup-out-mm35-1-p5) shows estimates for decomposition rates and $\alpha$ for the available litterbag data and Fig. S\@ref(fig:sup-out-mm35-2-p5) shows the same when data from @Bengtsson.2017 are excuded.
+
+(ref:sup-out-mm35-1-p5-caption) `r readRDS(leaching_plot_1_7$file_caption)`  
+
+
+```{r sup-out-mm35-1-p5, fig.cap='(ref:sup-out-mm35-1-p5-caption)', out.width="100%"}
+knitr::include_graphics(leaching_plot_1_7$file_plot)
+```
+
+
+(ref:sup-out-mm35-2-p5-caption) `r readRDS(leaching_plot_1_8$file_caption)`  
+
+
+```{r sup-out-mm35-2-p5, fig.cap='(ref:sup-out-mm35-2-p5-caption)', out.width="100%"}
+knitr::include_graphics(leaching_plot_1_8$file_plot)
+```
+
+
+# Difference in initial leaching loss and decomposition rate estimates between models 1-1 and 1-2 and between models 1-3 and 1-4 {#sup-3}
+
+
+Here, we compare estimated initial leaching losses and decomposition rates for all other samples when data from @Bengtsson.2017 are included (models 1-1 and 1-3) or not included (model 1-2 and 1-4).
+
+(ref:sup-out-sdm-mm27-1-mm27-2-parameter-difference-p1-1-caption) Difference in initial leaching losses (a) and decomposition rate (b) between model 1-1 and model 1-2 for all samples except from @Bengtsson.2017. 
+
+```{r sup-out-sdm-mm27-1-mm27-2-parameter-difference-p1-1, fig.cap='(ref:sup-out-sdm-mm27-1-mm27-2-parameter-difference-p1-1-caption)', out.width="100%"}
+tar_load(leaching_plot_4)
+knitr::include_graphics(leaching_plot_4$fit_1_vs_fit_2)
+```
+
+(ref:sup-out-sdm-mm36-1-mm36-2-parameter-difference-p1-1-caption) Difference in initial leaching losses (a) and decomposition rate (b) between model 1-3 and model 1-4 for all samples except from @Bengtsson.2017. 
+
+```{r sup-out-sdm-mm36-1-mm36-2-parameter-difference-p1-1, fig.cap='(ref:sup-out-sdm-mm36-1-mm36-2-parameter-difference-p1-1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_plot_4$fit_3_vs_fit_4)
+```
+
+
+# Comparison of one-pool decomposition rates estimated while considering or ignoring initial leaching losses and also allowing the decomposition rate to decrease with decreasing remaining mass {#sup-4}
+
+In section \@ref(out-res-2) in the main text, we have compared one-pool decomposition rate estimates and their uncertainties between a model which considers initial leaching losses (model 1-1) and a model which ignores initial leaching losses (model 2-1). Both of these models assume that the decomposition rate remains constant over time, whereas this may in reality not be the case. We therefore repeated the analysis using two models which allow the decomposition rate to decrease over time (see last paragraph in section \@ref(out-methods-1) in the main text, models 1-3 and 2-3).
+
+(ref:sup-out-mm36-1-mm35-1-p3-1-caption) (a) Decomposition rate estimates, either considering leaching (black) or ignoring leaching (grey) versus average initial leaching losses estimated by the model considering initial leaching losses. Points are average estimates and error bars are 95% prediction intervals. (b) Standard deviation of decomposition rate estimates, either considering leaching (black) or ignoring leaching (grey) versus average initial leaching losses estimated by the model considering initial leaching losses. Compare with Fig. \@ref(fig:out-mm27-1-mm28-1-p2) in the main text.
+
+```{r sup-out-mm36-1-mm35-1-p3-1, fig.cap='(ref:sup-out-mm36-1-mm35-1-p3-1-caption)', out.width="60%"}
+tar_load(leaching_plot_2_fit_7_and_fit_3)
+knitr::include_graphics(leaching_plot_2_fit_7_and_fit_3)
+```
+
+
+# Prior choices and justification {#sup-5}
+
+(ref:sup-out-d-sdm-all-models-priors-1-caption) Prior distributions of all Bayesian models and their justifications. "HPM parameter" is the name of the corresponding parameter in the Holocene Peatland Model [@Frolking.2010]. When there is no value for "Justification", the prior was chosen based on prior predictive checks against the data. This prior predictive check tests whether the models can produce distributions of measured variables we expect based on prior knowledge. 
+
+```{r sup-out-d-sdm-all-models-priors-1, tab.cap = "(ref:sup-out-d-sdm-all-models-priors-1-caption)"}
+leaching_tables$prior_justification %>%
+  kableExtra::kable(
+    col.names = c("Parameter", "Unit", "Prior distribution", "Justification"), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) %>%
+  # kableExtra::column_spec(1, width = "5cm") %>%
+  kableExtra::column_spec(4, width = "7cm")
+```
+
+
+
+# Prior and posterior predictive checks {#sup-6}
+
+(ref:sup-out-p-sdm-all-models-check-1-1-caption) Density estimate of 100 sets of remaining masses sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-out-p-sdm-all-models-check-1-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-1-1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_prior_m)
+```
+
+
+(ref:sup-out-p-sdm-all-models-check-2-1-caption) Density estimate of 100 sets of remaining masses sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-out-p-sdm-all-models-check-2-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-2-1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_posterior_m)
+```
+
+
+(ref:sup-out-p-sdm-all-models-check-3-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-out-p-sdm-all-models-check-3-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-3-1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_prior_phi)
+```
+
+
+(ref:sup-out-p-sdm-all-models-check-4-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+
+```{r sup-out-p-sdm-all-models-check-4-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-4-1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_posterior_phi)
+```
+
+
+# Sensitivity of parameter estimates to priors and the experimental design of litterbag experiments {#sup-11}
+
+```{r}
+leaching_stan_draws_13 <- 
+  leaching_stan_draws_13 |>
+  leaching_check_coverage_simulation(alpha = 0.95)
+
+leaching_stan_draws_14 <- 
+  leaching_stan_draws_14 |>
+  leaching_check_coverage_simulation(alpha = 0.95)
+
+a <- 
+  leaching_stan_draws_4 |>
+  dplyr::filter(id_citation != "Bengtsson.2017") |>
+  dplyr::filter(! duplicated(id_sample_incubation_start))
+
+a <- 
+  dplyr::left_join(
+    a,
+    leaching_stan_draws_4 |> 
+      dplyr::filter(id_citation != "Bengtsson.2017") |>
+      dplyr::group_by(id_sample_incubation_start) |>
+      dplyr::summarise(
+        n_samples_in_experiment = length(mass_relative_mass),
+        .groups = "drop"
+      ),
+    by = "id_sample_incubation_start"
+  )
+```
+
+To check that the model considering initial leaching losses can in principle correctly estimate parameter values for $l_0$, $k_0$, and $\alpha$ under conditions which resemble those in available litterbag experiments, we simulated a dataset with all combinations of different values for these parameters ($l_0$: `r leaching_stan_draws_13 |> dplyr::pull(l_2_sim) |> unique() |> magrittr::multiply_by(100) |> knitr::combine_words(and = " or ")` mass-%, $k_0$: `r leaching_stan_draws_13 |> dplyr::pull(k_2_sim) |> unique() |> knitr::combine_words(and = " or ")` yr$^{-1}$, $\alpha$: `r leaching_stan_draws_13 |> dplyr::pull(alpha_2_sim) |> unique() |> round() |> knitr::combine_words(and = " or ")`, and constant precision parameter for remaining masses of `r leaching_stan_draws_13 |> dplyr::pull(phi_2_sim) |> unique() |> knitr::combine_words(and = " or ")` (near the median precision estimated by the model in the main text when excluding data from @Bengtsson.2017, `r leaching_stan_draws_4 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::filter(! is.na(k_2)) |> dplyr::pull(phi_2_p2) |> rvar_median() |> mean() |> round()`), implying standard deviations for remaining masses of `r leaching_stan_draws_13 |> dplyr::mutate(sigma = sqrt((mass_relative_mass_mu_sim * (1 - mass_relative_mass_mu_sim))/(phi_2_sim + 1))) |> dplyr::pull(sigma) |> magrittr::multiply_by(100) |> range() |> round(1) |> knitr::combine_words(and = " to ")` mass-%). From this, we simulated remaining masses according to three litterbag designs which differ in the time points at which litterbags are collected after the incubation started (collection plan) (design 1: after 1 and 2 years, design 2: after ~ 20 days, 1, and 2 years, design 3: after ~ 20 days, 1, 2, 3, and 5 years) and the number of litterbags collected at each time point (5 or 10, for each collection plan). 
+
+We then used the same hierarchical Bayesian model as for the model in the main text (see equations \@ref(eq:leaching-hierarchical-model-l0) and \@ref(eq:leaching-hierarchical-model-l0-2) and supporting information \@ref(sup-13)) and estimated parameters for the simulated data (model 1-5, Tab. S\@ref(tab:m-litterbag-synthesis-models)), treating samples with the same $k_0$ and $\alpha$ as samples from the same species, and samples with the same experimental design and $l_0$ as samples from the same study. 
+
+The estimated parameter values for $l_0$, $k_0$, and $\alpha$ can be compared against the values used to simulate the data and this allowed us to (1) test whether the models can estimate the true parameter values from litterbag data if our model is a good approximation to the data generating process, if *Sphagnum* species have similar $k_0$ and $\alpha$ in different studies, but may vary in their $l_0$, (2) analyze how the true $k_0$, $l$, and $\alpha$ control how accurate any of these parameters can be estimated, and (3) how the litterbag design controls how accurate $l_0$, $k_0$, and $\alpha$ can be estimated.  
+
+To provide an additional test that the model used in the main text can in principle provide accurate estimates of $k_0$, $l_0$, $\alpha$ when the simulation is as similar to available litterbag experiments as possible, we sampled parameter values from the posterior of the model in the main text and simulated remaining masses and standard deviations of remaining masses which could be observed in the available litterbag experiments if the model approximates the true data generating process. We then estimated $k_0$, $l_0$, $\alpha$ based on the simulated data (model 1-6) and compared the estimates to the parameter values sampled from the model in the main text to simulate the data. 
+
+The results of this analysis indicate that all parameters except $\alpha$ can be successfully estimated for the simulated data (figures S\@ref(fig:leaching-sup-plot-5-1) to S\@ref(fig:leaching-sup-plot-5-3)). The true value for $k_0$ and $l_0$ is contained in central 95% posterior intervals more than 95% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: `r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(k_2_sim - k_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> mean() |> round(3)` (`r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(k_2_sim - k_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> posterior::rvar_mean() |> posterior::quantile2(probs = c(0.025, 0.975)) |> round(3) |> knitr::combine_words(and = ", ")`) yr$^{-1}$ for $k_0$ and `r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(l_2_sim - l_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> mean() |> magrittr::multiply_by(100) |> round(1)` (`r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(l_2_sim - l_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> posterior::rvar_mean() |> posterior::quantile2(probs = c(0.025, 0.975)) |> magrittr::multiply_by(100) |> round(1) |> knitr::combine_words(and = ", ")`) mass-% for $l_0$. Biases and errors for both $k_0$ and $l_0$ were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true $l_0$ indicating that small initial leaching losses are not overestimated (supporting information \@ref(sup-11)).   
+
+Estimates for $\alpha$ were always biased, except when the prior was already similar to the true value, indicating that litterbag data provide little information about this parameter which therefore is dominated by the prior (figure S\@ref(fig:leaching-sup-plot-5-3)). In our simulations, $\alpha$ has only a small influence on the estimates of $k_0$ and $l_0$ (figures S\@ref(fig:leaching-sup-plot-5-1) and S\@ref(fig:leaching-sup-plot-5-2)), indicating that also for available litterbag data, this bias should affect our estimates for $l_0$ and $k_0$ not much.
+
+<!--However, a direct transfer of the results of this sensitivity analysis to the available litterbag data is not possible because unlike our simulation, the design of litterbag experiments, and specific decomposition rates and initial leaching losses for experiments and species, are different. In addition, in hierarchical models, the amount by which $l_0$ and $k_0$ estimates are pooled to the (studies', species', and global) averages depends on how much information the data provide for individual experiments and how much the true values vary in the hierarchical groups, and these factors are different between model 1-5 and available litterbag data.  -->
+
+
+```{r, results = 'asis'}
+res_captions_ref_tot <- 
+  paste0("(ref:leaching-sup-plot-5-", 1:3, "-caption)")
+
+res_captions_text_tot <- 
+  paste0(res_captions_ref_tot, " ", c("True decomposition rates minus estimated decomposition rates", "True initial leaching losses minus estimated initial leaching losses", "True $\\alpha$ minus estimated $\\alpha$"), " for model 1-5 versus true initial leaching losses ($l_{0,\\text{true}}$). Columns show values for different experimental designs (see the main text for details). Rows show values for different true decomposition rates ($k_{0,\\text{true}}$) (yr$^{-1}$).\n\n")
+
+for(i in res_captions_text_tot) {
+  cat(i)
+}
+
+res_plot_file_tot <- tar_read(leaching_plot_5)
+```
+
+
+```{r leaching-sup-plot-5, fig.cap=res_captions_ref_tot, out.width="100%"}
+knitr::include_graphics(res_plot_file_tot)
+```
+
+
+Based on these results we can assess how large the risk is that our model overestimated $l_0$. If the experimental design causes available litterbag data to provide only few information on $l_0$ and $k_0$, their estimates will depend more strongly on the prior and the variability of initial leaching losses and decomposition rates across studies and species, meaning that uncertain estimates are constrained to the global average. In the sensitivity analysis, this caused underestimation of larger initial leaching losses, but no overestimation of smaller initial leaching losses for the sampling design where the first litterbags were collected only after a year because we chose a prior which reflects that previous studies which directly measured initial leaching losses mostly observed small initial leaching losses. Even though this simulation is not directly transferable to the real data, the general pattern that initial leaching losses are constrained to the estimated average still holds and thus even if the data are not informative, our estimates should be conservative because also our prior is conservative.
+
+Moreover, for `r a |> dplyr::filter(incubation_duration >= 365) |> dplyr::filter(mean(k_2) >= 0.03 & mean(l_2) < 0.08) |> nrow()` experiments where the first litterbag was collected a year after the start of the experiment, the estimated average decomposition rate was larger than 0.03 yr$^{-1}$ and the estimated average initial leaching loss smaller than 8 mass-%, indicating that there are only few initial leaching loss estimates which are small. In addition, the sensitivity analysis with data simulated from the posterior distribution of the model in the main text suggests that if the posterior is an approximately correct representation of the true parameter values, estimating these parameter values from the simulated data does not result in biased estimates for $l_0$.
+
+In contrast, the risk of underestimation of large initial leaching losses is probably larger because `r a |> dplyr::filter(incubation_duration >= 365) |> dplyr::filter(mean(k_2) >= 0.03 & mean(l_2) >= 0.1) |> nrow()` experiments where the first litterbag was collected a year after the start of the experiment had estimates for average $k_0$ larger than 0.03 yr$^{-1}$ and estimates for average $l_0$ larger than 10 mass-%, indicating that underestimation of large initial leaching losses may be more common in our analysis than overestimation of small initial leaching losses.  
+
+Overall, even though the design of most available litterbag data introduces errors which should certainly be reduced to validate our results, we do not expect that there is a serious overestimation of small initial leaching losses and estimates of large initial leaching losses may be conservative. 
+
+
+# Further information on Bayesian data analysis {#sup-14}
+
+None of the models had divergent transitions`r if(any(leaching_stan_checks$tables$leaching_table_mcmc_diagnostics_summary$num_divergent > 0)) "[---todo: check this]"`, the minimum bulk effective sample size was larger than 400`r if(any(leaching_stan_checks$tables$leaching_table_mcmc_diagnostics_summary$min_ess_bulk <= 400)) "[---todo: check this]"`, and the largest improved $\hat{R}$ was `r leaching_stan_checks$tables$leaching_table_mcmc_diagnostics_summary |> dplyr::pull(max_rhat_improved) |> max(na.rm = TRUE) |> round(2)`, indicating that all chains converged [@Vehtari.2021]. Monte Carlo standard errors (MSCE) [@Vehtari.2021] for the median were at most `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "k_2" & id_fit %in% leaching_d_models$id_fit[leaching_d_models$has_leaching & ! leaching_d_models$id_fit %in% c(13, 14)]) |> dplyr::pull(MCSE_Q50) |> max() |> round(3)` yr$^{-1}$ for $k_0$ (if initial leaching was considered), `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "k_2" & id_fit %in% leaching_d_models$id_fit[! leaching_d_models$has_leaching & ! leaching_d_models$id_fit %in% c(13, 14)]) |> dplyr::pull(MCSE_Q50) |> max() |> round(3)` yr$^{-1}$ for $k_0$ (if initial leaching was ignored), `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "l_2" & ! id_fit %in% c(13, 14)) |> dplyr::pull(MCSE_Q50) |> max() |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$, `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "alpha_2" & ! id_fit %in% c(13, 14)) |> dplyr::pull(MCSE_Q50) |> max() |> round(3)` for $\alpha$, and `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "m_rep" & ! id_fit %in% c(13, 14)) |> dplyr::pull(MCSE_Q50) |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for the remaining mass. For the 2.5% and 97.5% quantiles, MCSE were at most `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "k_2" & id_fit %in% leaching_d_models$id_fit[leaching_d_models$has_leaching & ! leaching_d_models$id_fit %in% c(13, 14)]) |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> round(3)` yr$^{-1}$ for $k_0$ (if initial leaching was considered), `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "k_2" & id_fit %in% leaching_d_models$id_fit[! leaching_d_models$has_leaching & ! leaching_d_models$id_fit %in% c(13, 14)]) |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> round(3)` yr$^{-1}$ for $k_0$ (if initial leaching was ignored), `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "l_2" & ! id_fit %in% c(13, 14)) |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> magrittr::multiply_by(100) |> round(3)` mass-% for $l_0$, `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "alpha_2" & ! id_fit %in% c(13, 14)) |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max() |> round(3)` for $\alpha$, and `r leaching_stan_checks$tables$leaching_table_mcse_summary |> dplyr::filter(base_par == "m_rep" & ! id_fit %in% c(13, 14)) |> dplyr::select(MCSE_Q2.5, MCSE_Q97.5) |> unlist() |> max(na.rm = TRUE) |> magrittr::multiply_by(100) |> round(3)` mass-% for the remaining mass.
+
+All other computations were done in R (`r paste(c(R.Version()$major, R.Version()$minor), collapse = ".")`) [@RCoreTeam.2022]. We computed prior and posterior predictive checks with the bayesplot package (`r packageVersion("bayesplot")`) [@Gabry.2022] (supporting section \@ref(sup-6)). Data were handled with tidyverse packages [@Wickham.2019], MCMC samples with the posterior (`r packageVersion("posterior")`) [@Burkner.2023] and tidybayes (`r packageVersion("tidybayes")`) [@Kay.2022] packages. Graphics were created with ggplot2 (`r packageVersion("ggplot2")`) [@Wickham.2016] and patchwork (`r packageVersion("patchwork")`) [@Pedersen.2020].
+
+
+# Initial leaching losses and one-pool decomposition rates as estimated by all models in this study for all species and studies {#sup-7}
+
+```{r, results = 'asis'}
+a <- 
+  leaching_stan_draws_1 %>% 
+  dplyr::filter(! duplicated(id_citation)) %>% 
+  dplyr::pull(id_citation) %>% 
+  paste0("(ref:", stringr::str_remove(., pattern = "\\."), ") @", ., "\n")
+
+for(i in seq_along(a)) {
+  cat(a[[i]])
+}
+```
+
+(ref:sup-out-l-2-all-models-caption) Range of average estimated initial leaching losses (percent of the initial mass) for litterbag replicates grouped by species and study as estimated by all models (see Tab. S\@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of initial leaching losses for individual litterbag replicates.
+
+```{r sup-out-l-2-all-models, tab.cap = "(ref:sup-out-l-2-all-models-caption)"}
+# l_2
+leaching_tables$parameter_estimates$l0 %>%
+  kableExtra::kable(
+    col.names = c("Taxon", "Study", "Sample size", colnames(.)[stringr::str_detect(colnames(.), pattern = "^model")]), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) %>%
+  kableExtra::add_header_above(
+    c(" " = 1, " " = 1, " " = 1, "Initial leaching losses (mass-%)" = 8)
+  ) %>%
+  kableExtra::collapse_rows(
+    columns = 1, 
+    latex_hline = "major", 
+    valign = "top"
+  )
+```
+
+(ref:sup-out-k-2-all-models-caption) Range of average one-pool exponential decomposition rates (yr$^{-1}$) for litterbag replicates grouped by species and study as estimated by all models (see Tab. S\@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
+
+```{r sup-out-k-2-all-models, tab.cap = "(ref:sup-out-k-2-all-models-caption)"}
+# k_2
+leaching_tables$parameter_estimates$k0 %>%
+  kableExtra::kable(
+    col.names = c("Taxon", "Study", "Sample size", colnames(.)[stringr::str_detect(colnames(.), pattern = "^model")]), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) %>%
+  kableExtra::add_header_above(
+    c(" " = 1, " " = 1, " " = 1, "Decomposition rates (yr$^{-1}$)" = 8),
+    escape = FALSE
+  ) %>%
+  kableExtra::collapse_rows(
+    columns = 1, 
+    latex_hline = "major", 
+    valign = "top"
+  )
+```
+
+
+(ref:sup-out-alpha-2-all-models-caption) Range of average $\alpha$ (-) for litterbag replicates grouped by species and study as estimated by all models (see Tab. S\@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
+
+```{r sup-out-alpha-2-all-models, tab.cap = "(ref:sup-out-alpha-2-all-models-caption)"}
+# alpha_2
+leaching_tables$parameter_estimates$alpha %>%
+  kableExtra::kable(
+    col.names = c("Taxon", "Study", "Sample size", colnames(.)[stringr::str_detect(colnames(.), pattern = "^model")]), 
+    booktabs = TRUE,
+    escape = FALSE
+  ) %>%
+  kableExtra::kable_styling(
+    latex_options = c("HOLD_position", "scale_down")
+  ) %>%
+  kableExtra::add_header_above(
+    c(" " = 1, " " = 1, " " = 1, "$\\\\alpha$ (-)" = 8), 
+    escape = FALSE
+  ) %>%
+  kableExtra::collapse_rows(
+    columns = 1, 
+    latex_hline = "major", 
+    valign = "top"
+  )
+```
+
+\clearpage
+
+
+```{r, results = 'asis'}
+# import targets
+tar_load(leaching_plot_1_1)
+tar_load(leaching_plot_1_2)
+tar_load(leaching_plot_1_3)
+tar_load(leaching_plot_1_4)
+tar_load(leaching_plot_1_5)
+tar_load(leaching_plot_1_6)
+tar_load(leaching_plot_1_7)
+tar_load(leaching_plot_1_8)
+
+# load file paths
+a <- 
+  list(
+    leaching_plot_1_1,
+    leaching_plot_1_2,
+    leaching_plot_1_3,
+    leaching_plot_1_4,
+    leaching_plot_1_5,
+    leaching_plot_1_6,
+    leaching_plot_1_7,
+    leaching_plot_1_8
+  ) %>%
+  purrr::transpose()
+
+# plot files
+res_plot_file_tot <- unlist(a$file_plot)
+
+# captions
+res_caption_file_tot <- 
+  unlist(a$file_caption)
+
+# caption references
+res_captions_refs_tot <- 
+  paste0(
+    "(ref:out-mm", 
+    res_plot_file_tot %>% 
+      stringr::str_extract(pattern = "\\d+\\.pdf$") %>%
+      stringr::str_remove(pattern = "\\.pdf$"), 
+    "-p5-caption)"
+  )
+
+res_captions_tot <- 
+  purrr::map2_chr(res_caption_file_tot, res_captions_refs_tot, function(.x, .y) {
+    paste0(.y, " ", readRDS(.x), "\n\n")
+  })
+
+# print captions
+for(i in seq_along(res_captions_tot)) {
+  cat(res_captions_tot[[i]])
+}
+```
+
+```{r, sup-out-mm-p5-1, fig.cap=res_captions_refs_tot, out.width="100%", result="asis"}
+knitr::include_graphics(res_plot_file_tot)
+```
+
+
+# Fit of all models to the remaining masses reported in the synthesized litterbag studies {#sup-8}
+
+(ref:sup-out-sdm-all-models-p1-caption) Measured versus predicted remaining masses in litterbag studies from all models computed in our study. Points are average values and error bars are 95% prediction intervals. For a description of each model, see Tab. S\@ref(tab:m-litterbag-synthesis-models).
+
+```{r sup-out-sdm-all-models-p1, fig.cap='(ref:sup-out-sdm-all-models-p1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_y_vs_yrep_m)
+```
+
+
+# Litterbag experiments with bad fit under model 1-3 {#sup-9}
+
+```{r}
+tar_load(leaching_plot_outlier_1_3)
+```
+
+
+(ref:sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1-caption) `r readRDS(leaching_plot_outlier_1_3$caption)`
+
+```{r sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1, fig.cap='(ref:sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1-caption)', out.width="100%"}
+knitr::include_graphics(leaching_plot_outlier_1_3$plot)
+```
+
+
+# Effects of considering or ignoring initial leaching losses on decomposition rate estimates for model 1-1 versus model 2-1 and for all species {#sup-10}
+
+(ref:sup-out-mm27-1-mm28-1-p3-caption) (a) Decomposition rate estimates, either considering leaching (black) or ignoring leaching (grey) versus average initial leaching losses estimated by the model considering initial leaching losses. Points are average estimates and error bars are 95% prediction intervals. (b) Standard deviation of decomposition rate estimates, either considering leaching (black) or ignoring leaching (grey) versus average initial leaching losses estimated by the model considering initial leaching losses. 
+
+```{r sup-out-mm27-1-mm28-1-p3, fig.cap='(ref:sup-out-mm27-1-mm28-1-p3-caption)', out.width="70%"}
+tar_load(leaching_plot_2_fit_7_and_fit_3)
+knitr::include_graphics(leaching_plot_2_fit_7_and_fit_3)
+```
+
+
+# References {.unnumbered}
+
+
+
