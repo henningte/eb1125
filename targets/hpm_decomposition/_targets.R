@@ -274,7 +274,13 @@ list(
               cores = leaching_mcmc_config$nchains,
               algorithm = "NUTS",
               control = list(max_treedepth = 14, adapt_delta = 0.99),
-              init = hpmd_stan_initial_values
+              init =
+                purrr::map(
+                  hpmd_stan_initial_values, function(.x) {
+                    .x$alpha_2_p1 = array(runif(1, 0, 1), dim = 1L)
+                    .x
+                  }
+                )
             )
           })
         } else {

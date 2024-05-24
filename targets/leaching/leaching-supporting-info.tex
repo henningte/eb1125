@@ -99,6 +99,8 @@
 \usepackage{multirow}
 \usepackage{bm}
 \usepackage{xr} \externaldocument{leaching-paper}
+\usepackage{lineno}
+\linenumbers
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -119,7 +121,7 @@
 
 \title{Supporting information to: A Synthesis of \emph{Sphagnum} Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates}
 \author{Henning Teickner\textsuperscript{1,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{29 April, 2024}
+\date{24 May, 2024}
 
 \begin{document}
 \maketitle
@@ -227,11 +229,7 @@ The formula for the average remaining mass (\(\mu_i\)) when \(\alpha=1\) and the
 
 \begin{equation}
 \begin{aligned}
-\mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-(1 - s) \exp(k t) + s & \text{if}~t_i>0
-\end{cases}\\
-s & = & \ensuremath{10^{-4}}\\
+\mu_i & = & 1 \exp(k t)\\
 \label{eq:sup-model-2}
 \end{aligned}
 \end{equation}
@@ -241,10 +239,9 @@ The formula for the average remaining mass (\(\mu_i\)) when \(\alpha=1\) and the
 \begin{equation}
 \begin{aligned}
 \mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-(1 - l\_1_i - s) \exp(k t) + s & \text{if}~t_i>0
+1 & \text{if}~t_i=0\\
+(1 - l\_1_i) \exp(k t) & \text{if}~t_i>0
 \end{cases}\\
-s & = & \ensuremath{10^{-4}}\\
 \label{eq:sup-model-3}
 \end{aligned}
 \end{equation}
@@ -253,11 +250,7 @@ The formula for the average remaining mass (\(\mu_i\)) when \(\alpha\) is estima
 
 \begin{equation}
 \begin{aligned}
-\mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-\frac{(1 - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
-\end{cases}\\
-s & = & \ensuremath{10^{-4}}\\
+\mu_i & = & \frac{(1)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}}\\
 \label{eq:sup-model-4}
 \end{aligned}
 \end{equation}
@@ -267,13 +260,14 @@ The formula for the average remaining mass (\(\mu_i\)) when \(\alpha\) is estima
 \begin{equation}
 \begin{aligned}
 \mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-\frac{(1 - l\_1_i - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
+1 & \text{if}~t_i=0\\
+\frac{(1 - l\_1_i)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} & \text{if}~t_i>0
 \end{cases}\\
-s & = & \ensuremath{10^{-4}}\\
 \label{eq:sup-model-5}
 \end{aligned}
 \end{equation}
+
+To avoid \(\mu_i = 1\), we subtracted a constant (\ensuremath{10^{-4}}) from \(\mu_i\) when \(\mu_i = 1\).
 
 \(\alpha\) is modeled in the same way as \(\phi\) (models 1-3, 1-4, 2-3, 2-4) (equation \eqref{eq:sup-model-6}):
 
@@ -466,7 +460,7 @@ l\_2\_p4\_p2 & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
 
 }
 
-\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.}\label{fig:sup-out-p-sdm-all-models-check-3-1}
+\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies. The x axis is log scaled.}\label{fig:sup-out-p-sdm-all-models-check-3-1}
 \end{figure}
 
 
@@ -477,13 +471,13 @@ l\_2\_p4\_p2 & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
 
 }
 
-\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.}\label{fig:sup-out-p-sdm-all-models-check-4-1}
+\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies. The x axis is log scaled.}\label{fig:sup-out-p-sdm-all-models-check-4-1}
 \end{figure}
 
 \hypertarget{sup-11}{%
 \section{Sensitivity of parameter estimates to priors and the experimental design of litterbag experiments}\label{sup-11}}
 
-To check that the model considering initial leaching losses can in principle correctly estimate parameter values for \(l_0\), \(k_0\), and \(\alpha\) under conditions which resemble those in available litterbag experiments, we simulated a dataset with all combinations of different values for these parameters (\(l_0\): 1, 5, or 15 mass-\%, \(k_0\): 0.01, 0.05, or 0.15 yr\(^{-1}\), \(\alpha\): 1 or 3, and constant precision parameter for remaining masses of 200 (near the median precision estimated by the model in the main text when excluding data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}), 240), implying standard deviations for remaining masses of 0.7 to 3.5 mass-\%). From this, we simulated remaining masses according to three litterbag designs which differ in the time points at which litterbags are collected after the incubation started (collection plan) (design 1: after 1 and 2 years, design 2: after \textasciitilde{} 20 days, 1, and 2 years, design 3: after \textasciitilde{} 20 days, 1, 2, 3, and 5 years) and the number of litterbags collected at each time point (5 or 10, for each collection plan).
+To check that the model considering initial leaching losses can in principle correctly estimate parameter values for \(l_0\), \(k_0\), and \(\alpha\) under conditions which resemble those in available litterbag experiments, we simulated a dataset with all combinations of different values for these parameters (\(l_0\): 1, 5, or 15 mass-\%, \(k_0\): 0.01, 0.05, or 0.15 yr\(^{-1}\), \(\alpha\): 1 or 3, and constant precision parameter for remaining masses of 200 (near the median precision estimated by the model in the main text when excluding data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}), 241), implying standard deviations for remaining masses of 0.7 to 3.5 mass-\%). From this, we simulated remaining masses according to three litterbag designs which differ in the time points at which litterbags are collected after the incubation started (collection plan) (design 1: after 1 and 2 years, design 2: after \textasciitilde{} 20 days, 1, and 2 years, design 3: after \textasciitilde{} 20 days, 1, 2, 3, and 5 years) and the number of litterbags collected at each time point (5 or 10, for each collection plan).
 
 We then used the same hierarchical Bayesian model as for the model in the main text (see equations \eqref{eq:leaching-hierarchical-model-l0} and \eqref{eq:leaching-hierarchical-model-l0-2} and supporting information \ref{sup-13}) and estimated parameters for the simulated data (model 1-5, Tab. S\ref{tab:m-litterbag-synthesis-models}), treating samples with the same \(k_0\) and \(\alpha\) as samples from the same species, and samples with the same experimental design and \(l_0\) as samples from the same study.
 
@@ -491,7 +485,7 @@ The estimated parameter values for \(l_0\), \(k_0\), and \(\alpha\) can be compa
 
 To provide an additional test that the model used in the main text can in principle provide accurate estimates of \(k_0\), \(l_0\), \(\alpha\) when the simulation is as similar to available litterbag experiments as possible, we sampled parameter values from the posterior of the model in the main text and simulated remaining masses and standard deviations of remaining masses which could be observed in the available litterbag experiments if the model approximates the true data generating process. We then estimated \(k_0\), \(l_0\), \(\alpha\) based on the simulated data (model 1-6) and compared the estimates to the parameter values sampled from the model in the main text to simulate the data.
 
-The results of this analysis indicate that all parameters except \(\alpha\) can be successfully estimated for the simulated data (figures S\ref{fig:leaching-sup-plot-5-1} to S\ref{fig:leaching-sup-plot-5-3}). The true value for \(k_0\) and \(l_0\) is contained in central 95\% posterior intervals more than 95\% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: 0.043 (0.002, 0.106) yr\(^{-1}\) for \(k_0\) and 4.4 (0.1, 12.9) mass-\% for \(l_0\). Biases and errors for both \(k_0\) and \(l_0\) were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true \(l_0\) indicating that small initial leaching losses are not overestimated (supporting information \ref{sup-11}).
+The results of this analysis indicate that all parameters except \(\alpha\) can be successfully estimated for the simulated data (figures S\ref{fig:leaching-sup-plot-5-1} to S\ref{fig:leaching-sup-plot-5-3}). The true value for \(k_0\) and \(l_0\) is contained in central 95\% posterior intervals more than 95\% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: 0.043 (0.002, 0.105) yr\(^{-1}\) for \(k_0\) and 4.4 (0.1, 12.7) mass-\% for \(l_0\). Biases and errors for both \(k_0\) and \(l_0\) were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true \(l_0\) indicating that small initial leaching losses are not overestimated (supporting information \ref{sup-11}).
 
 Estimates for \(\alpha\) were always biased, except when the prior was already similar to the true value, indicating that litterbag data provide little information about this parameter which therefore is dominated by the prior (figure S\ref{fig:leaching-sup-plot-5-3}). In our simulations, \(\alpha\) has only a small influence on the estimates of \(k_0\) and \(l_0\) (figures S\ref{fig:leaching-sup-plot-5-1} and S\ref{fig:leaching-sup-plot-5-2}), indicating that also for available litterbag data, this bias should affect our estimates for \(l_0\) and \(k_0\) not much.
 
@@ -537,7 +531,7 @@ Overall, even though the design of most available litterbag data introduces erro
 \hypertarget{sup-14}{%
 \section{Further information on Bayesian data analysis}\label{sup-14}}
 
-None of the models had divergent transitions, the minimum bulk effective sample size was larger than 400, and the largest improved \(\hat{R}\) was 1, indicating that all chains converged (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}). Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.086 yr\(^{-1}\) for \(k_0\) (if initial leaching was considered), 0.235 yr\(^{-1}\) for \(k_0\) (if initial leaching was ignored), 1.46 mass-\% for \(l_0\), 0.233 for \(\alpha\), and 0.411 mass-\% for the remaining mass. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.203 yr\(^{-1}\) for \(k_0\) (if initial leaching was considered), 1.027 yr\(^{-1}\) for \(k_0\) (if initial leaching was ignored), 0.839 mass-\% for \(l_0\), 0.819 for \(\alpha\), and 2.691 mass-\% for the remaining mass.
+None of the models had divergent transitions, the minimum bulk effective sample size was larger than 400, and the largest improved \(\hat{R}\) was 1.01, indicating that all chains converged (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}). Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.081 yr\(^{-1}\) for \(k_0\) (if initial leaching was considered), 0.204 yr\(^{-1}\) for \(k_0\) (if initial leaching was ignored), 1.419 mass-\% for \(l_0\), 0.19 for \(\alpha\), and 0.47 mass-\% for the remaining mass. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.137 yr\(^{-1}\) for \(k_0\) (if initial leaching was considered), 1.267 yr\(^{-1}\) for \(k_0\) (if initial leaching was ignored), 0.691 mass-\% for \(l_0\), 0.701 for \(\alpha\), and 3.044 mass-\% for the remaining mass.
 
 All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{R Core Team, 2022}). We computed prior and posterior predictive checks with the bayesplot package (1.9.0) (\protect\hyperlink{ref-Gabry.2022}{Gabry and Mahr, 2022}) (supporting section \ref{sup-6}). Data were handled with tidyverse packages (\protect\hyperlink{ref-Wickham.2019}{Wickham et al., 2019}), MCMC samples with the posterior (1.5.0) (\protect\hyperlink{ref-Burkner.2023}{Bürkner et al., 2023}) and tidybayes (3.0.2) (\protect\hyperlink{ref-Kay.2022}{Kay, 2022}) packages. Graphics were created with ggplot2 (3.4.4) (\protect\hyperlink{ref-Wickham.2016}{Wickham, 2016}) and patchwork (1.1.1) (\protect\hyperlink{ref-Pedersen.2020}{Pedersen, 2020}).
 
@@ -573,101 +567,101 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 \cmidrule(l{3pt}r{3pt}){4-11}
 Taxon & Study & Sample size & model 1-1 & model 1-2 & model 1-3 & model 1-4 & model 2-1 & model 2-2 & model 2-3 & model 2-4\\
 \midrule
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 17.95, 29.1 &  & 11.04, 16.38 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 17.8, 28.9 &  & 10.96, 16.42 &  &  &  &  & \\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 10.16, 15.1 & 9.95, 13.77 & 7.79, 11.42 & 7.45, 11.42 &  &  &  & \\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 10.11, 14.88 & 9.95, 14.04 & 7.8, 11.61 & 7.57, 11.72 &  &  &  & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 14.13, 16.39 & 13.68, 15.78 & 11.82, 13.6 & 11.48, 13.23 &  &  &  & \\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 14.1, 16.29 & 13.73, 16.05 & 11.76, 13.55 & 11.66, 13.4 &  &  &  & \\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 & 11.48, 22.62 & 10.91, 20.41 & 9.77, 18.89 & 9.39, 17.4 &  &  &  & \\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 & 11.45, 22.53 & 10.92, 20.71 & 9.71, 18.55 & 9.56, 17.65 &  &  &  & \\
 
-\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 16.24, 16.24 & 15.81, 15.81 & 13.96, 13.96 & 13.25, 13.25 &  &  &  & \\
+\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 16.33, 16.33 & 15.79, 15.79 & 13.93, 13.93 & 13.52, 13.52 &  &  &  & \\
 \cmidrule{1-11}
-$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 & 5.86, 6.13 & 5.13, 5.42 & 5.49, 5.76 & 4.98, 5.19 &  &  &  & \\
+$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 & 5.77, 6.03 & 5.15, 5.37 & 5.52, 5.79 & 5.01, 5.22 &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 15.29, 19.01 &  & 13.24, 15.98 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 15.26, 18.97 &  & 13.18, 15.96 &  &  &  &  & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 11.98, 16.88 & 12.04, 17.14 & 11.78, 16.74 & 11.91, 16.91 &  &  &  & \\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 11.99, 16.89 & 12.02, 17.08 & 11.81, 16.69 & 11.88, 16.88 &  &  &  & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 14.24, 16.69 & 14.78, 17.35 & 13.47, 15.82 & 14.28, 16.77 &  &  &  & \\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 14.28, 16.72 & 14.72, 17.26 & 13.54, 15.89 & 14.31, 16.8 &  &  &  & \\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 & 11.21, 14.79 & 11.69, 15.4 & 10.63, 14.03 & 11.26, 14.87 &  &  &  & \\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 & 11.21, 14.81 & 11.69, 15.38 & 10.64, 14 & 11.32, 14.91 &  &  &  & \\
 \cmidrule{1-11}
-$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 9.03, 27.23 &  & 8.78, 26.59 &  &  &  &  & \\
+$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 9.15, 27.38 &  & 8.85, 26.39 &  &  &  &  & \\
 \cmidrule{1-11}
-$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 19.81, 23.57 &  & 19.48, 23.04 &  &  &  &  & \\
+$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 19.93, 23.61 &  & 19.5, 23.09 &  &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 11.89, 19.03 &  & 9.91, 13.48 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 11.86, 18.62 &  & 9.89, 13.53 &  &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 12.68, 17.84 & 12.89, 18.22 & 12.28, 17.43 & 12.59, 17.8 &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 12.66, 17.94 & 12.87, 18.2 & 12.32, 17.38 & 12.57, 17.82 &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 16.95, 49.91 &  & 12.82, 33.44 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 16.99, 50.6 &  & 12.62, 32.95 &  &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 10.55, 20.08 & 11.11, 20.28 & 9.36, 17.24 & 10.12, 18.14 &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 10.56, 19.66 & 11.17, 20.4 & 9.39, 17.11 & 10.2, 18.08 &  &  &  & \\
 \cmidrule{1-11}
- & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 & 11.27, 18.89 & 11.27, 18.78 & 11.08, 18.65 & 10.93, 18.39 &  &  &  & \\
+ & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 & 11.31, 18.94 & 11.27, 18.73 & 11.05, 18.67 & 10.92, 18.28 &  &  &  & \\
 
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 & 5.89, 13.82 &  & 6.05, 13.68 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 & 5.91, 13.8 &  & 6.06, 13.6 &  &  &  &  & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 5.18, 9.82 & 5.24, 9.86 & 5.19, 9.77 & 5.14, 9.72 &  &  &  & \\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 5.27, 9.8 & 5.29, 9.87 & 5.25, 9.8 & 5.24, 9.73 &  &  &  & \\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 2.28, 2.85 & 2.43, 3.07 & 2.63, 3.46 & 2.84, 3.71 &  &  &  & \\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 2.34, 2.91 & 2.44, 3.05 & 2.62, 3.36 & 2.81, 3.72 &  &  &  & \\
 
- & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 8.91, 10.18 & 8.89, 10.17 & 8.84, 10.13 & 8.8, 10.08 &  &  &  & \\
+ & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 8.89, 10.19 & 8.91, 10.18 & 8.87, 10.14 & 8.79, 10.08 &  &  &  & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 10.39, 11.69 & 10.28, 11.59 & 10.22, 11.48 & 9.95, 11.19 &  &  &  & \\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 10.38, 11.69 & 10.28, 11.53 & 10.21, 11.5 & 9.93, 11.22 &  &  &  & \\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 10.32, 12.68 & 10.25, 12.62 & 10.1, 12.46 & 9.88, 12.25 &  &  &  & \\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 10.3, 12.64 & 10.27, 12.66 & 10.07, 12.47 & 9.86, 12.16 &  &  &  & \\
 
- & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 10.84, 10.84 & 10.75, 10.75 & 10.63, 10.63 & 10.34, 10.34 &  &  &  & \\
+ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 10.74, 10.74 & 10.72, 10.72 & 10.67, 10.67 & 10.41, 10.41 &  &  &  & \\
 
- & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 & 16.51, 16.51 & 16.39, 16.39 & 16.3, 16.3 & 15.98, 15.98 &  &  &  & \\
+ & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 & 16.4, 16.4 & 16.36, 16.36 & 16.28, 16.28 & 15.97, 15.97 &  &  &  & \\
 
-\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 8.91, 8.91 & 8.87, 8.87 & 8.77, 8.77 & 8.59, 8.59 &  &  &  & \\
+\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 8.88, 8.88 & 8.88, 8.88 & 8.77, 8.77 & 8.57, 8.57 &  &  &  & \\
 \cmidrule{1-11}
-$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 20.05, 27.67 &  & 17.19, 24 &  &  &  &  & \\
+$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 20.11, 27.77 &  & 17.29, 23.91 &  &  &  &  & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 & 4.67, 5.5 & 5.33, 6.14 & 4.63, 5.36 & 5.01, 5.79 &  &  &  & \\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 & 4.73, 5.54 & 5.3, 6.16 & 4.58, 5.33 & 5.07, 5.81 &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 13.84, 22.38 &  & 12.84, 21.04 &  &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 13.8, 22.41 &  & 12.79, 20.9 &  &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 & 8.22, 32.01 &  & 8.15, 29.34 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 & 8.29, 32.18 &  & 8.06, 29.37 &  &  &  &  & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 9.58, 13.32 & 9.28, 13.06 & 9.12, 12.74 & 8.78, 12.33 &  &  &  & \\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 9.51, 13.33 & 9.29, 13.01 & 9.09, 12.66 & 8.81, 12.29 &  &  &  & \\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 10.64, 12.51 & 10.41, 12.12 & 9.92, 11.67 & 9.74, 11.23 &  &  &  & \\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 10.73, 12.62 & 10.46, 12.22 & 9.88, 11.65 & 9.79, 11.33 &  &  &  & \\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 10.52, 10.52 & 10.49, 10.49 & 9.74, 9.74 & 9.81, 9.81 &  &  &  & \\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 10.42, 10.42 & 10.5, 10.5 & 9.79, 9.79 & 9.82, 9.82 &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 & 9.93, 13.67 &  & 7.66, 9.61 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 & 9.99, 13.71 &  & 7.69, 9.84 &  &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 9.9, 10.05 & 10.78, 11.19 & 8.79, 8.82 & 10.06, 10.44 &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 9.93, 10.04 & 10.76, 11.16 & 8.76, 8.85 & 10.1, 10.45 &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 13.96, 21.71 &  & 13.21, 20.53 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 13.85, 21.76 &  & 13.14, 20.58 &  &  &  &  & \\
 
- & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 8.96, 9.86 & 8.15, 8.48 & 8.58, 9.2 & 7.85, 8.11 &  &  &  & \\
+ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 8.95, 9.65 & 8.09, 8.46 & 8.62, 9.18 & 7.8, 8.09 &  &  &  & \\
 
-\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 6.57, 10.76 & 7.31, 11.48 & 6.18, 10.18 & 6.81, 10.94 &  &  &  & \\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 6.59, 10.7 & 7.2, 11.33 & 6.33, 10.36 & 6.86, 10.94 &  &  &  & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 7.61, 11.24 &  & 6.95, 9.79 &  &  &  &  & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 7.64, 11.34 &  & 7.02, 9.83 &  &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 13.67, 14.31 & 15.51, 16.2 & 12.39, 12.91 & 14.89, 15.58 &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 13.59, 14.26 & 15.59, 16.33 & 12.36, 12.84 & 14.8, 15.55 &  &  &  & \\
 \cmidrule{1-11}
-$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 12.95, 15.82 & 13.44, 16.32 & 11.79, 14.35 & 12.43, 15.34 &  &  &  & \\
+$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 12.94, 15.78 & 13.4, 16.24 & 11.7, 14.33 & 12.29, 15.14 &  &  &  & \\
 \cmidrule{1-11}
-$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 & 15.92, 21.62 & 15.96, 21.55 & 8.46, 14.58 & 7.51, 13.06 &  &  &  & \\
+$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 & 15.85, 21.57 & 15.98, 21.54 & 8.62, 14.71 & 7.56, 13.08 &  &  &  & \\
 \cmidrule{1-11}
-$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 9.79, 10.11 & 9.12, 9.7 & 9.16, 9.61 & 8.6, 9.24 &  &  &  & \\
+$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 9.68, 10.08 & 8.91, 9.61 & 9.18, 9.57 & 8.55, 9.23 &  &  &  & \\
 \cmidrule{1-11}
-$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 15.23, 34.04 &  & 13.55, 26.11 &  &  &  &  & \\
+$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 15.18, 33.95 &  & 13.52, 25.68 &  &  &  &  & \\
 \cmidrule{1-11}
-$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 11.9, 11.9 & 11.91, 11.91 & 11.19, 11.19 & 11.27, 11.27 &  &  &  & \\
+$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 11.89, 11.89 & 11.9, 11.9 & 11.14, 11.14 & 11.32, 11.32 &  &  &  & \\
 \cmidrule{1-11}
-$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 14.37, 17.58 &  & 13.84, 16.94 &  &  &  &  & \\
+$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 14.37, 17.52 &  & 13.84, 16.95 &  &  &  &  & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 & 3.5, 4.66 & 3.94, 5.26 & 3.37, 4.5 & 3.71, 5.01 &  &  &  & \\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 & 3.5, 4.63 & 3.89, 5.21 & 3.41, 4.59 & 3.71, 4.97 &  &  &  & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 & 2.59, 5.98 & 2.76, 6 & 2.54, 5.8 & 2.64, 5.6 &  &  &  & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 & 2.6, 5.95 & 2.75, 6.03 & 2.56, 5.77 & 2.64, 5.68 &  &  &  & \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -685,101 +679,101 @@ $S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017
 \cmidrule(l{3pt}r{3pt}){4-11}
 Taxon & Study & Sample size & model 1-1 & model 1-2 & model 1-3 & model 1-4 & model 2-1 & model 2-2 & model 2-3 & model 2-4\\
 \midrule
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.59, 0.83 &  & 0.97, 1.66 &  & 0.85, 1.17 &  & 2.03, 3.57 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.59, 0.82 &  & 0.97, 1.68 &  & 0.86, 1.17 &  & 2.02, 3.6 & \\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 0.1, 0.25 & 0.1, 0.26 & 0.14, 0.38 & 0.15, 0.42 & 0.16, 0.35 & 0.16, 0.35 & 0.32, 1.06 & 0.4, 1.19\\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 0.1, 0.25 & 0.1, 0.25 & 0.14, 0.37 & 0.15, 0.41 & 0.16, 0.35 & 0.16, 0.35 & 0.32, 1.05 & 0.4, 1.19\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.07, 0.08 & 0.07, 0.08 & 0.1, 0.11 & 0.11, 0.12 & 0.18, 0.2 & 0.18, 0.19 & 0.67, 0.8 & 0.71, 0.85\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.07, 0.08 & 0.07, 0.08 & 0.1, 0.11 & 0.1, 0.12 & 0.18, 0.2 & 0.17, 0.19 & 0.65, 0.78 & 0.69, 0.83\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 & 0.09, 0.2 & 0.09, 0.2 & 0.11, 0.26 & 0.13, 0.31 & 0.18, 0.33 & 0.18, 0.33 & 0.45, 1.34 & 0.5, 1.54\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 & 0.09, 0.2 & 0.09, 0.2 & 0.11, 0.26 & 0.13, 0.31 & 0.18, 0.33 & 0.19, 0.33 & 0.45, 1.35 & 0.49, 1.52\\
 
-\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.07, 0.07 & 0.06, 0.06 & 0.1, 0.1 & 0.11, 0.11 & 0.2, 0.2 & 0.19, 0.19 & 0.81, 0.81 & 0.85, 0.85\\
+\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.06, 0.06 & 0.06, 0.06 & 0.1, 0.1 & 0.11, 0.11 & 0.2, 0.2 & 0.19, 0.19 & 0.8, 0.8 & 0.85, 0.85\\
 \cmidrule{1-11}
-$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 & 0.05, 0.05 & 0.04, 0.04 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.06, 0.06 & 0.38, 0.41 & 0.32, 0.34\\
+$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 & 0.05, 0.05 & 0.04, 0.04 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.05, 0.06 & 0.37, 0.39 & 0.31, 0.32\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.24, 0.48 &  & 0.33, 0.69 &  & 0.47, 0.71 &  & 2.09, 3.47 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.24, 0.48 &  & 0.34, 0.69 &  & 0.48, 0.71 &  & 2.11, 3.46 & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 0.04, 0.06 & 0.03, 0.06 & 0.04, 0.06 & 0.04, 0.06 & 0.17, 0.2 & 0.16, 0.2 & 3.59, 5.04 & 4.69, 6.6\\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 0.04, 0.06 & 0.03, 0.06 & 0.04, 0.06 & 0.04, 0.06 & 0.17, 0.2 & 0.16, 0.2 & 3.59, 5.09 & 4.65, 6.5\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.05, 0.05 & 0.16, 0.18 & 0.15, 0.17 & 1.79, 2.14 & 2.39, 2.86\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.05, 0.05 & 0.16, 0.18 & 0.15, 0.17 & 1.83, 2.15 & 2.39, 2.77\\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 & 0.05, 0.06 & 0.04, 0.05 & 0.05, 0.07 & 0.05, 0.07 & 0.14, 0.17 & 0.13, 0.16 & 1.39, 1.83 & 1.95, 2.53\\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 & 0.05, 0.06 & 0.04, 0.05 & 0.05, 0.07 & 0.05, 0.07 & 0.14, 0.17 & 0.13, 0.16 & 1.41, 1.86 & 1.92, 2.54\\
 \cmidrule{1-11}
-$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.05, 0.08 &  & 0.06, 0.09 &  & 0.15, 0.37 &  & 0.91, 3.36 & \\
+$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.05, 0.08 &  & 0.06, 0.1 &  & 0.15, 0.37 &  & 0.91, 3.41 & \\
 \cmidrule{1-11}
-$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 0.06, 0.07 &  & 0.07, 0.08 &  & 0.32, 0.35 &  & 1.83, 2.3 & \\
+$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 0.06, 0.07 &  & 0.07, 0.08 &  & 0.32, 0.35 &  & 1.81, 2.32 & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.39, 0.79 &  & 0.5, 1.13 &  & 0.58, 0.96 &  & 1.57, 3.42 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.39, 0.79 &  & 0.5, 1.12 &  & 0.57, 0.96 &  & 1.61, 3.45 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 0.03, 0.06 & 0.03, 0.05 & 0.03, 0.06 & 0.03, 0.06 & 0.15, 0.19 & 0.14, 0.18 & 1.25, 1.86 & 1.36, 2.07\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 0.03, 0.05 & 0.03, 0.05 & 0.03, 0.06 & 0.03, 0.06 & 0.14, 0.19 & 0.14, 0.18 & 1.25, 1.85 & 1.35, 2.08\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.3, 0.65 &  & 0.45, 2.07 &  & 0.55, 1.32 &  & 1.33, 10.72 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.3, 0.64 &  & 0.46, 2.09 &  & 0.55, 1.34 &  & 1.33, 11.05 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 0.07, 0.14 & 0.06, 0.12 & 0.09, 0.19 & 0.08, 0.19 & 0.15, 0.27 & 0.14, 0.26 & 0.53, 1.27 & 0.58, 1.53\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 0.07, 0.14 & 0.06, 0.12 & 0.09, 0.2 & 0.08, 0.19 & 0.15, 0.27 & 0.14, 0.26 & 0.52, 1.28 & 0.57, 1.46\\
 \cmidrule{1-11}
- & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 & 0.03, 0.05 & 0.03, 0.05 & 0.03, 0.05 & 0.04, 0.06 & 0.12, 0.17 & 0.12, 0.17 & 1.37, 2.46 & 1.46, 2.58\\
+ & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 & 0.03, 0.05 & 0.03, 0.05 & 0.03, 0.05 & 0.04, 0.06 & 0.12, 0.17 & 0.12, 0.17 & 1.37, 2.47 & 1.5, 2.68\\
 
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 & 0.03, 0.04 &  & 0.03, 0.05 &  & 0.08, 0.19 &  & 1.1, 2.03 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 & 0.03, 0.04 &  & 0.03, 0.05 &  & 0.08, 0.19 &  & 1.1, 2.04 & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.08, 0.11 & 0.08, 0.11 & 1.23, 2.08 & 1.31, 2.21\\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.08, 0.11 & 0.08, 0.11 & 1.23, 2.06 & 1.33, 2.2\\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 0.03, 0.05 & 0.03, 0.05 & 0.04, 0.05 & 0.04, 0.05 & 0.05, 0.07 & 0.05, 0.07 & 0.74, 0.89 & 0.86, 1.02\\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 & 0.03, 0.05 & 0.03, 0.05 & 0.04, 0.05 & 0.04, 0.05 & 0.05, 0.07 & 0.05, 0.07 & 0.75, 0.91 & 0.87, 1.04\\
 
- & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 0.01, 0.02 & 0.01, 0.02 & 0.01, 0.02 & 0.01, 0.02 & 0.09, 0.09 & 0.09, 0.09 & 1.62, 2.08 & 1.65, 2.08\\
+ & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 & 0.01, 0.02 & 0.01, 0.02 & 0.01, 0.02 & 0.01, 0.02 & 0.09, 0.09 & 0.09, 0.09 & 1.59, 2.06 & 1.66, 2.08\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.04 & 0.03, 0.04 & 0.11, 0.12 & 0.1, 0.12 & 1.38, 1.55 & 1.47, 1.65\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.04 & 0.03, 0.04 & 0.11, 0.12 & 0.1, 0.12 & 1.4, 1.55 & 1.49, 1.68\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.04, 0.05 & 0.04, 0.05 & 0.04, 0.06 & 0.04, 0.06 & 0.11, 0.14 & 0.11, 0.14 & 1.29, 1.65 & 1.38, 1.72\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.04, 0.05 & 0.04, 0.05 & 0.04, 0.06 & 0.04, 0.06 & 0.11, 0.14 & 0.11, 0.14 & 1.27, 1.64 & 1.38, 1.74\\
 
- & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.04, 0.04 & 0.04, 0.04 & 0.11, 0.11 & 0.11, 0.11 & 1.4, 1.4 & 1.51, 1.51\\
+ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.04, 0.04 & 0.04, 0.04 & 0.11, 0.11 & 0.11, 0.11 & 1.43, 1.43 & 1.51, 1.51\\
 
- & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 & 0.05, 0.05 & 0.05, 0.05 & 0.05, 0.05 & 0.06, 0.06 & 0.24, 0.24 & 0.24, 0.24 & 3.33, 3.33 & 3.48, 3.48\\
+ & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 & 0.05, 0.05 & 0.05, 0.05 & 0.05, 0.05 & 0.06, 0.06 & 0.24, 0.24 & 0.24, 0.24 & 3.32, 3.32 & 3.45, 3.45\\
 
-\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.03 & 0.1, 0.1 & 0.09, 0.09 & 1.19, 1.19 & 1.27, 1.27\\
+\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.03 & 0.03, 0.03 & 0.1, 0.1 & 0.09, 0.09 & 1.18, 1.18 & 1.3, 1.3\\
 \cmidrule{1-11}
-$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.17, 0.42 &  & 0.25, 0.62 &  & 0.47, 0.73 &  & 1.8, 3.29 & \\
+$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.17, 0.41 &  & 0.25, 0.6 &  & 0.47, 0.73 &  & 1.77, 3.29 & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 & 0.05, 0.05 & 0.04, 0.04 & 0.05, 0.06 & 0.04, 0.05 & 0.1, 0.11 & 0.09, 0.11 & 0.25, 0.29 & 0.3, 0.35\\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 & 0.05, 0.05 & 0.04, 0.04 & 0.05, 0.06 & 0.04, 0.05 & 0.1, 0.11 & 0.09, 0.11 & 0.25, 0.29 & 0.29, 0.34\\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.11, 0.16 &  & 0.13, 0.2 &  & 0.29, 0.4 &  & 1.08, 2.04 & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.1, 0.16 &  & 0.13, 0.2 &  & 0.29, 0.4 &  & 1.09, 2 & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 & 0.06, 0.32 &  & 0.07, 0.58 &  & 0.18, 0.78 &  & 0.68, 3.99 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 & 0.06, 0.3 &  & 0.07, 0.57 &  & 0.18, 0.79 &  & 0.66, 3.92 & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 0.03, 0.04 & 0.03, 0.04 & 0.03, 0.04 & 0.04, 0.05 & 0.1, 0.13 & 0.1, 0.13 & 0.73, 1.04 & 0.57, 0.82\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 & 0.03, 0.04 & 0.03, 0.04 & 0.03, 0.05 & 0.04, 0.05 & 0.1, 0.13 & 0.1, 0.13 & 0.74, 1.04 & 0.56, 0.82\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.08, 0.1 & 0.08, 0.1 & 0.1, 0.12 & 0.1, 0.13 & 0.16, 0.19 & 0.16, 0.19 & 0.79, 0.96 & 0.65, 0.78\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.08, 0.1 & 0.08, 0.1 & 0.1, 0.12 & 0.1, 0.13 & 0.16, 0.19 & 0.16, 0.19 & 0.8, 0.95 & 0.63, 0.77\\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.05, 0.05 & 0.14, 0.14 & 0.12, 0.12 & 0.77, 0.77 & 0.63, 0.63\\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 & 0.05, 0.05 & 0.04, 0.04 & 0.06, 0.06 & 0.05, 0.05 & 0.14, 0.14 & 0.12, 0.12 & 0.76, 0.76 & 0.6, 0.6\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 & 0.32, 0.65 &  & 0.41, 0.91 &  & 0.48, 0.8 &  & 0.89, 1.87 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 & 0.31, 0.65 &  & 0.41, 0.91 &  & 0.48, 0.79 &  & 0.88, 1.87 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.06 & 0.04, 0.05 & 0.06, 0.07 & 0.05, 0.06 & 0.13, 0.14 & 0.12, 0.13 & 0.44, 0.44 & 0.63, 0.65\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.06 & 0.04, 0.05 & 0.06, 0.07 & 0.05, 0.06 & 0.13, 0.14 & 0.12, 0.13 & 0.44, 0.44 & 0.61, 0.64\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.1, 0.2 &  & 0.12, 0.24 &  & 0.29, 0.44 &  & 1.21, 2.22 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.1, 0.2 &  & 0.12, 0.24 &  & 0.29, 0.44 &  & 1.22, 2.19 & \\
 
- & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 0.04, 0.04 & 0.03, 0.03 & 0.04, 0.05 & 0.03, 0.04 & 0.12, 0.12 & 0.1, 0.1 & 1.04, 1.09 & 0.67, 0.69\\
+ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 0.04, 0.04 & 0.03, 0.03 & 0.04, 0.05 & 0.03, 0.04 & 0.12, 0.12 & 0.1, 0.1 & 1.02, 1.08 & 0.66, 0.67\\
 
-\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 0.04, 0.09 & 0.04, 0.07 & 0.05, 0.1 & 0.05, 0.08 & 0.1, 0.18 & 0.09, 0.17 & 0.51, 0.91 & 0.44, 0.75\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 & 0.04, 0.09 & 0.04, 0.07 & 0.05, 0.1 & 0.05, 0.08 & 0.1, 0.18 & 0.09, 0.17 & 0.5, 0.91 & 0.43, 0.74\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.26, 0.38 &  & 0.31, 0.45 &  & 0.34, 0.5 &  & 0.77, 1.14 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 & 0.26, 0.38 &  & 0.31, 0.45 &  & 0.34, 0.5 &  & 0.75, 1.13 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.06 & 0.04, 0.04 & 0.07, 0.07 & 0.05, 0.05 & 0.17, 0.17 & 0.15, 0.15 & 0.83, 0.89 & 0.95, 1\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 & 0.05, 0.06 & 0.04, 0.04 & 0.07, 0.07 & 0.05, 0.05 & 0.17, 0.17 & 0.15, 0.15 & 0.83, 0.88 & 0.94, 0.98\\
 \cmidrule{1-11}
-$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.07, 0.11 & 0.06, 0.1 & 0.08, 0.14 & 0.08, 0.13 & 0.18, 0.22 & 0.17, 0.22 & 0.86, 1.16 & 0.74, 1.04\\
+$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 & 0.07, 0.11 & 0.06, 0.1 & 0.08, 0.14 & 0.08, 0.13 & 0.18, 0.22 & 0.17, 0.22 & 0.85, 1.17 & 0.71, 1.01\\
 \cmidrule{1-11}
-$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 & 0.1, 0.16 & 0.1, 0.16 & 0.67, 0.87 & 0.85, 1.17 & 0.33, 0.38 & 0.33, 0.38 & 3.67, 7.08 & 3.75, 7.13\\
+$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 & 0.1, 0.16 & 0.1, 0.16 & 0.65, 0.85 & 0.85, 1.16 & 0.33, 0.38 & 0.33, 0.38 & 3.64, 7.06 & 3.79, 7.21\\
 \cmidrule{1-11}
-$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 0.04, 0.04 & 0.03, 0.03 & 0.05, 0.05 & 0.04, 0.04 & 0.12, 0.13 & 0.1, 0.12 & 1.07, 1.09 & 0.77, 0.8\\
+$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 & 0.04, 0.04 & 0.03, 0.03 & 0.05, 0.05 & 0.04, 0.04 & 0.12, 0.13 & 0.1, 0.11 & 1.07, 1.09 & 0.75, 0.79\\
 \cmidrule{1-11}
-$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.23, 0.8 &  & 0.29, 1.44 &  & 0.46, 1.11 &  & 1.23, 6.49 & \\
+$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 & 0.23, 0.8 &  & 0.29, 1.45 &  & 0.45, 1.1 &  & 1.22, 6.54 & \\
 \cmidrule{1-11}
-$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.04, 0.04 & 0.04, 0.04 & 0.13, 0.13 & 0.12, 0.12 & 0.88, 0.88 & 0.74, 0.74\\
+$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 & 0.03, 0.03 & 0.03, 0.03 & 0.04, 0.04 & 0.04, 0.04 & 0.13, 0.13 & 0.12, 0.12 & 0.87, 0.87 & 0.71, 0.71\\
 \cmidrule{1-11}
-$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 0.05, 0.08 &  & 0.06, 0.09 &  & 0.24, 0.29 &  & 1.31, 1.66 & \\
+$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 & 0.05, 0.08 &  & 0.06, 0.09 &  & 0.24, 0.29 &  & 1.28, 1.64 & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 & 0.04, 0.06 & 0.04, 0.05 & 0.04, 0.06 & 0.04, 0.05 & 0.08, 0.11 & 0.08, 0.11 & 0.13, 0.19 & 0.16, 0.23\\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 & 0.04, 0.05 & 0.04, 0.05 & 0.04, 0.06 & 0.04, 0.05 & 0.08, 0.11 & 0.08, 0.11 & 0.13, 0.18 & 0.15, 0.22\\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.03, 0.06 & 0.03, 0.06 & 0.07, 0.17 & 0.08, 0.21\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.02, 0.03 & 0.03, 0.06 & 0.03, 0.06 & 0.06, 0.17 & 0.08, 0.21\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -797,101 +791,101 @@ $S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017
 \cmidrule(l{3pt}r{3pt}){4-11}
 Taxon & Study & Sample size & model 1-1 & model 1-2 & model 1-3 & model 1-4 & model 2-1 & model 2-2 & model 2-3 & model 2-4\\
 \midrule
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.86, 1.94 &  &  &  & 2.63, 2.98 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.87, 1.94 &  &  &  & 2.63, 2.97 & \\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 &  &  & 1.95, 2.01 & 2.44, 2.55 &  &  & 3.89, 4.43 & 4.65, 5.33\\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 &  &  & 1.96, 2.02 & 2.44, 2.54 &  &  & 3.87, 4.41 & 4.61, 5.3\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.1, 2.11 & 2.91, 2.94 &  &  & 7.62, 8.3 & 8.49, 9.29\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.11, 2.12 & 2.88, 2.9 &  &  & 7.56, 8.2 & 8.37, 9.17\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 &  &  & 1.94, 1.98 & 2.51, 2.61 &  &  & 4.83, 5.91 & 5.3, 6.66\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 9 &  &  & 1.94, 1.98 & 2.49, 2.58 &  &  & 4.82, 5.93 & 5.28, 6.64\\
 
-\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.11, 2.11 & 2.95, 2.95 &  &  & 7.8, 7.8 & 8.84, 8.84\\
+\multirow[t]{-5}{*}{\raggedright\arraybackslash $S.~angustifolium$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.12, 2.12 & 2.93, 2.93 &  &  & 7.77, 7.77 & 8.82, 8.82\\
 \cmidrule{1-11}
-$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 &  &  & 2.22, 2.22 & 3.02, 3.02 &  &  & 11.48, 11.54 & 15.27, 15.29\\
+$S.~auriculatum$ & Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}) & 3 &  &  & 2.21, 2.21 & 3, 3.01 &  &  & 11.41, 11.46 & 15.03, 15.2\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 2.02, 2.12 &  &  &  & 5.35, 7.14 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 2.02, 2.11 &  &  &  & 5.36, 7.14 & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 &  &  & 2.18, 2.2 & 3, 3.03 &  &  & 17.77, 25.15 & 19.05, 27.28\\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 &  &  & 2.18, 2.19 & 2.99, 3.02 &  &  & 17.78, 25.05 & 19.07, 27.31\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.2, 2.2 & 3.07, 3.07 &  &  & 14.44, 16.3 & 15.66, 17.7\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.19, 2.2 & 3.06, 3.07 &  &  & 14.42, 16.4 & 15.56, 17.63\\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 &  &  & 2.17, 2.18 & 3.01, 3.04 &  &  & 14.28, 17.72 & 15.81, 20.05\\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~balticum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 2 &  &  & 2.17, 2.18 & 3, 3.02 &  &  & 14.32, 17.86 & 15.65, 19.85\\
 \cmidrule{1-11}
-$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.22, 2.23 &  &  &  & 9.48, 12.98 & \\
+$S.~capillifolium$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.22, 2.24 &  &  &  & 9.53, 12.98 & \\
 \cmidrule{1-11}
-$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 &  &  & 2.22, 2.23 &  &  &  & 9.36, 10.2 & \\
+$S.~contortum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 &  &  & 2.24, 2.24 &  &  &  & 9.33, 10.16 & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.67, 1.75 &  &  &  & 3.41, 4.31 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.66, 1.74 &  &  &  & 3.44, 4.34 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 &  &  & 1.97, 1.98 & 3.11, 3.15 &  &  & 12.76, 18.57 & 13.44, 19.42\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~cuspidatum$} & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 &  &  & 1.97, 1.97 & 3.1, 3.15 &  &  & 12.8, 18.58 & 13.4, 19.36\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.97, 2.1 &  &  &  & 3.26, 4.15 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.98, 2.11 &  &  &  & 3.27, 4.16 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 &  &  & 2.13, 2.15 & 2.84, 2.88 &  &  & 6.28, 7.92 & 8.06, 10.02\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~fallax$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 &  &  & 2.13, 2.15 & 2.83, 2.88 &  &  & 6.27, 7.87 & 7.98, 9.86\\
 \cmidrule{1-11}
- & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 &  &  & 2.18, 2.19 & 2.99, 3.01 &  &  & 14.9, 22.21 & 15.01, 22.4\\
+ & Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}) & 8 &  &  & 2.2, 2.21 & 2.96, 2.99 &  &  & 14.93, 22.32 & 15.11, 22.54\\
 
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 &  &  & 2.17, 2.18 &  &  &  & 20.35, 28.21 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 16 &  &  & 2.18, 2.19 &  &  &  & 20.22, 28.03 & \\
 
- & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 &  &  & 2.19, 2.2 & 3, 3.02 &  &  & 30.79, 43.93 & 30.94, 44.15\\
+ & Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}) & 8 &  &  & 2.19, 2.2 & 2.99, 3.01 &  &  & 30.73, 43.65 & 30.99, 44.18\\
 
- & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 &  &  & 2.09, 2.1 & 2.77, 2.82 &  &  & 25.84, 29.16 & 26.64, 30.12\\
+ & Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}) & 2 &  &  & 2.09, 2.11 & 2.78, 2.81 &  &  & 25.92, 29.26 & 26.6, 30.05\\
 
- & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 &  &  & 2.18, 2.19 & 3.02, 3.04 &  &  & 34.51, 39.17 & 34.19, 38.97\\
+ & Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}) & 5 &  &  & 2.2, 2.21 & 3, 3.02 &  &  & 34.47, 39.11 & 34.19, 38.88\\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 &  &  & 2.19, 2.19 & 3.01, 3.03 &  &  & 22.44, 26 & 22.49, 26.05\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 &  &  & 2.2, 2.21 & 2.99, 3.01 &  &  & 22.44, 25.95 & 22.59, 26.11\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.15, 2.17 & 2.93, 2.96 &  &  & 17.87, 21.83 & 18.01, 21.94\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.17, 2.19 & 2.92, 2.96 &  &  & 17.84, 21.85 & 18.06, 21.95\\
 
- & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 &  &  & 2.18, 2.18 & 2.98, 2.98 &  &  & 23.02, 23.02 & 23.27, 23.27\\
+ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 &  &  & 2.19, 2.19 & 2.96, 2.96 &  &  & 23.08, 23.08 & 23.24, 23.24\\
 
- & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 &  &  & 2.16, 2.16 & 2.96, 2.96 &  &  & 16.49, 16.49 & 16.82, 16.82\\
+ & Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}) & 1 &  &  & 2.18, 2.18 & 2.95, 2.95 &  &  & 16.42, 16.42 & 16.73, 16.73\\
 
-\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.19, 2.19 & 3.05, 3.05 &  &  & 28.73, 28.73 & 28.94, 28.94\\
+\multirow[t]{-10}{*}{\raggedright\arraybackslash $S.~fuscum$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.21, 2.21 & 3.02, 3.02 &  &  & 28.54, 28.54 & 28.95, 28.95\\
 \cmidrule{1-11}
-$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 2.13, 2.23 &  &  &  & 4.78, 6.51 & \\
+$S.~girgensohnii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 2.13, 2.22 &  &  &  & 4.77, 6.45 & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 &  &  & 2.21, 2.21 & 3.01, 3.02 &  &  & 11.57, 11.98 & 16.99, 17.89\\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 2 &  &  & 2.21, 2.22 & 3.01, 3.01 &  &  & 11.69, 12.14 & 16.6, 17.55\\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.18, 2.22 &  &  &  & 7.16, 9.06 & \\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~lindbergii$} & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.19, 2.23 &  &  &  & 7.16, 9.03 & \\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 &  &  & 2.11, 2.15 &  &  &  & 8.34, 11.28 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 27 &  &  & 2.12, 2.15 &  &  &  & 8.33, 11.24 & \\
 
- & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 &  &  & 2.2, 2.21 & 3.02, 3.04 &  &  & 16.23, 20.49 & 15.09, 18.69\\
+ & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 3 &  &  & 2.21, 2.22 & 3.03, 3.04 &  &  & 16.22, 20.47 & 14.95, 18.52\\
 
- & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.11, 2.13 & 2.78, 2.82 &  &  & 9.77, 10.99 & 8.88, 9.91\\
+ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.11, 2.12 & 2.78, 2.81 &  &  & 9.77, 11 & 8.78, 9.82\\
 
-\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.21, 2.21 & 2.99, 2.99 &  &  & 14.64, 14.64 & 13.77, 13.77\\
+\multirow[t]{-4}{*}{\raggedright\arraybackslash $S.~magellanicum~aggr.$} & Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}) & 1 &  &  & 2.2, 2.2 & 3, 3 &  &  & 14.54, 14.54 & 13.63, 13.63\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 &  &  & 1.72, 1.78 &  &  &  & 3.08, 3.7 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 8 &  &  & 1.72, 1.78 &  &  &  & 3.06, 3.68 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 1.99, 2 & 3, 3.03 &  &  & 8.88, 9.31 & 13.47, 14.67\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~majus$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 1.98, 1.99 & 3.03, 3.06 &  &  & 8.89, 9.32 & 13.34, 14.53\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.16, 2.19 &  &  &  & 7.7, 10.29 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 2.17, 2.21 &  &  &  & 7.69, 10.28 & \\
 
- & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 &  &  & 2.21, 2.21 & 2.99, 3 &  &  & 15.82, 16.35 & 18.55, 18.85\\
+ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 &  &  & 2.22, 2.22 & 2.98, 2.99 &  &  & 15.83, 16.39 & 18.4, 18.74\\
 
-\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 &  &  & 2.17, 2.21 & 2.9, 2.94 &  &  & 12.61, 15.73 & 12.6, 15.66\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash $S.~papillosum$} & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 4 &  &  & 2.19, 2.21 & 2.89, 2.93 &  &  & 12.56, 15.67 & 12.54, 15.47\\
 \cmidrule{1-11}
- & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.88, 1.92 &  &  &  & 4.3, 4.87 & \\
+ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 10 &  &  & 1.88, 1.92 &  &  &  & 4.24, 4.79 & \\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.1, 2.1 & 3.1, 3.1 &  &  & 10.67, 11.09 & 12.34, 12.72\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $S.~rubellum$} & Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}) & 2 &  &  & 2.11, 2.11 & 3.07, 3.07 &  &  & 10.61, 11.04 & 12.18, 12.6\\
 \cmidrule{1-11}
-$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.15, 2.18 & 2.85, 2.92 &  &  & 8.48, 10.67 & 8.16, 10.04\\
+$S.~russowii$ & Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}) & 3 &  &  & 2.14, 2.18 & 2.84, 2.9 &  &  & 8.47, 10.66 & 8.07, 9.91\\
 \cmidrule{1-11}
-$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 &  &  & 8.48, 10.75 & 9.21, 11.83 &  &  & 11.5, 14.49 & 11.57, 14.59\\
+$S.~russowii$ and $capillifolium$ & Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) & 18 &  &  & 8.42, 10.63 & 9.2, 11.84 &  &  & 11.51, 14.48 & 11.59, 14.58\\
 \cmidrule{1-11}
-$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 &  &  & 2.21, 2.22 & 3.02, 3.02 &  &  & 14.3, 14.37 & 16.61, 16.83\\
+$S.~squarrosum$ & Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}) & 2 &  &  & 2.21, 2.22 & 3.02, 3.02 &  &  & 14.16, 14.28 & 16.37, 16.7\\
 \cmidrule{1-11}
-$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 1.97, 2.05 &  &  &  & 4.17, 5.33 & \\
+$S.~tenellum$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 9 &  &  & 1.98, 2.05 &  &  &  & 4.15, 5.33 & \\
 \cmidrule{1-11}
-$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 &  &  & 2.24, 2.24 & 3.1, 3.1 &  &  & 16.53, 16.53 & 16.01, 16.01\\
+$S.~teres$ & Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}) & 1 &  &  & 2.24, 2.24 & 3.07, 3.07 &  &  & 16.46, 16.46 & 15.73, 15.73\\
 \cmidrule{1-11}
-$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 &  &  & 2.23, 2.24 &  &  &  & 10.68, 13.35 & \\
+$S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) & 6 &  &  & 2.22, 2.23 &  &  &  & 10.62, 13.31 & \\
 \cmidrule{1-11}
- & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 &  &  & 2.2, 2.21 & 3, 3.03 &  &  & 10.79, 11.9 & 13.68, 15.37\\
+ & Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}) & 6 &  &  & 2.21, 2.22 & 3, 3.03 &  &  & 10.66, 11.77 & 13.6, 15.34\\
 
-\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 &  &  & 2.23, 2.25 & 3.07, 3.13 &  &  & 14.21, 16.56 & 16.17, 19.39\\
+\multirow[t]{-2}{*}{\raggedright\arraybackslash $Sphagnum$ spec.} & Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}) & 10 &  &  & 2.23, 2.25 & 3.07, 3.11 &  &  & 14.06, 16.38 & 16.17, 19.3\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -1004,7 +998,7 @@ $S.~warnstorfii$ & Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017
 
 }
 
-\caption{Remaining masses predicted by model 1-3 (shaded area) or as reported on average in available litterbag studies (red lines) during the litterbag experiments for outlier litterbag replicates. There is a panel for each litterbag replicate, identified by \texttt{id\_sample\_incubation\_start} in the Peatland Decomposition Database (first row), the species (second row), and the study the data are from (third) row. The studies are: (1) Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}), (2) Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}), (3) Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}), (4) Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}), (5) Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}), (6) Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}), (7) Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}), (8) Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}). Outlier litterbag replicates are defined as those replicates where the average measured remaining mass significantly different from the average predicted remaining mass (\(\alpha = 0.99\)).}\label{fig:sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1}
+\caption{Remaining masses predicted by model 1-3 (shaded area) or as reported on average in available litterbag studies (red lines) during the litterbag experiments for outlier litterbag replicates. There is a panel for each litterbag replicate, identified by \texttt{id\_sample\_incubation\_start} in the Peatland Decomposition Database (first row), the species (second row), and the study the data are from (third) row. The studies are: (1) Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}), (2) Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}), (3) Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}), (4) Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}), (5) Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}), (6) Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}), (7) Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}), (8) Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}), (9) Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}). Outlier litterbag replicates are defined as those replicates where the average measured remaining mass significantly different from the average predicted remaining mass (\(\alpha = 0.99\)).}\label{fig:sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1}
 \end{figure}
 
 \hypertarget{sup-10}{%

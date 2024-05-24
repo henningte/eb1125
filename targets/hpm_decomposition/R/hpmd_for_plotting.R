@@ -39,7 +39,7 @@ hpmd_get_plot_1 <- function(x_stan_draws) {
       y = expression("Estimated from litterbag data (yr"^{-1}*")"),
       x = expression("Predicted by HPM (modifications) (yr"^{-1}*")")
     ) +
-    scale_fill_manual(values = c("steelblue", "yellowgreen", "salmon")) +
+    scale_fill_manual(values = c("steelblue", "lightgoldenrod", "salmon")) +
     facet_wrap(~ id_model, nrow = 1L) +
     theme(
       legend.position = "bottom",

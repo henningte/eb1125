@@ -15,10 +15,14 @@
 #'
 #' @param model_name Character value. Name of the model. This is put in the title.
 #'
-#' @param add_prefix_model Logical vlaue. If `TRUE`, "model " will be added as prefix to the title of the plot.
+#' @param add_prefix_model Logical value. If `TRUE`, "model " will be added as prefix to the title of the plot.
+#'
+#' @param x_axis_use_log_scale Logical value. If `TRUE`, the x axis will be log scaled.
+#'
+#' @param x_axis_label_digits Integer value. Number of digits to which to round x axis labels.
 #'
 #' @export
-leaching_check_stan_plot_ppc <- function(x, y_name, yrep_name, x_lab, x_scale = 1, model_name, add_prefix_model = TRUE) {
+leaching_check_stan_plot_ppc <- function(x, y_name, yrep_name, x_lab, x_scale = 1, model_name, add_prefix_model = TRUE, x_axis_use_log_scale = FALSE, x_axis_label_digits = 0) {
 
   bayesplot::ppc_dens_overlay(
     y =
@@ -46,7 +50,8 @@ leaching_check_stan_plot_ppc <- function(x, y_name, yrep_name, x_lab, x_scale = 
       x = x_lab
     ) +
     ggplot2::scale_x_continuous(
-      labels = function(.x) .x * x_scale
+      labels = function(.x) round(.x * x_scale, digits = x_axis_label_digits),
+      trans = if(x_axis_use_log_scale) {"log"} else {"identity"}
     ) +
     ggplot2::theme(
       legend.position = "none",
@@ -117,8 +122,9 @@ leaching_check_stan_plot_y_vs_yrep <- function(x, y_name, yrep_name, x_scale = 1
 #'
 #' @param width,height Numeric values, the width and height of the pdf.
 #'
+#'
 #' @export
-leaching_check_stan_plot_ppc_combined <- function(x, y_name, yrep_name, x_lab, x_scale = 1, file, width, height, add_prefix_model = TRUE) {
+leaching_check_stan_plot_ppc_combined <- function(x, y_name, yrep_name, x_lab, x_scale = 1, file, width, height, add_prefix_model = TRUE, x_axis_use_log_scale = FALSE, x_axis_label_digits = 0) {
 
   res <-
     x %>%
@@ -134,7 +140,9 @@ leaching_check_stan_plot_ppc_combined <- function(x, y_name, yrep_name, x_lab, x
           leaching_d_models %>%
           dplyr::filter(id_fit == .x2$id_fit[[1]]) %>%
           dplyr::pull(model_name),
-        add_prefix_model = add_prefix_model
+        add_prefix_model = add_prefix_model,
+        x_axis_use_log_scale = x_axis_use_log_scale,
+        x_axis_label_digits = x_axis_label_digits
       )
 
     }) %>%
@@ -298,7 +306,9 @@ leaching_stan_get_all_checks <- function(
               x_scale = 1,
               file = "figures/leaching_plot_ppc_prior_phi.pdf",
               width = 10,
-              height = 3
+              height = 3,
+              x_axis_use_log_scale = TRUE,
+              x_axis_label_digits = 0
             ),
           # m_rep: posterior
           leaching_plot_ppc_posterior_m =
@@ -322,7 +332,9 @@ leaching_stan_get_all_checks <- function(
               x_scale = 1,
               file = "figures/leaching_plot_ppc_posterior_phi.pdf",
               width = 10,
-              height = 6
+              height = 6,
+              x_axis_use_log_scale = TRUE,
+              x_axis_label_digits = 0
             ),
           # mrep: y vs yrep
           leaching_plot_y_vs_yrep_m =

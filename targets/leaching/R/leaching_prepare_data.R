@@ -352,32 +352,6 @@ leaching_filter_data_2 <- function(x) {
 }
 
 
-
-#' Fixes errors in data values in the database
-#'
-#' @param x
-#'
-#' @export
-leaching_correct_erroneous_database_entries <- function(x) {
-
-  x %>%
-    dplyr::mutate( #---todo: correct this in the database and then remove the code here!
-      mass_relative_mass =
-        dplyr::case_when(
-          mass_relative_mass > 1.0 & id_citation == "Hagemann.2015" ~ mass_relative_mass/100,
-          TRUE ~ mass_relative_mass
-        ),
-      incubation_duration =
-        dplyr::case_when(
-          id_citation == "Breeuwer.2008" ~ incubation_duration * 365,
-          id_citation == "Trinder.2008" ~ incubation_duration * 7,
-          TRUE ~ incubation_duration
-        )
-    )
-
-}
-
-
 #' Adjusts taxon_rank_value
 #'
 #' @param x
@@ -679,7 +653,6 @@ leaching_prepare_data <- function(file, mass_relative_mass_offset, leaching_data
     leaching_data_make_wide() %>%
     leaching_get_average_wtd() %>%
     leaching_filter_data_2() %>%
-    leaching_correct_erroneous_database_entries() %>%
     leaching_data_adjust_taxon_rank_value() %>%
     leaching_data_add_niche_wtd(leaching_data_sphagnum_niches = leaching_data_sphagnum_niches) %>%
     leaching_prepare_remaining_masses(mass_relative_mass_offset)

@@ -1,33 +1,33 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<!--[![DOI](https://zenodo.org/badge/465653387.svg)](https://zenodo.org/badge/latestdoi/465653387) ![Last-changedate](https://img.shields.io/badge/last%20change-2024--04--29-brightgreen.svg)-->
+<!--[![DOI](https://zenodo.org/badge/465653387.svg)](https://zenodo.org/badge/latestdoi/465653387) ![Last-changedate](https://img.shields.io/badge/last%20change-2024--05--24-brightgreen.svg)-->
 
-# eb1125
+## Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates” and “Underestimation of Anaerobic Decomposition Rates in *Sphagnum* Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses”.
 
 This repository contains the data and code for our two manuscripts:
 
 Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): A
 Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses
-Bias Decomposition Rate Estimates. Preprint.
+Bias Decomposition Rate Estimates. (not peer-reviewed preprint).
 
 Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024):
 Underestimation of Anaerobic Decomposition Rates in *Sphagnum* Litterbag
 Experiments by the Holocene Peatland Model Depends on Initial Leaching
-Losses. Preprint.
+Losses. (not peer-reviewed preprint).
 
 ### How to cite
 
 Please cite this compendium as:
 
 > Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr, (2024).
-> Compendium of R code and data for “Underestimation of Anaerobic
-> Decomposition Rates in *Sphagnum* Litterbag Experiments by the
-> Holocene Peatland Model Depends on Initial Leaching Losses” and “A
-> Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses
-> Bias Decomposition Rate Estimates”. Accessed 29 Apr 2024. Online at
-> \[—todo: add link\]
+> Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag
+> Experiments: Initial Leaching Losses Bias Decomposition Rate
+> Estimates” and “Underestimation of Anaerobic Decomposition Rates in
+> *Sphagnum* Litterbag Experiments by the Holocene Peatland Model
+> Depends on Initial Leaching Losses”. Accessed 24 May 2024.
+> <https://github.com/henningte/eb1125>
 
-## Contents
+### Contents
 
 Code to reproduce each manuscript is in the folder in [:file_folder:
 targets](targets):  
@@ -43,11 +43,6 @@ Leaching Losses*. Preprint.
 
 To reproduce the manuscripts, run the ‘targets’ workflow by executing
 `run.R` in above folders.
-
-## How to run in your broswer or download and run locally
-
-You can download the compendium as a zip from from these URLs:
-\<\[—todo: add\]\>
 
 ### Licenses
 
@@ -69,8 +64,8 @@ original author(s) and the source.
     (2015)](https://academic.oup.com/evolut/article/69/1/90/6851823#supplementary-data).
 -   [:file_folder:
     dpeatdecomposition_snapshot.rds](targets/leaching/derived_data/dpeatdecomposition_snapshot.rds):
-    This file is a snapshot from the Peat Decomposition Database
-    \[—todo:ref\].
+    This file is the subset of the data from the Peat Decomposition
+    Database (Teickner and Knorr 2024) we analyzed in this project.
 
 ### Contributions
 
@@ -95,6 +90,13 @@ Johnson, Matthew G., Gustaf Granath, Teemu Tahvanainen, Remy Pouliot,
 Hans K. Stenøien, Line Rochefort, Håkan Rydin, and A. Jonathan Shaw.
 2015. “Evolution of Niche Preference in *Sphagnum* Peat Mosses.”
 *Evolution* 69 (1): 90–103. <https://doi.org/10.1111/evo.12547>.
+
+</div>
+
+<div id="ref-Teickner.2024c" class="csl-entry">
+
+Teickner, Henning, and Klaus-Holger Knorr. 2024. “Peatland Decomposition
+Database (1.0.0).” Zenodo. <https://doi.org/10.5281/ZENODO.11276065>.
 
 </div>
 

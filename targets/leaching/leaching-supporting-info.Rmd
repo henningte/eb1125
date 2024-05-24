@@ -34,6 +34,8 @@ header-includes:
   - \usepackage{multirow}
   - \usepackage{bm}
   - \usepackage{xr} \externaldocument{leaching-paper}
+  - \usepackage{lineno}
+  - \linenumbers
 fontsize: 12pt
 ---
 
@@ -197,11 +199,7 @@ The formula for the average remaining mass ($\mu_i$) when $\alpha=1$ and there a
 
 \begin{equation}
 \begin{aligned}
-\mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-(1 - s) \exp(k t) + s & \text{if}~t_i>0
-\end{cases}\\
-s & = & `r mass_relative_mass_offset`\\
+\mu_i & = & 1 \exp(k t)\\
 (\#eq:sup-model-2)
 \end{aligned}
 \end{equation}
@@ -211,10 +209,9 @@ The formula for the average remaining mass ($\mu_i$) when $\alpha=1$ and there a
 \begin{equation}
 \begin{aligned}
 \mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-(1 - l\_1_i - s) \exp(k t) + s & \text{if}~t_i>0
+1 & \text{if}~t_i=0\\
+(1 - l\_1_i) \exp(k t) & \text{if}~t_i>0
 \end{cases}\\
-s & = & `r mass_relative_mass_offset`\\
 (\#eq:sup-model-3)
 \end{aligned}
 \end{equation}
@@ -223,11 +220,7 @@ The formula for the average remaining mass ($\mu_i$) when $\alpha$ is estimated 
 
 \begin{equation}
 \begin{aligned}
-\mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-\frac{(1 - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
-\end{cases}\\
-s & = & `r mass_relative_mass_offset`\\
+\mu_i & = & \frac{(1)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}}\\
 (\#eq:sup-model-4)
 \end{aligned}
 \end{equation}
@@ -238,13 +231,14 @@ The formula for the average remaining mass ($\mu_i$) when $\alpha$ is estimated 
 \begin{equation}
 \begin{aligned}
 \mu_i & = & \begin{cases} 
-1 - s & \text{if}~t_i=0\\
-\frac{(1 - l\_1_i - s)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} + s & \text{if}~t_i>0
+1 & \text{if}~t_i=0\\
+\frac{(1 - l\_1_i)}{(1 + (\alpha - 1) k t)^{\frac{1}{\alpha - 1}}} & \text{if}~t_i>0
 \end{cases}\\
-s & = & `r mass_relative_mass_offset`\\
 (\#eq:sup-model-5)
 \end{aligned}
 \end{equation}
+
+To avoid $\mu_i = 1$, we subtracted a constant (`r mass_relative_mass_offset`) from $\mu_i$ when $\mu_i = 1$.
 
 $\alpha$ is modeled in the same way as $\phi$ (models 1-3, 1-4, 2-3, 2-4) (equation \@ref(eq:sup-model-6)):
 
@@ -377,14 +371,14 @@ knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_posterior_m
 ```
 
 
-(ref:sup-out-p-sdm-all-models-check-3-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+(ref:sup-out-p-sdm-all-models-check-3-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies. The x axis is log scaled.
 
 ```{r sup-out-p-sdm-all-models-check-3-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-3-1-caption)', out.width="100%"}
 knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_prior_phi)
 ```
 
 
-(ref:sup-out-p-sdm-all-models-check-4-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies.
+(ref:sup-out-p-sdm-all-models-check-4-1-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining masses from the litterbag studies. The x axis is log scaled.
 
 ```{r sup-out-p-sdm-all-models-check-4-1, fig.cap='(ref:sup-out-p-sdm-all-models-check-4-1-caption)', out.width="100%"}
 knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_ppc_posterior_phi)
@@ -432,8 +426,6 @@ To provide an additional test that the model used in the main text can in princi
 The results of this analysis indicate that all parameters except $\alpha$ can be successfully estimated for the simulated data (figures S\@ref(fig:leaching-sup-plot-5-1) to S\@ref(fig:leaching-sup-plot-5-3)). The true value for $k_0$ and $l_0$ is contained in central 95% posterior intervals more than 95% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: `r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(k_2_sim - k_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> mean() |> round(3)` (`r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(k_2_sim - k_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> posterior::rvar_mean() |> posterior::quantile2(probs = c(0.025, 0.975)) |> round(3) |> knitr::combine_words(and = ", ")`) yr$^{-1}$ for $k_0$ and `r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(l_2_sim - l_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> mean() |> magrittr::multiply_by(100) |> round(1)` (`r leaching_stan_draws_13 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::mutate(res = abs(l_2_sim - l_2)) |> dplyr::slice(which.max(mean(res))) |> dplyr::pull(res) |> posterior::rvar_mean() |> posterior::quantile2(probs = c(0.025, 0.975)) |> magrittr::multiply_by(100) |> round(1) |> knitr::combine_words(and = ", ")`) mass-% for $l_0$. Biases and errors for both $k_0$ and $l_0$ were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true $l_0$ indicating that small initial leaching losses are not overestimated (supporting information \@ref(sup-11)).   
 
 Estimates for $\alpha$ were always biased, except when the prior was already similar to the true value, indicating that litterbag data provide little information about this parameter which therefore is dominated by the prior (figure S\@ref(fig:leaching-sup-plot-5-3)). In our simulations, $\alpha$ has only a small influence on the estimates of $k_0$ and $l_0$ (figures S\@ref(fig:leaching-sup-plot-5-1) and S\@ref(fig:leaching-sup-plot-5-2)), indicating that also for available litterbag data, this bias should affect our estimates for $l_0$ and $k_0$ not much.
-
-<!--However, a direct transfer of the results of this sensitivity analysis to the available litterbag data is not possible because unlike our simulation, the design of litterbag experiments, and specific decomposition rates and initial leaching losses for experiments and species, are different. In addition, in hierarchical models, the amount by which $l_0$ and $k_0$ estimates are pooled to the (studies', species', and global) averages depends on how much information the data provide for individual experiments and how much the true values vary in the hierarchical groups, and these factors are different between model 1-5 and available litterbag data.  -->
 
 
 ```{r, results = 'asis'}

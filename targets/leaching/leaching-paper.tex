@@ -39,7 +39,7 @@
 \hypersetup{
   pdftitle={A Synthesis of Sphagnum Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates},
   pdfauthor={Henning Teickner1,2,; Edzer Pebesma2; Klaus-Holger Knorr1},
-  pdfkeywords={Sphagnum, litterbag, decomposition, leaching, error analysis},
+  pdfkeywords={Sphagnum, litterbag, decomposition, leaching, error analysis, Bayesian hierarchical model},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -121,15 +121,15 @@
 
 \title{A Synthesis of \emph{Sphagnum} Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates}
 \author{Henning Teickner\textsuperscript{1,2,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{29 April, 2024}
+\date{24 May, 2024}
 
 \begin{document}
 \maketitle
 \begin{abstract}
 Decomposition is one of the major controls of long-term sequestration of carbon in northern peatlands. Our knowledge of the magnitude and controls of decomposition rates is derived to a large extent from litterbag experiments. Similar to other litter types, initial leaching losses may bias decomposition rates of \emph{Sphagnum}, but their magnitudes and variability are not well known.\\
 We present a meta-analysis of 15 \emph{Sphagnum} litterbag studies to estimate initial leaching losses (\(l_0\)), to test whether initial leaching losses can bias \emph{Sphagnum} decomposition rate estimates (\(k_0\)), and to analyze how initial leaching losses increase errors in \(k_0\) estimates.\\
-Average \(l_0\) estimates range between 3 to 18 mass-\%, average \(k_0\) estimates between 0.01 to 1.17 yr\(^{-1}\). Simulations and models fitted to empirical data indicate that ignoring initial leaching losses leads to an overestimation of \(k_0\). An error analysis suggests that \(k_0\) and \(l_0\) can be estimated only with relatively large errors because of limitations in the design of most available litterbag experiments. Sampling the first litterbags shortly after the start of the experiments allows more accurate estimation of \(l_0\) and \(k_0\). We estimated large \(l_0\) (\(>5\) mass-\%) also for only air-dried samples which could imply that \emph{Sphagnum} litterbag experiments with dried litter are unrepresentative for natural decomposition processes in which \(l_0\) may be smaller according to leaching experiments with fresh litter.\\
-In summary, comparing results of litterbag experiments between experimental treatments and between studies and accurately estimating decomposition rates may be possible only if initial leaching losses are explicitly considered.
+Average \(l_0\) estimates range between 3 to 18 mass-\%, average \(k_0\) estimates between 0.01 to 1.16 yr\(^{-1}\). Simulations and models fitted to empirical data indicate that ignoring initial leaching losses leads to an overestimation of \(k_0\). An error analysis suggests that \(k_0\) and \(l_0\) can be estimated only with relatively large errors because of limitations in the design of most available litterbag experiments. Sampling the first litterbags shortly after the start of the experiments allows more accurate estimation of \(l_0\) and \(k_0\). We estimated large \(l_0\) (\(>5\) mass-\%) also for only air-dried samples which could imply that \emph{Sphagnum} litterbag experiments with dried litter are unrepresentative for natural decomposition processes in which \(l_0\) may be smaller according to leaching experiments with fresh litter.\\
+We conclude that comparing results of litterbag experiments between experimental treatments and between studies and accurately estimating decomposition rates may be possible only if initial leaching losses are explicitly considered.
 \end{abstract}
 
 \textsuperscript{1} ILÖK, Ecohydrology \& Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany\\
@@ -137,9 +137,7 @@ In summary, comparing results of litterbag experiments between experimental trea
 
 \textsuperscript{*} Correspondence: \href{mailto:henning.teickner@uni-muenster.de}{Henning Teickner \textless{}\href{mailto:henning.teickner@uni-muenster.de}{\nolinkurl{henning.teickner@uni-muenster.de}}\textgreater{}}
 
-Keywords: Sphagnum, litterbag, decomposition, leaching, error analysis
-
-Highlights:
+Keywords: Sphagnum, litterbag, decomposition, leaching, error analysis, Bayesian hierarchical model
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -245,7 +243,7 @@ In supporting information \ref{sup-2} we show that estimating \(\alpha\) from th
 \hypertarget{database-of-sphagnum-litterbag-decomposition-data}{%
 \subsection{Database of Sphagnum litterbag decomposition data}\label{database-of-sphagnum-litterbag-decomposition-data}}
 
-Through a Scopus search with search string \texttt{(\ TITLE-ABS-KEY\ (\ peat*\ AND\ (\ "litter\ bag"\ OR\ "decomposition\ rate"\ OR\ "decay\ rate"\ OR\ "mass\ loss"\ )\ )\ AND\ NOT\ (\ "tropic*"\ )\ )} (2022-12-17), we identified studies which analyzed litterbag data in northern peatlands. These studies were further screened to exclude those which do not contain litterbag data or which recycle data from other studies which have already been obtained or which do not use \emph{Sphagnum} litter (identified down to the species level) or which did not include any estimate for water table depths. Authors of the selected studies not older than 10 years were contacted to obtain raw data. In case this was not successful or studies were older than 10 years, relevant data (remaining masses, species identified, mesh sizes, incubation durations, depths where litter were buried, senescence status of collected litter, water table depths) were extracted from the papers where possible. The data are stored in a `MariaDB' database and available from \ldots{} {[}---todo:ref{]}.
+Through a Scopus search with search string \texttt{(\ TITLE-ABS-KEY\ (\ peat*\ AND\ (\ "litter\ bag"\ OR\ "decomposition\ rate"\ OR\ "decay\ rate"\ OR\ "mass\ loss"\ )\ )\ AND\ NOT\ (\ "tropic*"\ )\ )} (2022-12-17), we identified studies which analyzed litterbag data in northern peatlands. These studies were further screened to exclude those which do not contain litterbag data or which recycle data from other studies which have already been obtained or which do not use \emph{Sphagnum} litter (identified down to the species level) or which did not include any estimate for water table depths. Authors of the selected studies not older than 10 years were contacted to obtain raw data. In case this was not successful or studies were older than 10 years, relevant data (remaining masses, species identified, mesh sizes, incubation durations, depths where litter were buried, senescence status of collected litter, water table depths) were extracted from the papers where possible. The data are accessible from the Peatland Decomposition Database (\protect\hyperlink{ref-Teickner.2024c}{Teickner and Knorr, 2024}).
 
 In this study, we use data from 15 studies which sampled litterbags at least at two time points after the start of the incubation because otherwise \(k_0\) and \(l_0\) become unidentifiable. The selected studies are: Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}), Vitt (\protect\hyperlink{ref-Vitt.1990}{1990}), Johnson and Damman (\protect\hyperlink{ref-Johnson.1991}{1991}), Szumigalski and Bayley (\protect\hyperlink{ref-Szumigalski.1996}{1996}), Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}), Scheffer et al. (\protect\hyperlink{ref-Scheffer.2001}{2001}), Thormann et al. (\protect\hyperlink{ref-Thormann.2001}{2001}), Asada and Warner (\protect\hyperlink{ref-Asada.2005b}{2005}), Trinder et al. (\protect\hyperlink{ref-Trinder.2008}{2008}), Breeuwer et al. (\protect\hyperlink{ref-Breeuwer.2008}{2008}), Straková et al. (\protect\hyperlink{ref-Strakova.2010}{2010}), Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}), Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}), Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}), and Mäkilä et al. (\protect\hyperlink{ref-Makila.2018}{2018}). Samples originally classified as \emph{Sphagnum magellanicum} are here classified as \emph{Sphagnum magellanicum aggr.} (\protect\hyperlink{ref-Hassel.2018}{Hassel et al., 2018}).
 
@@ -352,12 +350,12 @@ Bayesian data analysis was used to compute all models to account for relevant er
 Average predicted remaining masses of all models, considering or ignoring initial leaching losses, fitted the data well, but errors were often large and the models ignoring initial leaching losses did not fit the data as well, unless \(\alpha\) was also estimated from the data (supporting Fig. \ref{fig:sup-out-sdm-all-models-p1} and supporting Fig. \ref{fig:sup-out-p-sdm-all-models-check-2-1}).
 Some litterbag experiments fitted badly under either model. These experiments had average reported remaining masses which increased over time, sampling dates with much larger mass losses compared to previous dates than explainable by the models, or the incubation began in autumn and the replicates experienced cold winters that probably delayed mass losses from both leaching and depolymerization (data from Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017})) (supporting Fig. \ref{fig:sup-out-sdm-mm36-1-outlier-decomposition-trajectory-p1}).
 
-Estimated errors for all parameters were comparatively large for initial leaching losses, decomposition rates, and \(\alpha\), with median coefficients of variation of 28, 45, and 38\% respectively, indicating that none of the parameters can be estimated very accurately from available litterbag data.
+Estimated errors for all parameters were comparatively large for initial leaching losses, decomposition rates, and \(\alpha\), with median coefficients of variation of 28, 44, and 38\% respectively, indicating that none of the parameters can be estimated very accurately from available litterbag data.
 
 \hypertarget{out-res-1}{%
 \subsection{Magnitude and variation of initial leaching losses and decomposition rates estimated from available litterbag data}\label{out-res-1}}
 
-Estimates for \(l_0\) ranged between 3 to 18 mass-\% (3 and 33 mass-\% when data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) are also included). There was a large posterior probability (\(>99\)\%) that \(l_0>5\) mass-\% for 39 out of 289 litterbag experiments, that \(l_0>10\) mass-\% for 5 experiments, that \(l_0<5\) mass-\% for none of the experiments, and that \(l_0<10\) mass-\% for 16 experiments. The posterior probability was larger than 70\% that \(l_0<5\) mass-\% for 13 experiments from Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}), Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}), and Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}). Overall, the estimates agree well with the range given in the introduction when data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) are excluded.
+Estimates for \(l_0\) ranged between 3 to 18 mass-\% (3 and 33 mass-\% when data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) are also included). There was a large posterior probability (\(>99\)\%) that \(l_0>5\) mass-\% for 42 out of 289 litterbag experiments, that \(l_0>10\) mass-\% for 6 experiments, that \(l_0<5\) mass-\% for none of the experiments, and that \(l_0<10\) mass-\% for 16 experiments. The posterior probability was larger than 70\% that \(l_0<5\) mass-\% for 13 experiments from Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985}), Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}), and Golovatskaya and Nikonova (\protect\hyperlink{ref-Golovatskaya.2017}{2017}). Overall, the estimates agree well with the range given in the introduction when data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) are excluded.
 
 Average \(l_0\) varied between species and studies (Fig. \ref{fig:out-mm36-1-p5}, Tab. \ref{tab:tab-out-fit-4-species-averages-caption}). The median within-species variance was 0.3 times as large as the between-species variance (logit scale). Replicates from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017}) had the largest leaching losses across species which appear to be a result of the laboratory setup (Fig. \ref{fig:out-mm36-1-p5}).
 
@@ -365,9 +363,9 @@ For species where data from several studies were available, the variation of \(l
 
 Small average initial leaching losses (\textless{} 5\%) were estimated for \emph{Sphagnum} spec., either peat from 10 to 30 cm depth (\protect\hyperlink{ref-Prevost.1997}{Prevost et al., 1997}), or hollow and hummock \emph{Sphagna} from the surface (\protect\hyperlink{ref-Bartsch.1985}{Bartsch and Moore, 1985}), for \emph{S. lindbergii} (also from Bartsch and Moore (\protect\hyperlink{ref-Bartsch.1985}{1985})), for \emph{S. fuscum} replicates (incubated in central Sweden (\protect\hyperlink{ref-Breeuwer.2008}{Breeuwer et al., 2008}) or in Western Siberia (\protect\hyperlink{ref-Golovatskaya.2017}{Golovatskaya and Nikonova, 2017})), and for \emph{S. auriculatum} (\protect\hyperlink{ref-Trinder.2008}{Trinder et al., 2008}). Large average \(l_0\) (often \textgreater10 mass-\%) were estimated for \emph{S. angustifolium}, \emph{S. balticum}, \emph{S. fallax}, and \emph{S. russowii}.
 
-Average decomposition rates are in the range 0.01 to 2.07 yr\(^{-1}\) (0.01 to 1.17 yr\(^{-1}\) without data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017})). As for initial leaching losses, Fig. \ref{fig:out-mm36-1-p5} (b) indicates some differences between species and studies and the median within-species variance was 0.9 times as large as the between-species variance (log scale). Decomposition rates were particularly small and consistent for \emph{Sphagnum fuscum} (range: 0.01 to 0.06 yr\(^{-1}\)), and small also for peat samples from 10 or 20 cm depth (\protect\hyperlink{ref-Prevost.1997}{Prevost et al., 1997}), and unidentified lawn and hummock mosses (\protect\hyperlink{ref-Bartsch.1985}{Bartsch and Moore, 1985}) (Fig. \ref{fig:out-mm36-1-p5} (b)). Replicates for which the model estimated larger initial leaching losses also had on average larger estimated decomposition rates (supporting information \ref{sup-7}).
+Average decomposition rates are in the range 0.01 to 2.09 yr\(^{-1}\) (0.01 to 1.16 yr\(^{-1}\) without data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017})). As for initial leaching losses, Fig. \ref{fig:out-mm36-1-p5} (b) indicates some differences between species and studies and the median within-species variance was 0.9 times as large as the between-species variance (log scale). Decomposition rates were particularly small and consistent for \emph{Sphagnum fuscum} (range: 0.01 to 0.06 yr\(^{-1}\)), and small also for peat samples from 10 or 20 cm depth (\protect\hyperlink{ref-Prevost.1997}{Prevost et al., 1997}), and unidentified lawn and hummock mosses (\protect\hyperlink{ref-Bartsch.1985}{Bartsch and Moore, 1985}) (Fig. \ref{fig:out-mm36-1-p5} (b)). Replicates for which the model estimated larger initial leaching losses also had on average larger estimated decomposition rates (supporting information \ref{sup-7}).
 
-Estimates for \(\alpha\), the parameter controlling how fast the decomposition rate decreases over time, were variable, but average values did not differ much between species or studies and were similar to the prior average of \textasciitilde2 (the posterior average \(\alpha\) is 2.56 (2.07, 3.09), 95\% confidence interval), indicating that available litterbag data do not provide much information against or in favor of a decrease in decomposition rate with progressing decomposition if initial leaching losses are considered. An exception are \emph{S. russowii} and \emph{S. capillifolium} litters from Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) for which we estimated a larger \(\alpha\), though with large errors (9.43 (5.34, 12.15)).
+Estimates for \(\alpha\), the parameter controlling how fast the decomposition rate decreases over time, were variable, but average values did not differ much between species or studies and were similar to the prior average of \textasciitilde2 (the posterior average \(\alpha\) is 2.56 (2.04, 3.1), 95\% confidence interval), indicating that available litterbag data do not provide much information against or in favor of a decrease in decomposition rate with progressing decomposition if initial leaching losses are considered. An exception are \emph{S. russowii} and \emph{S. capillifolium} litters from Hagemann and Moroni (\protect\hyperlink{ref-Hagemann.2015}{2015}) for which we estimated a larger \(\alpha\), though with large errors (9.34 (5.03, 12.15)).
 
 
 
@@ -391,25 +389,25 @@ Estimates for \(\alpha\), the parameter controlling how fast the decomposition r
 \toprule
 Species & $l_0$ (mass-\%) & $k_0$ (yr$^{-1}$) & $\alpha$ (-)\\
 \midrule
-$Sphagnum$ spec. & 4.9 (2.2, 9.8) & 0.04 (0.02, 0.07) & 2.9 (1.8, 4.9)\\
-$S.~lindbergii$ & 7.9 (2.8, 13.1) & 0.05 (0.02, 0.08) & 2.9 (1.8, 4.7)\\
-$S.~fuscum$ & 9.8 (7.7, 12.3) & 0.04 (0.02, 0.06) & 2.9 (1.8, 4.7)\\
-$S.~magellanicum~aggr.$ & 10 (6.4, 14.3) & 0.05 (0.03, 0.1) & 2.8 (1.8, 4.5)\\
-$S.~angustifolium$ & 10.7 (5.8, 17.7) & 0.13 (0.05, 0.25) & 2.7 (1.8, 4.1)\\
+$Sphagnum$ spec. & 4.9 (2.2, 9.8) & 0.04 (0.02, 0.07) & 2.9 (1.8, 4.8)\\
+$S.~lindbergii$ & 7.9 (2.8, 13.3) & 0.05 (0.02, 0.08) & 2.9 (1.8, 4.7)\\
+$S.~fuscum$ & 9.8 (7.8, 12.4) & 0.04 (0.02, 0.06) & 2.8 (1.8, 4.6)\\
+$S.~magellanicum~aggr.$ & 10.1 (6.5, 14.4) & 0.05 (0.03, 0.1) & 2.8 (1.8, 4.5)\\
+$S.~angustifolium$ & 10.8 (6, 17.7) & 0.13 (0.05, 0.25) & 2.6 (1.8, 4.1)\\
 \addlinespace
-$S.~teres$ & 10.5 (5.8, 17) & 0.05 (0.02, 0.08) & 2.9 (1.8, 4.8)\\
-$S.~papillosum$ & 9.2 (5.1, 13.4) & 0.05 (0.02, 0.08) & 2.8 (1.8, 4.6)\\
-$S.~squarrosum$ & 9.5 (4.8, 15.2) & 0.05 (0.01, 0.08) & 2.9 (1.8, 4.7)\\
-$S.~auriculatum$ & 7.4 (1.4, 13.6) & 0.05 (0.01, 0.08) & 2.9 (1.8, 4.7)\\
-$S.~balticum$ & 13 (8.9, 17.5) & 0.05 (0.03, 0.07) & 2.9 (1.8, 4.7)\\
+$S.~teres$ & 10.5 (5.8, 16.7) & 0.05 (0.02, 0.09) & 2.9 (1.8, 4.8)\\
+$S.~papillosum$ & 9.2 (5, 13.5) & 0.05 (0.02, 0.08) & 2.8 (1.8, 4.5)\\
+$S.~squarrosum$ & 9.5 (4.8, 15) & 0.05 (0.02, 0.08) & 2.9 (1.8, 4.7)\\
+$S.~auriculatum$ & 7.5 (1.4, 13.9) & 0.05 (0.01, 0.08) & 2.9 (1.8, 4.7)\\
+$S.~balticum$ & 13 (9, 17.7) & 0.05 (0.03, 0.07) & 2.9 (1.8, 4.8)\\
 \addlinespace
-$S.~fallax$ & 10.6 (5.8, 17.8) & 0.07 (0.03, 0.14) & 2.8 (1.8, 4.5)\\
-$S.~russowii$ & 11.4 (6.1, 19.8) & 0.07 (0.03, 0.15) & 2.8 (1.8, 4.5)\\
+$S.~fallax$ & 10.7 (5.7, 18) & 0.07 (0.03, 0.14) & 2.8 (1.8, 4.5)\\
+$S.~russowii$ & 11.3 (6.1, 19.7) & 0.07 (0.03, 0.16) & 2.8 (1.8, 4.5)\\
 $S.~cuspidatum$ & 11.8 (7.1, 17.8) & 0.04 (0.02, 0.07) & 2.9 (1.8, 4.8)\\
-$S.~majus$ & 10.1 (5.6, 15.6) & 0.05 (0.02, 0.09) & 2.9 (1.8, 4.7)\\
-$S.~rubellum$ & 12.1 (6.9, 20.8) & 0.05 (0.02, 0.09) & 2.9 (1.8, 4.8)\\
+$S.~majus$ & 10.1 (5.8, 15.8) & 0.05 (0.02, 0.09) & 2.9 (1.8, 4.7)\\
+$S.~rubellum$ & 12.1 (6.8, 20.5) & 0.05 (0.02, 0.09) & 2.9 (1.8, 4.8)\\
 \addlinespace
-$S.~russowii$ and $capillifolium$ & 10.2 (5.9, 15.2) & 0.37 (0.04, 1.5) & 5.1 (3.3, 7.7)\\
+$S.~russowii$ and $capillifolium$ & 10.3 (6.1, 15.3) & 0.37 (0.04, 1.48) & 5.1 (3.3, 7.6)\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -434,7 +432,7 @@ The overestimation of \(k_0\) when ignoring initial leaching losses becomes howe
 \caption{Results of the simulation experiment. (a) Estimated divided by simulated decomposition rates (\(k_0\)) versus simulated initial leaching losses (\(l_0\)) for the three simulated decomposition rates. Error bars are standard errors. (b) Remaining masses predicted by the model ignoring initial leaching losses minus remaining masses with the simulation model, either after 5, 20, or 100 years of decomposition. Positive values mean that with \(k_0\) estimated while ignoring initial leaching losses remaining masses are underestimated. (c) Simulated remaining masses versus remaining masses predicted by the model ignoring initial leaching losses for the three simulated decomposition rates and the simulated litterbag retrieval times.}\label{fig:out-p-simulation-p2}
 \end{figure}
 
-The analysis of the synthesized litterbag data reproduces both patterns we have observed in the simulation: First, average \(k_0\) as estimated by the model ignoring initial leaching losses increased with increasing \(l_0\) (as estimated by the model considering initial leaching losses) (Fig. \ref{fig:out-mm27-1-mm28-1-p2} (a)). On average, \(k_0\) estimates were 1.4 to 9.4-fold larger when initial leaching losses are ignored compared to when initial leaching losses are considered (1.2 to 9.7-fold larger with data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017})). Second, the standard deviation of \(k_0\) increased with increasing \(l_0\), even though this is the case for some species also for the model that considered initial leaching (Fig. \ref{fig:out-mm27-1-mm28-1-p2} (b)).
+The analysis of the synthesized litterbag data reproduces both patterns we have observed in the simulation: First, average \(k_0\) as estimated by the model ignoring initial leaching losses increased with increasing \(l_0\) (as estimated by the model considering initial leaching losses) (Fig. \ref{fig:out-mm27-1-mm28-1-p2} (a)). On average, \(k_0\) estimates were 1.4 to 9.5-fold larger when initial leaching losses are ignored compared to when initial leaching losses are considered (1.2 to 9.5-fold larger with data from Bengtsson et al. (\protect\hyperlink{ref-Bengtsson.2017}{2017})). Second, the standard deviation of \(k_0\) increased with increasing \(l_0\), even though this is the case for some species also for the model that considered initial leaching (Fig. \ref{fig:out-mm27-1-mm28-1-p2} (b)).
 
 Overall, both our simulation and our analysis of available litterbag data suggest that \(k_0\) will be overestimated and have larger errors when initial leaching losses are ignored.
 
@@ -452,7 +450,7 @@ Overall, both our simulation and our analysis of available litterbag data sugges
 \hypertarget{out-res-3}{%
 \subsection{\texorpdfstring{Sensitivity of \(k_0\) and \(l_0\) to the design of litterbag experiments}{Sensitivity of k\_0 and l\_0 to the design of litterbag experiments}}\label{out-res-3}}
 
-For litterbag experiments with small estimated \(l_0\), \(k_0\) was less sensitive to \(l_0\) if the first litterbags were collected shortly after the start of the litterbag experiment, as expected. In contrast, for litterbag experiments with larger estimated \(l_0\), this relation was less pronounced or apparently absent (Fig. \ref{fig:out-sdm-ua1-p1-p2} (b)). Because average initial leaching losses and decomposition rates are positively related (Pearson correlation coefficients and 95\% confidence interval: 0.16 (0.05, 0.25)), a similar relation can be observed if the data are grouped by the estimated \(k_0\) (Fig. \ref{fig:out-sdm-ua1-p1-p2} (c)), i.e.~for litterbag experiments with small estimated decomposition rates, the sensitivity indices were smaller if the first litterbags were collected shortly after the start of the litterbag experiment and the pattern is less pronounced for larger decomposition rates.
+For litterbag experiments with small estimated \(l_0\), \(k_0\) was less sensitive to \(l_0\) if the first litterbags were collected shortly after the start of the litterbag experiment, as expected. In contrast, for litterbag experiments with larger estimated \(l_0\), this relation was less pronounced or apparently absent (Fig. \ref{fig:out-sdm-ua1-p1-p2} (b)). Because average initial leaching losses and decomposition rates are positively related (Pearson correlation coefficients and 95\% confidence interval: 0.16 (0.06, 0.26)), a similar relation can be observed if the data are grouped by the estimated \(k_0\) (Fig. \ref{fig:out-sdm-ua1-p1-p2} (c)), i.e.~for litterbag experiments with small estimated decomposition rates, the sensitivity indices were smaller if the first litterbags were collected shortly after the start of the litterbag experiment and the pattern is less pronounced for larger decomposition rates.
 
 A rough approximation based on Fig. \ref{fig:out-sdm-ua1-p1-p2} (b) indicates that the average sensitivity of decomposition rates to initial leaching losses can be halved if the first litterbags are collected 20 days after the start of the incubation instead of after a year, if initial leaching losses are smaller than approximately 9\% and decomposition rates smaller than approximately 0.07 yr\(^{-1}\).
 
@@ -470,17 +468,8 @@ A rough approximation based on Fig. \ref{fig:out-sdm-ua1-p1-p2} (b) indicates th
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-We have estimated initial leaching losses and decomposition rates of \emph{Sphagnum} from available litterbag data and results indicate that initial leaching losses are not small in general and large enough to bias predictions of peat accumulation rates over longer time periods. Our sensitivity analysis indicates that our estimates for \(l_0\) are conservative for available litterbag data and the risk that we have overestimated them is low (supporting information \ref{sup-11}). We can thus build on our estimates to discuss the following three points:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  We discuss which factors may have caused small initial leaching losses in previous studies and in litterbag experiments where we estimated small initial leaching losses. If we can identify factors which cause small initial leaching losses, we may in turn explain under what conditions there are larger initial leaching losses. It would also allow us to assess whether initial leaching losses estimated from litterbag experiments are representative for those under natural conditions.
-\item
-  We discuss the consequences of ignoring initial leaching losses for decomposition rate estimates, but also for studies which do not estimate decomposition rates and instead simply interpret mass loss differences between experimental groups as decomposition.
-\item
-  We make suggestions how to design litterbag experiments to improve estimates of \(k_0\) and \(l_0\).
-\end{enumerate}
+We have estimated initial leaching losses and decomposition rates of \emph{Sphagnum} from available litterbag data and results indicate that initial leaching losses are not small in general and large enough to bias predictions of peat accumulation rates over longer time periods. Our sensitivity analysis indicates that our estimates for \(l_0\) are conservative for available litterbag data and the risk that we have overestimated them is low (supporting information \ref{sup-11}). We can thus build on our estimates to discuss the following three points.\\
+First, we discuss which factors may have caused small initial leaching losses in previous studies and in litterbag experiments where we estimated small initial leaching losses. If we can identify factors which cause small initial leaching losses, we may in turn explain under what conditions there are larger initial leaching losses. It would also allow us to assess whether initial leaching losses estimated from litterbag experiments are representative for those under natural conditions. Next, we discuss the consequences of ignoring initial leaching losses for decomposition rate estimates, but also for studies which do not estimate decomposition rates and instead simply interpret mass loss differences between experimental groups as decomposition. Finally, we make suggestions how to design litterbag experiments to improve estimates of \(k_0\) and \(l_0\).
 
 \hypertarget{out-discussion-2}{%
 \subsection{Possible causes of variations in initial leaching losses between studies}\label{out-discussion-2}}
@@ -594,8 +583,6 @@ Additional information that should be provided to correctly interpret litterbag 
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
 
-The main question we addressed was whether ignoring initial leaching losses in \emph{Sphagnum} litterbag experiments biases decomposition rate estimates.
-
 Simulations, estimated initial leaching losses from 15 litterbag studies, and error analysis suggest that decomposition rates are overestimated if initial leaching losses are ignored. With average initial leaching loss magnitudes as reported in previous studies and as estimated here (3 to 18 mass-\%), this implies an overestimation of remaining masses up to several tens of percent during decades of decomposition. A correct estimation of decomposition rates thus requires to explicitly estimate initial leaching losses. This increases the accuracy of predicted peat accumulation from long-term peatland models and allows to better test them.
 
 If initial leaching losses are considered when evaluating available litterbag data, parameter errors are large also due to the experimental design. Based on our error analysis, we suggest that future \emph{Sphagnum} litterbag experiments should sample a batch of litterbags few days to weeks after the start of the experiment because this allows a more accurate estimation of both initial leaching losses and decomposition rates. This applies particularly to experiments in which decomposition rates are small.
@@ -618,7 +605,7 @@ HT: Conceptualization, methodology, software, validation, formal analysis, inves
 \section*{Data and code availability}\label{data-and-code-availability}}
 \addcontentsline{toc}{section}{Data and code availability}
 
-Data and code to reproduce this manuscript are available from \ldots{} {[}---todo:ref{]}
+Data and code to reproduce this manuscript are available from \url{https://github.com/henningte/eb1125}.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -766,6 +753,9 @@ Szumigalski, A. R. and Bayley, S. E.: Decomposition along a bog to rich fen grad
 
 \leavevmode\vadjust pre{\hypertarget{ref-Taylor.1996}{}}%
 Taylor, B. R. and Bärlocher, F.: Variable effects of air-drying on leaching losses from tree leaf litter, Hydrobiologia, 325, 173--182, \url{https://doi.org/10.1007/BF00014982}, 1996.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024c}{}}%
+Teickner, H. and Knorr, K.-H.: Peatland {Decomposition Database} (1.0.0), \url{https://doi.org/10.5281/ZENODO.11276065}, 2024.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Thormann.2001}{}}%
 Thormann, M. N., Bayley, S. E., and Currah, R. S.: Comparison of decomposition of belowground and aboveground plant litters in peatlands of boreal {Alberta}, {Canada}, Canadian Journal of Botany, 79, 9--22, \url{https://doi.org/10.1139/b00-138}, 2001.

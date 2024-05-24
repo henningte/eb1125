@@ -47,7 +47,9 @@ hpmd_stan_get_all_checks <- function(
                   file = "figures/hpmd_plot_ppc_prior_phi.pdf",
                   width = 10,
                   height = 3,
-                  add_prefix_model = FALSE
+                  add_prefix_model = FALSE,
+		  x_axis_use_log_scale = TRUE,
+		  x_axis_label_digits = 0
                 )
             } else {
               NULL
@@ -77,7 +79,8 @@ hpmd_stan_get_all_checks <- function(
                   file = "figures/hpmd_plot_ppc_prior_hpm_k_2.pdf",
                   width = 10,
                   height = 3,
-                  add_prefix_model = FALSE
+                  add_prefix_model = FALSE,
+                  x_axis_label_digits = 2
                 )
             },
           # hpm_l_2_rep: prior
@@ -134,7 +137,9 @@ hpmd_stan_get_all_checks <- function(
                   file = "figures/hpmd_plot_ppc_posterior_phi.pdf",
                   width = 10,
                   height = 6,
-                  add_prefix_model = FALSE
+                  add_prefix_model = FALSE,
+		  x_axis_use_log_scale = TRUE,
+		  x_axis_label_digits = 0
                 )
             },
           # hpm_k_2_rep: posterior
@@ -156,7 +161,8 @@ hpmd_stan_get_all_checks <- function(
                   file = "figures/hpmd_plot_ppc_posterior_hpm_k_2.pdf",
                   width = 12,
                   height = 3,
-                  add_prefix_model = FALSE
+                  add_prefix_model = FALSE,
+                  x_axis_label_digits = 2
                 )
             },
           # hpm_l_2_rep: posterior

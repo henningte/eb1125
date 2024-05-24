@@ -141,10 +141,15 @@ list(
       leaching_data_get_niche_wtd(file = "derived_data/evo12547-sup-0001-suppmat(1)-Tab-S2.csv")
   ),
   tar_target(
+    leaching_dpeatdecomposition_snapshot,
+    command = "derived_data/dpeatdecomposition_snapshot.rds",
+    format = "file"
+  ),
+  tar_target(
     leaching_data_from_database,
     command =
       leaching_prepare_data(
-        file = "derived_data/dpeatdecomposition_snapshot.rds",
+        file = leaching_dpeatdecomposition_snapshot,
         mass_relative_mass_offset = mass_relative_mass_offset,
         leaching_data_sphagnum_niches = leaching_data_sphagnum_niches
       )

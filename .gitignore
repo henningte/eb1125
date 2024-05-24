@@ -12,9 +12,11 @@
 *.blg
 *.toc
 *.out
+*.tar.gz
 targets/leaching/_targets
 targets/hpmd/_targets
-targets/leaching/_targets_rvars
+!targets/leaching/_targets_rvars/gitkeep
+!targets/leaching/misc_out/gitkeep
 targets/hpmd/_targets_rvars
 *renv/library
 *renv/sandbox

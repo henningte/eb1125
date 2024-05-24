@@ -159,7 +159,7 @@
 
 \title{Supporting information to: Underestimation of Anaerobic Decomposition Rates in \emph{Sphagnum} Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses}
 \author{Henning Teickner\textsuperscript{1,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{29 April, 2024}
+\date{24 May, 2024}
 
 \begin{document}
 \maketitle
@@ -176,7 +176,7 @@
 \hypertarget{sup-1}{%
 \section{Model equations}\label{sup-1}}
 
-The litterbag decomposition model combined with each modification of the HPM is obtained from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024a}) (model 1-4, see the supporting information to Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024a}) for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in supporting Tab. S\ref{tab:sup-out-d-sdm-all-models-priors-1}.
+The litterbag decomposition model combined with each modification of the HPM is obtained from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) (model 1-4, see the supporting information to Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in supporting Tab. S\ref{tab:sup-out-d-sdm-all-models-priors-1}.
 
 In models HPMf-LE-peat, HPMe-LE-peat, and HPMe-LE-peat-l0, decomposition rates estimated from litterbag data (\(k\_2_{\text{sample}}\)) are modeled with decomposition rates predicted by the HPM decomposition module (equation \eqref{eq:sup-model-1}):
 
@@ -303,7 +303,7 @@ hpm\_l\_2\_p4 &  & (-) & gamma(10, 0.25) & \\
 \paragraph*{Monte Carlo Standard Errors}\label{monte-carlo-standard-errors}}
 \addcontentsline{toc}{paragraph}{Monte Carlo Standard Errors}
 
-Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.01 yr\(^{-1}\) for \(k_0\), 0.319 mass-\% for \(l_0\), 0.038 for \(\alpha\), 0.366 mass-\% for the remaining mass, 0.001 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.003 for \(c_{1}\), 0.001 yr\(^{-1}\) for \(f_{min}\), 0.002 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.31 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.108 yr\(^{-1}\) for \(k_0\), 0.679 mass-\% for \(l_0\), 0.172 for \(\alpha\), 2.644 mass-\% for the remaining mass, 0.004 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.004 for \(c_{1}\), 0.007 yr\(^{-1}\) for \(f_{min}\), 0.008 m for \(c_{2}\), 0.002 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.248 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0.
+Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.012 yr\(^{-1}\) for \(k_0\), 0.363 mass-\% for \(l_0\), 0.043 for \(\alpha\), 0.401 mass-\% for the remaining mass, 0.001 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.004 for \(c_{1}\), 0.001 yr\(^{-1}\) for \(f_{min}\), 0.002 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.342 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.088 yr\(^{-1}\) for \(k_0\), 0.646 mass-\% for \(l_0\), 0.147 for \(\alpha\), 2.742 mass-\% for the remaining mass, 0.004 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.006 for \(c_{1}\), 0.005 yr\(^{-1}\) for \(f_{min}\), 0.007 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.293 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0.
 
 \hypertarget{power-scaling}{%
 \paragraph*{Power-scaling}\label{power-scaling}}
@@ -311,7 +311,7 @@ Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari
 
 Power-scaling exponentiates prior (to analyze prior sensitivity) or likelihood (to analyze likelihood sensitivity) distributions by different constants \(\alpha>0\), where \(\alpha>1\) means that the scaled component gets more important relative to the other component, and \(\alpha<1\) means it gets less important (\protect\hyperlink{ref-Kallioinen.2024}{Kallioinen et al., 2024}). We varied \(\alpha\) from \(0.99\) to \(1.01\) (default option) and identified sensitivity with the cumulative Jensen-Shannon distance and a threshold of 0.05, as suggested in Kallioinen et al. (\protect\hyperlink{ref-Kallioinen.2024}{2024}).
 
-The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2024}{Teickner et al., 2024a}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
+The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2024}{Teickner et al., 2024}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
 
 \hypertarget{software}{%
 \paragraph*{Software}\label{software}}
@@ -352,7 +352,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-prior-phi}
+\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies. The x axis is log scaled.}\label{fig:sup-hpmd-plot-ppc-prior-phi}
 \end{figure}
 
 
@@ -363,7 +363,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-posterior-phi}
+\caption{Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies. The x axis is log scaled.}\label{fig:sup-hpmd-plot-ppc-posterior-phi}
 \end{figure}
 
 
@@ -485,7 +485,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{\(k_0\) estimated with the litterbag decomposition model from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024a}) (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPMf, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
+\caption{\(k_0\) estimated with the litterbag decomposition model from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPMf, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
 \end{figure}
 
 
@@ -546,7 +546,7 @@ To illustrate that the HPM decomposition module implies large uncertainties if i
 \hypertarget{sup-7}{%
 \section{\texorpdfstring{R code to predict \(k_0\), \(l_0\), and remaining masses with HPMe-LE-peat-l0}{R code to predict k\_0, l\_0, and remaining masses with HPMe-LE-peat-l0}}\label{sup-7}}
 
-HPMe-LE-peat-l0 and functions to predict \(k_0\) and \(l_0\) for different species and water table levels are available via the R package hpmdpredict (\protect\hyperlink{ref-Teickner.2024b}{Teickner et al., 2024b}). To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for \emph{S. fuscum} incubated at a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\) during the first five years.
+HPMe-LE-peat-l0 and functions to predict \(k_0\) and \(l_0\) for different species and water table levels are available via the R package hpmdpredict (\protect\hyperlink{ref-Teickner.2024b}{Teickner and Knorr, 2024}). To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for \emph{S. fuscum} incubated at a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\) during the first five years.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -635,11 +635,11 @@ Prevost, M., Belleau, P., and Plamondon, A. P.: Substrate conditions in a treed 
 \leavevmode\vadjust pre{\hypertarget{ref-RCoreTeam.2022}{}}%
 R Core Team: R: {A} language and environment for statistical computing, Manual, R Foundation for Statistical Computing, Vienna, Austria, 2022.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024}{}}%
-Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: {Do} initial leaching losses bias decomposition rate estimates?, 2024a.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024b}{}}%
-Teickner, H., Pebesma, E., and Knorr, K.-H.: {hpmdpredict}: {Predictions} with model {HPMe-LE-peat-l0} from {Teickner} et al. (2024), 2024b.
+Teickner, H. and Knorr, K.-H.: {hpmdpredict}: {Predictions} with model {HPMe-LE-peat-l0} from {Teickner} et al. (2024), 2024.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024}{}}%
+Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: {Initial} leaching losses bias decomposition rate estimates, 2024.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Vehtari.2021}{}}%
 Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P.-C.: Rank-{Normalization}, {Folding}, and {Localization}: {An Improved R{\^{}}} for {Assessing Convergence} of {MCMC} (with {Discussion}), Bayesian Analysis, 16, \url{https://doi.org/10.1214/20-BA1221}, 2021.

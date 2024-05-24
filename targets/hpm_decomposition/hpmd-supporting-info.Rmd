@@ -202,14 +202,14 @@ knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_m)
 ```
 
 
-(ref:sup-hpmd-plot-ppc-prior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.
+(ref:sup-hpmd-plot-ppc-prior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the prior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies. The x axis is log scaled.
 
 ```{r sup-hpmd-plot-ppc-prior-phi, fig.cap='(ref:sup-hpmd-plot-ppc-prior-phi-caption)', out.width="100%"}
 knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_prior_phi)
 ```
 
 
-(ref:sup-hpmd-plot-ppc-posterior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies.
+(ref:sup-hpmd-plot-ppc-posterior-phi-caption) Density estimate of 100 sets of remaining mass errors (converted to precision) sampled from the posterior distribution of each model (light blue lines) versus density estimate of the measured remaining mass errors from the litterbag studies. The x axis is log scaled.
 
 ```{r sup-hpmd-plot-ppc-posterior-phi, fig.cap='(ref:sup-hpmd-plot-ppc-posterior-phi-caption)', out.width="100%"}
 knitr::include_graphics(hpmd_stan_checks$plots$hpmd_plot_ppc_posterior_phi)

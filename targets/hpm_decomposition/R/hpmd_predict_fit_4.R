@@ -157,13 +157,15 @@ hpmd_predict_fit_4 <- function(newdata, x_stan_fit_4, x_stan_data_4, hpmd_data) 
   newdata <-
     newdata %>%
     dplyr::mutate(
-      mass_relative_mass_mu =
-        (1.0 - m_config$s - l0) / (1.0 + (alpha_2 - 1.0) * k0 * incubation_duration)^(1.0 / (alpha_2 - 1.0)) + m_config$s,
-      mass_relative_mass_mu =
+      l0 =
         dplyr::case_when(
-          incubation_duration <= 0 ~ posterior::as_rvar(m0),
-          TRUE ~ mass_relative_mass_mu
+          incubation_duration <= 0 ~ posterior::as_rvar(0),
+          TRUE ~ .data$l0
         ),
+      mass_relative_mass_mu =
+        (m0 - .data$l0) / (1.0 + (.data$alpha_2 - 1.0) * .data$k0 * .data$incubation_duration)^(1.0 / (.data$alpha_2 - 1.0)),
+      mass_relative_mass_mu =
+        posterior::rvar_ifelse(mass_relative_mass_mu >= 1.0, 1.0 - m_config$s, mass_relative_mass_mu),
       mass_relative_mass =
         posterior::rvar_rng(
           rbeta,
