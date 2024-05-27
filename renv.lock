@@ -55,7 +55,7 @@
       "Package": "QuickJSR",
       "Version": "1.1.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "c2d96d1e0499a9f7e1e56d2d1dde0fa6",
       "Requirements": [
         "R6",
@@ -108,7 +108,7 @@
       "Package": "RcppEigen",
       "Version": "0.3.3.9.4",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "acb0a5bf38490f26ab8661b467f4f53a",
       "Requirements": [
         "Rcpp"
@@ -122,11 +122,21 @@
       "Hash": "f3e94e34ff656a7c8336ce01207bc2b8",
       "Requirements": []
     },
+    "Rdpack": {
+      "Package": "Rdpack",
+      "Version": "2.3.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "6cc7e06de6297f7021e7ed2dee56e742",
+      "Requirements": [
+        "rbibutils"
+      ]
+    },
     "StanHeaders": {
       "Package": "StanHeaders",
       "Version": "2.32.5",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "b8d6850ef3e330bc108e712679e79443",
       "Requirements": [
         "RcppEigen",
@@ -287,7 +297,7 @@
       "Package": "callr",
       "Version": "3.7.3",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "9b2191ede20fa29828139b9900922e51",
       "Requirements": [
         "R6",
@@ -374,7 +384,7 @@
       "Package": "curl",
       "Version": "5.2.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "ce88d13c0b10fe88a37d9c59dba2d7f9",
       "Requirements": []
     },
@@ -426,7 +436,7 @@
       "Package": "digest",
       "Version": "0.6.34",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "7ede2ee9ea8d3edbf1ca84c1e333ad1a",
       "Requirements": []
     },
@@ -473,6 +483,23 @@
         "tidyr",
         "tidyselect",
         "vctrs"
+      ]
+    },
+    "dpeatdecomposition": {
+      "Package": "dpeatdecomposition",
+      "Version": "1.0.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "dpeatdecomposition",
+      "RemoteUsername": "henningte",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "08fdba1d931a858557827a783eabe850ac31a6f2",
+      "Hash": "fe14f5810f5463f9b486bad75b3bd0af",
+      "Requirements": [
+        "dm",
+        "dplyr",
+        "magrittr"
       ]
     },
     "dplyr": {
@@ -586,7 +613,7 @@
       "Package": "ggplot2",
       "Version": "3.4.4",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "313d31eff2274ecf4c1d3581db7241f9",
       "Requirements": [
         "MASS",
@@ -694,6 +721,23 @@
         "pkgconfig",
         "rlang",
         "vctrs"
+      ]
+    },
+    "hpmdpredict": {
+      "Package": "hpmdpredict",
+      "Version": "0.0.0.9000",
+      "Source": "URL",
+      "RemoteType": "url",
+      "RemoteUrl": "https://zenodo.org/records/11339733/files/hpmdpredict_0.0.0.9000.tar.gz",
+      "Hash": "b79fe4c8b87ad254f9ba36ad0be6dbbd",
+      "Requirements": [
+        "Rdpack",
+        "dplyr",
+        "magrittr",
+        "posterior",
+        "rlang",
+        "rstan",
+        "tidybayes"
       ]
     },
     "htmltools": {
@@ -1093,7 +1137,7 @@
       "Package": "processx",
       "Version": "3.8.3",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "82d48b1aec56084d9438dbf98087a7e9",
       "Requirements": [
         "R6",
@@ -1110,13 +1154,16 @@
     },
     "purrr": {
       "Package": "purrr",
-      "Version": "0.3.4",
+      "Version": "1.0.2",
       "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "97def703420c8ab10d8f0e6c72101e02",
+      "Repository": "CRAN",
+      "Hash": "1cba04a4e9414bdefc9dcaa99649a8dc",
       "Requirements": [
+        "cli",
+        "lifecycle",
         "magrittr",
-        "rlang"
+        "rlang",
+        "vctrs"
       ]
     },
     "quantities": {
@@ -1137,6 +1184,14 @@
       "Source": "Repository",
       "Repository": "RSPM",
       "Hash": "5e3c5dc0b071b21fa128676560dbe94d",
+      "Requirements": []
+    },
+    "rbibutils": {
+      "Package": "rbibutils",
+      "Version": "2.2.8",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "60eae09898124cffcab51e5ee082a89f",
       "Requirements": []
     },
     "renv": {
@@ -1203,7 +1258,7 @@
       "Package": "rstan",
       "Version": "2.32.5",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "378a10b6373822761ec78021c105b059",
       "Requirements": [
         "BH",
@@ -1410,12 +1465,13 @@
     },
     "tidybayes": {
       "Package": "tidybayes",
-      "Version": "3.0.2",
+      "Version": "3.0.6",
       "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "d501501261b724f35ec9f2b80f4421b5",
+      "Repository": "CRAN",
+      "Hash": "3853596458d8b9c81f7b39ee920c5319",
       "Requirements": [
         "arrayhelpers",
+        "cli",
         "coda",
         "dplyr",
         "ggdist",
@@ -1454,7 +1510,7 @@
       "Package": "tidyselect",
       "Version": "1.2.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "79540e5fcd9e0435af547d885f184fd5",
       "Requirements": [
         "cli",
@@ -1538,7 +1594,7 @@
       "Package": "xfun",
       "Version": "0.41",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "460a5e0fe46a80ef87424ad216028014",
       "Requirements": []
     },
