@@ -1,12 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<!--[![DOI](https://zenodo.org/badge/465653387.svg)](https://zenodo.org/badge/latestdoi/465653387) ![Last-changedate](https://img.shields.io/badge/last%20change-2024--05--24-brightgreen.svg)-->
+
+[![DOI](https://zenodo.org/badge/805337783.svg)](https://zenodo.org/doi/10.5281/zenodo.11472954)
+![Last-changedate](https://img.shields.io/badge/last%20change-2024--06--04-brightgreen.svg)
 
 ## Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates” and “Underestimation of Anaerobic Decomposition Rates in *Sphagnum* Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses”.
 
 This repository contains the data and code for our two manuscripts:
 
-Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): A
+Henning_Teickner, Edzer_Pebesma, and Klaus-Holger_Knorr (2024): A
 Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses
 Bias Decomposition Rate Estimates. (not peer-reviewed preprint).
 
@@ -24,15 +26,15 @@ Please cite this compendium as:
 > Experiments: Initial Leaching Losses Bias Decomposition Rate
 > Estimates” and “Underestimation of Anaerobic Decomposition Rates in
 > *Sphagnum* Litterbag Experiments by the Holocene Peatland Model
-> Depends on Initial Leaching Losses”. Accessed 24 May 2024.
+> Depends on Initial Leaching Losses”. Accessed 04 Jun 2024.
 > <https://github.com/henningte/eb1125>
 
 ### Contents
 
 Code to reproduce each manuscript is in the folder in [:file_folder:
 targets](targets):  
-- [:file_folder: leaching](targets/leaching): \> Henning Teickner, Edzer
-Pebesma, and Klaus-Holger Knorr (2024): *A Synthesis of *Sphagnum*
+- [:file_folder: leaching](targets/leaching): \> Henning_Teickner,
+Edzer_Pebesma, and Klaus-Holger_Knorr (2024): *A Synthesis of *Sphagnum*
 Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate
 Estimates*. Preprint.  
 - [:file_folder: hpm_decomposition](targets/hpm_decomposition): \>

@@ -30,9 +30,14 @@ manuscript_yaml <-
   purrr::map(rmarkdown::yaml_front_matter)
   
 manuscript_authors <- 
-  purrr::map_chr(manuscript_yaml, function(.x) {
+  purrr::map_chr(seq_along(manuscript_yaml), function(i) {
+    .x <- manuscript_yaml[[i]]
     purrr::map_chr(.x$author, function(.y) {
-      names(.y)
+      if(i == 1) {
+        paste0(.y$given_name, "_", .y$surname)
+      } else {
+        names(.y) 
+      }
     }) |>
       knitr::combine_words(and = " and ")
   })
@@ -45,7 +50,7 @@ manuscript_title <-
 manuscript_year <- rep("2024", 2L)
 ```
 
-<!--[![DOI](https://zenodo.org/badge/465653387.svg)](https://zenodo.org/badge/latestdoi/465653387) ![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-brightgreen.svg)-->
+[![DOI](https://zenodo.org/badge/805337783.svg)](https://zenodo.org/doi/10.5281/zenodo.11472954) ![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-brightgreen.svg)
 
 ## Compendium of R code and data for `r manuscript_title %>% paste0('"', ., '"') %>% knitr::combine_words()`.
 

@@ -46,7 +46,7 @@ availability:
   #data: |
   #  use this to add a statement when having only data sets available
   codedata: |
-    Data and code to reproduce this manuscript are available from <https://github.com/henningte/eb1125>. The data used in this study is derived from @Teickner.2024c.
+    Data and code to reproduce this manuscript are available from @Teickner.2024e. The data used in this study is derived from @Teickner.2024c.
 #  sample: |
 #    use this section when having geoscientific samples available
 #videosupplement: |
