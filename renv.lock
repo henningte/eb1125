@@ -1282,6 +1282,26 @@
       "Hash": "06c85365a03fdaf699966cc1d3cf53ea",
       "Requirements": []
     },
+    "rticles": {
+      "Package": "rticles",
+      "Version": "0.27.3",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "rticles",
+      "RemoteUsername": "rstudio",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "1aee9911a3c205e2434f6fba0259396526ea59b4",
+      "Hash": "1209801fcaed9c1d72361bf9ce30b9f6",
+      "Requirements": [
+        "knitr",
+        "lifecycle",
+        "rmarkdown",
+        "tinytex",
+        "xfun",
+        "yaml"
+      ]
+    },
     "rvest": {
       "Package": "rvest",
       "Version": "1.0.2",

@@ -1,54 +1,82 @@
 ---
 title: "A Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates"
-author:
-  - Henning Teickner:
-      email: henning.teickner@uni-muenster.de
-      institute: [iloek, ifgi]
-      correspondence: true
-  - Edzer Pebesma:
-      email: email
-      institute: [ifgi]
-  - Klaus-Holger Knorr:
-      email: khknorr@uni-muenster.de
-      institute: [iloek]   
-institute:
-  - iloek: ILÖK, Ecohydrology & Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany
-  - ifgi: IfGI, Spatiotemporal Modelling Lab, Institute for Geoinformatics, University of Münster, 48149, Germany
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: 
-    bookdown::pdf_document2:
-      latex_engine: xelatex
-      toc: false
-      fig_caption: yes
-      keep_tex: true
-      pandoc_args:
-      - --lua-filter=templates/scholarly-metadata.lua
-      - --lua-filter=templates/author-info-blocks.lua
-      - --lua-filter=templates/pagebreak.lua
-bibliography: references.bib
+journal: "`r rticles::copernicus_journal_abbreviations(journal_name = 'biogeosciences')`"
+author:
+  - given_name: Henning
+    surname: Teickner
+    affiliation: "1, 2"
+    email: henning.teickner@uni-muenster.de
+    corresponding: true
+  - given_name: Edzer
+    surname: Pebesma
+    affiliation: 2
+    email: edzer.pebesma@uni-muenster.de
+  - given_name: Klaus-Holger
+    surname: Knorr
+    affiliation: "1"
+    email: klaus-holger.knorr@uni-muenster.de
+# If you have more than one corresponding author, add them manually using the following structure (note the commas):
+# Two authors: Daniel Nüst (daniel.nuest@uni-muenster.de) and Josiah Carberry (j.carberry@orcid.org)
+# Three authors or more: Daniel Nüst (daniel.nuest@uni-muenster.de), Josiah Carberry (j.carberry@orcid.org), and Markus Konkol (m.konkol@wwu.de)
+# If the following line is uncommented, the "corresponding: true" above are ignored
+#correspongdingauthors: Daniel Nüst (daniel.nuest@uni-muenster.de) and Josiah Carberry (j.carberry@orcid.org)
+# If an author is deceased, please mark the respective author name(s) with a dagger '†' and add a further affiliation; put the decease date in the 'address' field", see 'Nikolaus Copernicus' in template.
+# If authors contributed equally, please mark the respective author names with an asterisk '*' and add a further affiliation: 'These authors contributed equally to this work.'", see template.
+affiliation:
+  - code: 1
+    address: Ecohydrology & Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany
+  - code: 2
+    address: Spatiotemporal Modelling Lab, Institute for Geoinformatics, University of Münster, 48149, Germany
+running:
+  title: A synthesis of *Sphagnum* litterbag experiments
+  author: Teickner et al.
+# This section is mandatory even if you declare that no competing interests are present.
+competinginterests: |
+  The authors declare no competing interests.
+# See https://publications.copernicus.org/for_authors/licence_and_copyright.html, normally used for transferring the copyright, if needed. 
+# Note: additional copyright statements for affiliated software or data need to be placed in the data availability section. 
+# copyrightstatement: |
+### The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
+### It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
+### Note: unless stated otherwise, software and data affiliated with the manuscript are assumed to be published under the same licence as the article (currently Creative Commons 4.0)
+availability:
+  #code: |
+  #  use this to add a statement when having only software code available
+  #data: |
+  #  use this to add a statement when having only data sets available
+  codedata: |
+    Data and code to reproduce this manuscript are available from <https://github.com/henningte/eb1125>. The data used in this study is derived from @Teickner.2024c.
+#  sample: |
+#    use this section when having geoscientific samples available
+#videosupplement: |
+#  use this section when having video supplements available
+authorcontribution: |
+  HT: Conceptualization, methodology, software, validation, formal analysis, investigation, data curation, writing - original draft, visualization, project administration. EP: supervision, funding acquisition, writing - review & editing. KHK: supervision, funding acquisition, writing - review & editing.
+# disclaimer: |
+#   We like Copernicus.
+acknowledgements: |
+  This study was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) grant no. KN 929/23-1 to Klaus-Holger Knorr and grant no. PE 1632/18-1 to Edzer Pebesma.
 link-citations: true
-csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
+#csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
 keywords: |
   Sphagnum, litterbag, decomposition, leaching, error analysis, Bayesian hierarchical model
+output: 
+  bookdown::pdf_book:
+    base_format: rticles::copernicus_article
+    #toc: false
+    #fig_caption: yes
+    keep_tex: true
+    citation_package: "natbib"
+bibliography: references
 header-includes:
   - \usepackage{float}
   - \usepackage[version=4]{mhchem}
   - \usepackage{booktabs}
   - \usepackage{bm}
   - \usepackage{xr} \externaldocument{leaching-supporting-info}
-  - \usepackage{lineno}
-  - \linenumbers
-fontsize: 12pt
+# fontsize: 12pt
 ---
-
-
-<!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
-
-<!-- With the following code you can access and display values from the yml header above. -->
-
-Keywords: `r rmarkdown::metadata$keywords`
-
-<!-- The following code chunk defines some general settings how code chunks should behave. -->
 
 
 ```{r setup, include=FALSE}
@@ -71,7 +99,7 @@ library(targets)
 ```
 
 
-# Introduction
+\introduction[Introduction]
 
 Decomposition is one of the major controls of long-term sequestration of carbon in northern peatlands, which are a large global store of carbon sequestered from the atmosphere [@Yu.2012]. Our knowledge of the magnitude and controls of decomposition rates is derived to a large extent from litterbag experiments [@Rydin.2013] and these estimates inform parameters in long-term peatland models (e.g. @Frolking.2010). To make correct inferences about decomposition processes and past and future controls of peat accumulation, it has therefore to be validated that the decomposition rate estimates from litterbag experiments are unbiased. 
 
@@ -815,29 +843,13 @@ Based on this, we make the following suggestions for the design of litterbag exp
 Additional information that should be provided to correctly interpret litterbag experiments are the date when litter to use in an experiment was collected in the field (to allow future studies to evaluate possible influences of seasonal variations in concentrations of soluble compounds), whether the litter collected in the field was already dry (e.g. as water content measurements), and  how intensely litter was dried (e.g. drying temperature and residual water content).
 
 
-# Conclusions
+\conclusions[Conclusions]
 
 Simulations, estimated initial leaching losses from `r leaching_stan_draws_4 |> dplyr::pull(id_citation) |> unique() |> length()` litterbag studies, and error analysis suggest that decomposition rates are overestimated if initial leaching losses are ignored. With average initial leaching loss magnitudes as reported in previous studies and as estimated here (`r knitr::combine_words(leaching_stan_draws_4 |> dplyr::filter(id_citation != "Bengtsson.2017") |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::pull(l_2) |> mean() |> magrittr::multiply_by(100) |> range() |> round(0), and = " to ")` mass-%), this implies an overestimation of remaining masses up to several tens of percent during decades of decomposition. A correct estimation of decomposition rates thus requires to explicitly estimate initial leaching losses. This increases the accuracy of predicted peat accumulation from long-term peatland models and allows to better test them.
 
 If initial leaching losses are considered when evaluating available litterbag data, parameter errors are large also due to the experimental design. Based on our error analysis, we suggest that future *Sphagnum* litterbag experiments should sample a batch of litterbags few days to weeks after the start of the experiment because this allows a more accurate estimation of both initial leaching losses and decomposition rates. This applies particularly to experiments in which decomposition rates are small.
 
 Our estimates indicate that initial leaching losses $>5$ mass-% are not uncommon and vary as much within species as overall, somewhat contradictory to most results of many previous studies measuring small initial leaching losses from *Sphagnum*. This may be explained by pre-treatment of litter --- even only air-drying --- which may increase initial leaching losses compared to fresh *Sphagnum* and may cause large inter-study variation in initial leaching losses for the same species, similar to what has been observed for leaves from trees. This would imply that a sensible comparison of mass losses from *Sphagnum* litterbag experiments is possible only when initial leaching losses are estimated. Even more, if pre-treatment controls differential leaching of inhibiting or facilitating compounds, this may make litterbag experiments with large initial leaching losses causes by pre-treatment unrepresentative for decomposition under natural conditions. 
-
-
-# Acknowledgements {.unnumbered}
-
-This study was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) grant no. KN 929/23-1 to Klaus-Holger Knorr and grant no. PE 1632/18-1 to Edzer Pebesma.
-
-# Author contributions {.unnumbered}
-
-HT: Conceptualization, methodology, software, validation, formal analysis, investigation, data curation, writing - original draft, visualization, project administration. EP: supervision, funding acquisition, writing - review & editing. KHK: supervision, funding acquisition, writing - review & editing.
-
-# Data and code availability {.unnumbered}
-
-Data and code to reproduce this manuscript are available from <https://github.com/henningte/eb1125>.
-
-
-# References {.unnumbered}
 
 
 ---
