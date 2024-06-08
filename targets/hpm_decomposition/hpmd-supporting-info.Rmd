@@ -33,9 +33,16 @@ header-includes:
   - \usepackage{booktabs}
   - \usepackage{multirow}
   - \usepackage{bm}
-  - \usepackage{xr} \externaldocument{hpmd-paper}
+  - \usepackage{xr} \externaldocument[main-]{hpmd-paper}
+  - \usepackage{tocloft}
+  - \setlength{\cftsecnumwidth}{5ex}
 fontsize: 12pt
 ---
+
+\renewcommand{\thefigure}{S\arabic{figure}} 
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
 
 
 ```{r setup, include=FALSE}
@@ -94,9 +101,9 @@ hpmd_hpm_standard_parameter_values <-
 
 # Model equations {#sup-1}
 
-The litterbag decomposition model combined with each modification of the HPM is obtained from @Teickner.2024 (model 1-4, see the supporting information to @Teickner.2024 for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in supporting Tab. S\@ref(tab:sup-out-d-sdm-all-models-priors-1).
+The litterbag decomposition model combined with each modification of the HPM is obtained from @Teickner.2024f (model 1-4, see the supporting information to @Teickner.2024f for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in Tab. \@ref(tab:sup-out-d-sdm-all-models-priors-1).
 
-In models `r hpmd_model_id_to_name(c("3-2", "3-3", "3-4")) |> knitr::combine_words(and = " and ")`, decomposition rates estimated from litterbag data ($k\_2_{\text{sample}}$) are modeled with decomposition rates predicted by the HPM decomposition module (equation \@ref(eq:sup-model-1)):
+In models `r hpmd_model_id_to_name(c("3-2", "3-3", "3-4")) |> knitr::combine_words(and = " and ")`, decomposition rates estimated from litterbag data ($k\_2_{\text{sample}}$) are modeled with decomposition rates predicted by the HPM decomposition module:
 
 \begin{equation}
 \begin{aligned}
@@ -120,7 +127,7 @@ hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
 
 $ldos\_1$ is short for $layer\_degree\_of\_saturation\_1$. $lmdosas\_1$ is short for $layer\_minimum\_degree\_of\_saturation\_at\_surface\_1$. $lwtds\_1$ is short for $layer\_water\_table\_depth\_at\_surface\_1$. The HPM decomposition module is described in @Frolking.2010 (equations (7) to (9)). The Modified Granberg model is described in @Granberg.1999 (equations (1) to (3)) and @Kettridge.2007 (equations (6) to (9)).
 
-In `r hpmd_model_id_to_name(c("3-3", "3-4")) |> knitr::combine_words(and = " and ")`, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions (equation \@ref(eq:sup-model-2)):
+In `r hpmd_model_id_to_name(c("3-3", "3-4")) |> knitr::combine_words(and = " and ")`, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions:
 
 \begin{equation}
 \begin{aligned}
@@ -134,7 +141,7 @@ m68\_p3\_2\_p2 & \sim & \text{normal}(m68\_p3\_2\_p2\_p1, 68\_p3\_2\_p2\_p2)\\
 \end{aligned}
 \end{equation}
 
-`r hpmd_model_id_to_name("3-4")` in addition modeled the initial leaching loss of *Sphagnum* species as a maximum possible initial leaching loss per species ($hpm\_l\_2\_p1$) which is modified by the degree of saturation (equation \@ref(eq:sup-model-3)):
+`r hpmd_model_id_to_name("3-4")` in addition modeled the initial leaching loss of *Sphagnum* species as a maximum possible initial leaching loss per species ($hpm\_l\_2\_p1$) which is modified by the degree of saturation:
 
 \begin{equation}
 \begin{aligned}
@@ -179,7 +186,7 @@ Monte Carlo standard errors (MSCE) [@Vehtari.2021] for the median were at most `
 
 Power-scaling exponentiates prior (to analyze prior sensitivity) or likelihood (to analyze likelihood sensitivity) distributions by different constants $\alpha>0$, where $\alpha>1$ means that the scaled component gets more important relative to the other component, and $\alpha<1$ means it gets less important [@Kallioinen.2024]. We varied $\alpha$ from $0.99$ to $1.01$ (default option) and identified sensitivity with the cumulative Jensen-Shannon distance and a threshold of 0.05, as suggested in @Kallioinen.2024.
 
-The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For $W_{opt}$, $c_{1}$, and $c_{2}$ the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For $k_{0,i}$, the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information [@Teickner.2024] which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
+The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For $W_{opt}$, $c_{1}$, and $c_{2}$ the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For $k_{0,i}$, the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information [@Teickner.2024f] which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
 
 
 #### Software {.unnumbered}
@@ -288,7 +295,7 @@ knitr::include_graphics(tar_read(hpmd_plot_7))
 
 # $k_0$ predicted by the HPM versus water table depth below the litter for different studies and species {#sup-8}
 
-(ref:sup-hpmd-plot-8-1-caption) $k_0$ estimated with the litterbag decomposition model from @Teickner.2024 (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (`r hpmd_model_id_to_name("3-1")`, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95% posterior intervals. Lines are predictions of linear models fitted to the average estimates. *Sphagnum* spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr$^{-1}$ are clipped.
+(ref:sup-hpmd-plot-8-1-caption) $k_0$ estimated with the litterbag decomposition model from @Teickner.2024f (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (`r hpmd_model_id_to_name("3-1")`, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95% posterior intervals. Lines are predictions of linear models fitted to the average estimates. *Sphagnum* spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr$^{-1}$ are clipped.
 
 ```{r sup-hpmd-plot-8-1, fig.cap='(ref:sup-hpmd-plot-8-1-caption)', out.width="100%"}
 knitr::include_graphics(tar_read(hpmd_plot_8_1))

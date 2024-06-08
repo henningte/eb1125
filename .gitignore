@@ -13,6 +13,7 @@
 *.toc
 *.out
 *.tar.gz
+*synctex.gz
 targets/leaching/_targets
 targets/hpmd/_targets
 !targets/leaching/_targets_rvars/gitkeep

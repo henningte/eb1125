@@ -138,7 +138,9 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{bm}
-\usepackage{xr} \externaldocument{hpmd-paper}
+\usepackage{xr} \externaldocument[main-]{hpmd-paper}
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{5ex}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -159,7 +161,7 @@
 
 \title{Supporting information to: Underestimation of Anaerobic Decomposition Rates in \emph{Sphagnum} Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses}
 \author{Henning Teickner\textsuperscript{1,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{27 May, 2024}
+\date{08 June, 2024}
 
 \begin{document}
 \maketitle
@@ -173,12 +175,17 @@
 
 \textsuperscript{*} Correspondence: \href{mailto:henning.teickner@uni-muenster.de}{Henning Teickner \textless{}\href{mailto:henning.teickner@uni-muenster.de}{\nolinkurl{henning.teickner@uni-muenster.de}}\textgreater{}}
 
+\renewcommand{\thefigure}{S\arabic{figure}} 
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
 \hypertarget{sup-1}{%
 \section{Model equations}\label{sup-1}}
 
-The litterbag decomposition model combined with each modification of the HPM is obtained from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) (model 1-4, see the supporting information to Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in supporting Tab. S\ref{tab:sup-out-d-sdm-all-models-priors-1}.
+The litterbag decomposition model combined with each modification of the HPM is obtained from Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) (model 1-4, see the supporting information to Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in Tab. \ref{tab:sup-out-d-sdm-all-models-priors-1}.
 
-In models HPMf-LE-peat, HPMe-LE-peat, and HPMe-LE-peat-l0, decomposition rates estimated from litterbag data (\(k\_2_{\text{sample}}\)) are modeled with decomposition rates predicted by the HPM decomposition module (equation \eqref{eq:sup-model-1}):
+In models HPMf-LE-peat, HPMe-LE-peat, and HPMe-LE-peat-l0, decomposition rates estimated from litterbag data (\(k\_2_{\text{sample}}\)) are modeled with decomposition rates predicted by the HPM decomposition module:
 
 \begin{equation}
 \begin{aligned}
@@ -202,7 +209,7 @@ hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
 
 \(ldos\_1\) is short for \(layer\_degree\_of\_saturation\_1\). \(lmdosas\_1\) is short for \(layer\_minimum\_degree\_of\_saturation\_at\_surface\_1\). \(lwtds\_1\) is short for \(layer\_water\_table\_depth\_at\_surface\_1\). The HPM decomposition module is described in Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}) (equations (7) to (9)). The Modified Granberg model is described in Granberg et al. (\protect\hyperlink{ref-Granberg.1999}{1999}) (equations (1) to (3)) and Kettridge and Baird (\protect\hyperlink{ref-Kettridge.2007}{2007}) (equations (6) to (9)).
 
-In HPMe-LE-peat and HPMe-LE-peat-l0, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions (equation \eqref{eq:sup-model-2}):
+In HPMe-LE-peat and HPMe-LE-peat-l0, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions:
 
 \begin{equation}
 \begin{aligned}
@@ -216,7 +223,7 @@ m68\_p3\_2\_p2 & \sim & \text{normal}(m68\_p3\_2\_p2\_p1, 68\_p3\_2\_p2\_p2)\\
 \end{aligned}
 \end{equation}
 
-HPMe-LE-peat-l0 in addition modeled the initial leaching loss of \emph{Sphagnum} species as a maximum possible initial leaching loss per species (\(hpm\_l\_2\_p1\)) which is modified by the degree of saturation (equation \eqref{eq:sup-model-3}):
+HPMe-LE-peat-l0 in addition modeled the initial leaching loss of \emph{Sphagnum} species as a maximum possible initial leaching loss per species (\(hpm\_l\_2\_p1\)) which is modified by the degree of saturation:
 
 \begin{equation}
 \begin{aligned}
@@ -311,7 +318,7 @@ Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari
 
 Power-scaling exponentiates prior (to analyze prior sensitivity) or likelihood (to analyze likelihood sensitivity) distributions by different constants \(\alpha>0\), where \(\alpha>1\) means that the scaled component gets more important relative to the other component, and \(\alpha<1\) means it gets less important (\protect\hyperlink{ref-Kallioinen.2024}{Kallioinen et al., 2024}). We varied \(\alpha\) from \(0.99\) to \(1.01\) (default option) and identified sensitivity with the cumulative Jensen-Shannon distance and a threshold of 0.05, as suggested in Kallioinen et al. (\protect\hyperlink{ref-Kallioinen.2024}{2024}).
 
-The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2024}{Teickner et al., 2024}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
+The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2024f}{Teickner et al., 2024}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
 
 \hypertarget{software}{%
 \paragraph*{Software}\label{software}}
@@ -485,7 +492,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{\(k_0\) estimated with the litterbag decomposition model from Teickner et al. (\protect\hyperlink{ref-Teickner.2024}{2024}) (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPMf, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
+\caption{\(k_0\) estimated with the litterbag decomposition model from Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPMf, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
 \end{figure}
 
 
@@ -638,8 +645,8 @@ R Core Team: R: {A} language and environment for statistical computing, Manual, 
 \leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024b}{}}%
 Teickner, H. and Knorr, K.-H.: {hpmdpredict}: {Predictions} with model {HPMe-LE-peat-l0} from {Teickner} et al. (2024), \url{https://doi.org/10.5281/ZENODO.11339733}, 2024.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024}{}}%
-Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: {Initial} leaching losses bias decomposition rate estimates, 2024.
+\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024f}{}}%
+Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: {Initial} leaching losses bias decomposition rate estimates, EGUsphere, 2024, 1--30, \url{https://doi.org/10.5194/egusphere-2024-1686}, 2024.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Vehtari.2021}{}}%
 Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P.-C.: Rank-{Normalization}, {Folding}, and {Localization}: {An Improved R{\^{}}} for {Assessing Convergence} of {MCMC} (with {Discussion}), Bayesian Analysis, 16, \url{https://doi.org/10.1214/20-BA1221}, 2021.
