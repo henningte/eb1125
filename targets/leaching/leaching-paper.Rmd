@@ -46,7 +46,7 @@ availability:
   #data: |
   #  use this to add a statement when having only data sets available
   codedata: |
-    Data and code to reproduce this manuscript are available from @Teickner.2024e. The data used in this study are derived from @Teickner.2024c.
+    Data and code to reproduce this manuscript are available from @Teickner.2024j. The data used in this study are derived from @Teickner.2024c.
 #  sample: |
 #    use this section when having geoscientific samples available
 #videosupplement: |
@@ -58,17 +58,14 @@ authorcontribution: |
 acknowledgements: |
   This study was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) grant no. KN 929/23-1 to Klaus-Holger Knorr and grant no. PE 1632/18-1 to Edzer Pebesma. We thank Cristian Estop-Aragonés for helpful comments that improved an earlier version of this manuscript.
 link-citations: true
-#csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
+# csl: "templates/copernicus-publications.csl" # Insert path for the bib-style
 keywords: |
   Sphagnum, litterbag, decomposition, leaching, error analysis, Bayesian hierarchical model
 output: 
   bookdown::pdf_book:
     base_format: rticles::copernicus_article
-    #toc: false
-    #fig_caption: yes
     keep_tex: true
-    citation_package: "natbib"
-bibliography: references
+bibliography: references.bib
 header-includes:
   - \usepackage{float}
   - \usepackage[version=4]{mhchem}
@@ -840,7 +837,7 @@ Finally, if differences in sampling protocols (e.g. seasonal variations in conte
 ---
 abstract: |
   Our knowledge of the magnitude and controls of *Sphagnum* decomposition rates is derived to a large extent from litterbag experiments that do not explicitly consider initial leaching losses. Previous research on vascular plants suggests that decomposition rate ($k_0$) estimates from litterbag experiments are biased when initial leaching losses ($l_0$) are ignored. In contrast, magnitudes and variability of $l_0$ for *Sphagnum* litterbag experiments are not well known and therefore also not how much *Sphagnum* $k_0$ estimates are biased. As *Sphagnum* is the main peat forming species in many northern peatlands and biases in $k_0$ estimates can propagate and amplify in long-term peatland models, minimizing such bias is necessary for accurate predictions of peat accumulation.   
-  We present a meta-analysis of `r leaching_stan_draws_4 |> dplyr::pull(id_citation) |> unique() |> length()` *Sphagnum* litterbag studies to estimate initial leaching losses ($l_0$), to analyze how much *Sphagnum* $k_0$ estimates are biased when the decomposition model ignores initial leaching losses, and to analyze how much the variance of $k_0$ estimates of $k_0$ estimates increases due to initial leaching losses even when they are estimated by the decomposition model.  
+  We present a meta-analysis of `r leaching_stan_draws_4 |> dplyr::pull(id_citation) |> unique() |> length()` *Sphagnum* litterbag studies to estimate initial leaching losses ($l_0$), to analyze how much *Sphagnum* $k_0$ estimates are biased when the decomposition model ignores initial leaching losses, and to analyze how much the variance of $k_0$ estimates increases due to initial leaching losses even when they are estimated by the decomposition model.  
   Average $l_0$ estimates range between `r knitr::combine_words(leaching_stan_draws_4 |> dplyr::filter(id_citation != "Bengtsson.2017") |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::pull(l_2) |> mean() |> magrittr::multiply_by(100) |> range() |> round(0), and = " to ")` mass-%, average $k_0$ estimates between `r knitr::combine_words(leaching_stan_draws_4 |> dplyr::filter(id_citation != "Bengtsson.2017") |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::pull(k_2) |> mean() |> range() |> round(2), and = " to ")` yr$^{-1}$. Simulations and models fitted to empirical data indicate that ignoring initial leaching losses leads to an overestimation of $k_0$. An error analysis suggests that $k_0$ and $l_0$ can be estimated only with relatively large errors because of limitations in the design of most available litterbag experiments. Sampling the first litterbags shortly after the start of the experiments allows more accurate estimation of $l_0$ and $k_0$. We estimated large $l_0$ ($>5$ mass-%) also for only air-dried samples which could imply that *Sphagnum* litterbag experiments with dried litter are unrepresentative for natural decomposition processes in which $l_0$ may be smaller according to leaching experiments with fresh litter.  
   We conclude that comparing results of litterbag experiments between experimental treatments and between studies and accurately estimating decomposition rates may be possible only if initial leaching losses are explicitly considered. 
 ---
