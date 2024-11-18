@@ -34,8 +34,6 @@ header-includes:
   - \usepackage{multirow}
   - \usepackage{bm}
   - \usepackage{xr} \externaldocument[main-]{leaching-paper}
-  - \usepackage{lineno}
-  - \linenumbers
   - \usepackage{tocloft}
   - \setlength{\cftsecnumwidth}{4.5ex}
 fontsize: 12pt
@@ -128,7 +126,7 @@ Because initial leaching losses happen shortly after the start of the incubation
 
 # Model equations {#sup-13}
 
-Tab. \@ref(tab:m-litterbag-synthesis-models) lists the models we computed for this study. Here, we also assign identifiers to the models to make it easier to trace parts of the supporting information back to the specific model used to compute it. In the main text, models 1-2 and 2-2 are used in section \@ref(main-methods-bias-real-1), and model 1-4 in section \@ref(main-methods-estimate-real-1). Models 1-5 and 1-6 were computed for the sensitivity analysis described in section \@ref(main-methods-estimate-real-1) in the main text. The other models were computed to analyze the influence of estimating $\alpha$ from the data and the influence of including or excluding data from @Bengtsson.2017, as described in the main text.  
+Tab. \@ref(tab:sup-m-litterbag-synthesis-models) lists the models we computed for this study. Here, we also assign identifiers to the models to make it easier to trace parts of the supporting information back to the specific model used to compute it. In the main text, models 1-2 and 2-2 are used in section \@ref(main-methods-bias-real-1), and model 1-4 in section \@ref(main-methods-estimate-real-1). Models 1-5 and 1-6 were computed for the sensitivity analysis described in section \@ref(main-methods-estimate-real-1) in the main text. The other models were computed to analyze the influence of estimating $\alpha$ from the data and the influence of including or excluding data from @Bengtsson.2017, as described in the main text.  
 
 (ref:bengtsson2017-direct) @Bengtsson.2017
 (ref:frolking2010-indirect) [@Frolking.2010]
@@ -138,9 +136,9 @@ Tab. \@ref(tab:m-litterbag-synthesis-models) lists the models we computed for th
 (ref:eq-decomposition-solution-2-no-leaching-1) \@ref(main-eq:decomposition-solution-2-no-leaching-1)
 (ref:eq-decomposition-solution-2-with-leaching-1) \@ref(main-eq:decomposition-solution-2-with-leaching-1)
 
-(ref:m-litterbag-synthesis-models-caption) Overview of models computed in this study on synthesized litterbag data. "Decomposition equation" is the equation the models use to describe remaining masses over time for litterbag experiments. Equations for the model components are shown in supporting information \@ref(sup-13).
+(ref:sup-m-litterbag-synthesis-models-caption) Overview of models computed in this study on synthesized litterbag data. "Decomposition equation" is the equation the models use to describe remaining masses over time for litterbag experiments. Equations for the model components are shown in supporting information \@ref(sup-13).
 
-```{r m-litterbag-synthesis-models, tab.cap="(ref:m-litterbag-synthesis-models-caption)"}
+```{r sup-m-litterbag-synthesis-models, tab.cap="(ref:sup-m-litterbag-synthesis-models-caption)"}
 tibble::tibble(
   id_model = c("model 1-1", "model 1-2", "model 1-3", "model 1-4", "model 1-5", "model 1-6", "model 2-1", "model 2-2", "model 2-3", "model 2-4"),
   considers_leaching = c(rep("Yes", 6), rep("No", 4)),
@@ -423,7 +421,7 @@ a <-
 
 To check that the model considering initial leaching losses can in principle correctly estimate parameter values for $l_0$, $k_0$, and $\alpha$ under conditions which resemble those in available litterbag experiments, we simulated a dataset with all combinations of different values for these parameters ($l_0$: `r leaching_stan_draws_13 |> dplyr::pull(l_2_sim) |> unique() |> magrittr::multiply_by(100) |> knitr::combine_words(and = " or ")` mass-%, $k_0$: `r leaching_stan_draws_13 |> dplyr::pull(k_2_sim) |> unique() |> knitr::combine_words(and = " or ")` yr$^{-1}$, $\alpha$: `r leaching_stan_draws_13 |> dplyr::pull(alpha_2_sim) |> unique() |> round() |> knitr::combine_words(and = " or ")`, and constant precision parameter for remaining masses of `r leaching_stan_draws_13 |> dplyr::pull(phi_2_sim) |> unique() |> knitr::combine_words(and = " or ")` (near the median precision estimated by the model in the main text when excluding data from @Bengtsson.2017, `r leaching_stan_draws_4 |> dplyr::filter(! duplicated(id_sample_incubation_start)) |> dplyr::filter(! is.na(k_2)) |> dplyr::pull(phi_2_p2) |> rvar_median() |> mean() |> round()`), implying standard deviations for remaining masses of `r leaching_stan_draws_13 |> dplyr::mutate(sigma = sqrt((mass_relative_mass_mu_sim * (1 - mass_relative_mass_mu_sim))/(phi_2_sim + 1))) |> dplyr::pull(sigma) |> magrittr::multiply_by(100) |> range() |> round(1) |> knitr::combine_words(and = " to ")` mass-%). From this, we simulated remaining masses according to three litterbag designs which differ in the time points at which litterbags are collected after the incubation started (collection plan) (design 1: after 1 and 2 years, design 2: after ~ 20 days, 1, and 2 years, design 3: after ~ 20 days, 1, 2, 3, and 5 years) and the number of litterbags collected at each time point (5 or 10, for each collection plan). 
 
-We then used the same hierarchical Bayesian model as for the model in the main text (see equations \@ref(main-eq:leaching-hierarchical-model-l0) and \@ref(main-eq:leaching-hierarchical-model-l0-2) and supporting information \@ref(sup-13)) and estimated parameters for the simulated data (model 1-5, Tab. \@ref(tab:m-litterbag-synthesis-models)), treating samples with the same $k_0$ and $\alpha$ as samples from the same species, and samples with the same experimental design and $l_0$ as samples from the same study. 
+We then used the same hierarchical Bayesian model as for the model in the main text (see equations \@ref(main-eq:leaching-hierarchical-model-l0) and \@ref(main-eq:leaching-hierarchical-model-l0-2) and supporting information \@ref(sup-13)) and estimated parameters for the simulated data (model 1-5, Tab. \@ref(tab:sup-m-litterbag-synthesis-models)), treating samples with the same $k_0$ and $\alpha$ as samples from the same species, and samples with the same experimental design and $l_0$ as samples from the same study. 
 
 The estimated parameter values for $l_0$, $k_0$, and $\alpha$ can be compared against the values used to simulate the data and this allowed us to (1) test whether the models can estimate the true parameter values from litterbag data if our model is a good approximation to the data generating process, if *Sphagnum* species have similar $k_0$ and $\alpha$ in different studies, but may vary in their $l_0$, (2) analyze how the true $k_0$, $l$, and $\alpha$ control how accurate any of these parameters can be estimated, and (3) how the litterbag design controls how accurate $l_0$, $k_0$, and $\alpha$ can be estimated.  
 
@@ -484,7 +482,7 @@ for(i in seq_along(a)) {
 }
 ```
 
-(ref:sup-out-l-2-all-models-caption) Range of average estimated initial leaching losses (percent of the initial mass) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of initial leaching losses for individual litterbag replicates.
+(ref:sup-out-l-2-all-models-caption) Range of average estimated initial leaching losses (percent of the initial mass) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:sup-m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of initial leaching losses for individual litterbag replicates.
 
 ```{r sup-out-l-2-all-models, tab.cap = "(ref:sup-out-l-2-all-models-caption)"}
 # l_2
@@ -507,7 +505,7 @@ leaching_tables$parameter_estimates$l0 %>%
   )
 ```
 
-(ref:sup-out-k-2-all-models-caption) Range of average one pool exponential decomposition rates (yr$^{-1}$) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
+(ref:sup-out-k-2-all-models-caption) Range of average one pool exponential decomposition rates (yr$^{-1}$) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:sup-m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
 
 ```{r sup-out-k-2-all-models, tab.cap = "(ref:sup-out-k-2-all-models-caption)"}
 # k_2
@@ -532,7 +530,7 @@ leaching_tables$parameter_estimates$k0 %>%
 ```
 
 
-(ref:sup-out-alpha-2-all-models-caption) Range of average $\alpha$ (-) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
+(ref:sup-out-alpha-2-all-models-caption) Range of average $\alpha$ (-) for litterbag replicates grouped by species and study as estimated by all models (see Tab. \@ref(tab:sup-m-litterbag-synthesis-models)). Ranges were computed on average estimates and therefore do not consider the uncertainty of decomposition rates for individual litterbag replicates.
 
 ```{r sup-out-alpha-2-all-models, tab.cap = "(ref:sup-out-alpha-2-all-models-caption)"}
 # alpha_2
@@ -619,7 +617,7 @@ knitr::include_graphics(res_plot_file_tot)
 
 # Fit of all models to the remaining masses reported in the synthesized litterbag studies {#sup-8}
 
-(ref:sup-out-sdm-all-models-p1-caption) Measured versus predicted remaining masses in litterbag studies from all models computed in our study. Points are average values and error bars are 95% prediction intervals. For a description of each model, see Tab. \@ref(tab:m-litterbag-synthesis-models).
+(ref:sup-out-sdm-all-models-p1-caption) Measured versus predicted remaining masses in litterbag studies from all models computed in our study. Points are average values and error bars are 95% prediction intervals. For a description of each model, see Tab. \@ref(tab:sup-m-litterbag-synthesis-models).
 
 ```{r sup-out-sdm-all-models-p1, fig.cap='(ref:sup-out-sdm-all-models-p1-caption)', out.width="100%"}
 knitr::include_graphics(leaching_stan_checks$plots$leaching_plot_y_vs_yrep_m)
