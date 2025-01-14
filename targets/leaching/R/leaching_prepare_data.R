@@ -512,9 +512,9 @@ leaching_get_simulated_data <- function(id_dataset, mass_relative_mass_offset, x
         id_sample_incubation_start = seq_len(nrow(.)),
         incubation_duration_design = names(incubation_duration),
         taxon_rank_value =
-          paste0(l_2_sim, "_", alpha_2_sim),
+          paste0(k_2_sim, "_", alpha_2_sim),
         id_dataset =
-          paste0(phi_2_sim, "_", k_2_sim, "_", incubation_duration_design),
+          paste0(phi_2_sim, "_", l_2_sim, "_", incubation_duration_design),
         id_citation = id_dataset,
         speciesxstudies = paste0(taxon_rank_value, "_", id_dataset)
       ) %>%

@@ -37,8 +37,6 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Supporting information to: A Synthesis of Sphagnum Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates},
-  pdfauthor={Henning Teickner1,2,; Edzer Pebesma2; Klaus-Holger Knorr1},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -119,22 +117,15 @@
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
-\title{Supporting information to: A Synthesis of \emph{Sphagnum} Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates}
-\author{Henning Teickner\textsuperscript{1,2,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{18 November, 2024}
+\author{}
+\date{\vspace{-2.5em}}
 
 \begin{document}
-\maketitle
 
 {
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\textsuperscript{1} ILÖK, Ecohydrology \& Biogeochemistry Group, Institute of Landscape Ecology, University of Münster, 48149, Germany\\
-\textsuperscript{2} IfGI, Spatiotemporal Modelling Lab, Institute for Geoinformatics, University of Münster, 48149, Germany
-
-\textsuperscript{*} Correspondence: \href{mailto:henning.teickner@uni-muenster.de}{Henning Teickner \textless{}\href{mailto:henning.teickner@uni-muenster.de}{\nolinkurl{henning.teickner@uni-muenster.de}}\textgreater{}}
-
 \renewcommand{\thefigure}{S\arabic{figure}} 
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thesection}{S\arabic{section}}
@@ -194,36 +185,36 @@ All models used the following components to model the remaining mass of litterba
 
 \begin{equation}
 \begin{aligned}
-m_i & \sim & \text{Beta}(\mu_i\phi_{i},(1 - \mu_i)\phi_{i})\\
+m_i & \sim & \text{beta}(\mu_i\phi_{i},(1 - \mu_i)\phi_{i})\\
 \phi_{i} & = & \begin{cases}
 \text{precision}_i & \text{if}~\text{precision}_i~\text{is available}\\
 \phi\_1_{i} & \text{otherwise}\\
 \end{cases}\\
 \phi\_1_{i} & = & \phi\_2_{\text{sample}[i]}\\
-\text{precision}_i & \sim & \text{Gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
-\phi\_2_{\text{sample}} & \sim & \text{Gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
+\text{precision}_i & \sim & \text{gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
+\phi\_2_{\text{sample}} & \sim & \text{gamma}\left(\phi\_2\_p1, \frac{\phi\_2\_p1}{\phi\_2\_p2_{\text{sample}}}\right)\\
 \phi\_2\_p2_{\text{sample}} & = & \exp(\phi\_2\_p2\_p1 + \phi\_2\_p2\_p2_{\text{species[sample]}} + \\
                                 && \phi\_2\_p2\_p3_{\text{species x studies[sample]}})\\
-\phi\_2\_p2\_p1 & \sim & \text{Normal}(\phi\_2\_p2\_p1\_p1, \phi\_2\_p2\_p1\_p2)\\
-\phi\_2\_p2\_p2_{\text{species}} & \sim & \text{Normal}(\phi\_2\_p2\_p2\_p1, \phi\_2\_p2\_p2\_p2)\\
-\phi\_2\_p2\_p3_{\text{species x studies}} & \sim & \text{Normal}(\phi\_2\_p2\_p3\_p1, \phi\_2\_p2\_p3\_p2)\\
-\phi\_2\_p1 & \sim & \text{Gamma}(\phi\_2\_p1\_p1, \phi\_2\_p1\_p2)\\
-\phi\_2\_p2\_p1\_p2 & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p1\_p2_p1)\\
-\phi\_2\_p2\_p2\_p2_{\text{species}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p2\_p2\_p1)\\
-\phi\_2\_p2\_p3\_p2_{\text{species x studies}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p3\_p2\_p1)\\
-\phi\_2\_p2\_p4\_p2_{\text{samples}} & \sim & \text{Normal}^+(0, \phi\_2\_p2\_p4\_p2\_p1)\\
+\phi\_2\_p2\_p1 & \sim & \text{normal}(\phi\_2\_p2\_p1\_p1, \phi\_2\_p2\_p1\_p2)\\
+\phi\_2\_p2\_p2_{\text{species}} & \sim & \text{normal}(\phi\_2\_p2\_p2\_p1, \phi\_2\_p2\_p2\_p2)\\
+\phi\_2\_p2\_p3_{\text{species x studies}} & \sim & \text{normal}(\phi\_2\_p2\_p3\_p1, \phi\_2\_p2\_p3\_p2)\\
+\phi\_2\_p1 & \sim & \text{gamma}(\phi\_2\_p1\_p1, \phi\_2\_p1\_p2)\\
+\phi\_2\_p2\_p1\_p2 & \sim & \text{normal}^+(0, \phi\_2\_p2\_p1\_p2_p1)\\
+\phi\_2\_p2\_p2\_p2_{\text{species}} & \sim & \text{normal}^+(0, \phi\_2\_p2\_p2\_p2\_p1)\\
+\phi\_2\_p2\_p3\_p2_{\text{species x studies}} & \sim & \text{normal}^+(0, \phi\_2\_p2\_p3\_p2\_p1)\\
+\phi\_2\_p2\_p4\_p2_{\text{samples}} & \sim & \text{normal}^+(0, \phi\_2\_p2\_p4\_p2\_p1)\\
 k\_1_i & = & k\_2_{\text{sample}[i]}\\
 k\_2_{\text{sample}} & = & \text{exp}(k\_2\_p1 + k\_2\_p2_{\text{species[sample]}} + \\
                          && k\_2\_p3_{\text{species x study[sample]}} + \\
                          && k\_2\_p4_{\text{samples}})\\
-k\_2\_p1 & \sim & \text{Normal}(k\_2\_p1\_p1, k\_2\_p1\_p2)\\
-k\_2\_p2_{\text{species}} & \sim & \text{Normal}(k\_2\_p2\_p1, k\_2\_p2\_p2)\\
-k\_2\_p3_{\text{species x studies}} & \sim & \text{Normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
-k\_2\_p4_{\text{samples}} & \sim & \text{Normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
-k\_2\_p1\_p2 & \sim &  \text{Normal}^+(0, k\_2\_p1\_p2\_p1)\\
-k\_2\_p2\_p2_{\text{species}} & \sim &  \text{Normal}^+(0, k\_2\_p2\_p2\_p1)\\
-k\_2\_p3\_p2_{\text{species x studies}} & \sim &  \text{Normal}^+(0, k\_2\_p3\_p2\_p1)\\
-k\_2\_p4\_p2_{\text{samples}} & \sim &  \text{Normal}^+(0, k\_2\_p4\_p2\_p1)\\
+k\_2\_p1 & \sim & \text{normal}(k\_2\_p1\_p1, k\_2\_p1\_p2)\\
+k\_2\_p2_{\text{species}} & \sim & \text{normal}(k\_2\_p2\_p1, k\_2\_p2\_p2)\\
+k\_2\_p3_{\text{species x studies}} & \sim & \text{normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
+k\_2\_p4_{\text{samples}} & \sim & \text{normal}(k\_2\_p3\_p1, k\_2\_p3\_p2)\\
+k\_2\_p1\_p2 & \sim &  \text{normal}^+(0, k\_2\_p1\_p2\_p1)\\
+k\_2\_p2\_p2_{\text{species}} & \sim &  \text{normal}^+(0, k\_2\_p2\_p2\_p1)\\
+k\_2\_p3\_p2_{\text{species x studies}} & \sim &  \text{normal}^+(0, k\_2\_p3\_p2\_p1)\\
+k\_2\_p4\_p2_{\text{samples}} & \sim &  \text{normal}^+(0, k\_2\_p4\_p2\_p1)\\
 \label{eq:sup-model-1}
 \end{aligned}
 \end{equation}
@@ -282,10 +273,10 @@ To avoid \(\mu_i = 1\), we subtracted a constant (\ensuremath{10^{-4}}) from \(\
 \alpha\_2_{\text{sample}} & = & 1 + \text{exp}(\alpha\_2\_p1 + \alpha\_2\_p2_{\text{species[sample]}} + \\
                          && \alpha\_2\_p3_{\text{species x study[sample]}} + \\
                          && \alpha\_2\_p4_{\text{samples}})\\
-\alpha\_2\_p1 & \sim & \text{Normal}(\alpha\_2\_p1\_p1, \alpha\_2\_p1\_p2)\\
-\alpha\_2\_p2_{\text{species}} & \sim & \text{Normal}(\alpha\_2\_p2\_p1, \alpha\_2\_p2\_p2)\\
-\alpha\_2\_p3_{\text{species x studies}} & \sim & \text{Normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
-\alpha\_2\_p4_{\text{samples}} & \sim & \text{Normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
+\alpha\_2\_p1 & \sim & \text{normal}(\alpha\_2\_p1\_p1, \alpha\_2\_p1\_p2)\\
+\alpha\_2\_p2_{\text{species}} & \sim & \text{normal}(\alpha\_2\_p2\_p1, \alpha\_2\_p2\_p2)\\
+\alpha\_2\_p3_{\text{species x studies}} & \sim & \text{normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
+\alpha\_2\_p4_{\text{samples}} & \sim & \text{normal}(\alpha\_2\_p3\_p1, \alpha\_2\_p3\_p2)\\
 \label{eq:sup-model-6}
 \end{aligned}
 \end{equation}
@@ -297,14 +288,14 @@ Initial leaching losses are modeled in the same way as \(\phi\) (models 1-3, 1-4
 l\_1_i & = & l\_2_{\text{sample}[i]}\\
 l\_2_{\text{sample}} & = & \text{logit}^{-1}(l\_2\_p1 + l\_2\_p2_{\text{species[sample]}} + \\
                         && l\_2\_p3_{\text{species x study[sample]}} + \\                              && l\_2\_p4_{\text{samples}})\\
-l\_2\_p1 & \sim & \text{Normal}(l\_2\_p1\_p1, l\_2\_p1\_p2)\\
-l\_2\_p2_{\text{species}} & \sim & \text{Normal}(l\_2\_p2\_p1, l\_2\_p2\_p2)\\
-l\_2\_p3_{\text{species x study}} & \sim & \text{Normal}(l\_2\_p3\_p1, l\_2\_p3\_p2)\\
-l\_2\_p4_{\text{samples}} & \sim & \text{Normal}(l\_2\_p4\_p1, l\_2\_p4\_p2)\\
-l\_2\_p1\_p2 & \sim & \text{Normal}^+(0, l\_2\_p1\_p2\_p1)\\
-l\_2\_p2\_p2_{\text{species}} & \sim & \text{Normal}^+(0, l\_2\_p2\_p2\_p1)\\
-l\_2\_p3\_p2_{\text{species x study}} & \sim & \text{Normal}^+(0, l\_2\_p3\_p2\_p1)\\
-l\_2\_p4\_p2_{\text{samples}} & \sim & \text{Normal}^+(0, l\_2\_p4\_p2\_p1)\\
+l\_2\_p1 & \sim & \text{normal}(l\_2\_p1\_p1, l\_2\_p1\_p2)\\
+l\_2\_p2_{\text{species}} & \sim & \text{normal}(l\_2\_p2\_p1, l\_2\_p2\_p2)\\
+l\_2\_p3_{\text{species x study}} & \sim & \text{normal}(l\_2\_p3\_p1, l\_2\_p3\_p2)\\
+l\_2\_p4_{\text{samples}} & \sim & \text{normal}(l\_2\_p4\_p1, l\_2\_p4\_p2)\\
+l\_2\_p1\_p2 & \sim & \text{normal}^+(0, l\_2\_p1\_p2\_p1)\\
+l\_2\_p2\_p2_{\text{species}} & \sim & \text{normal}^+(0, l\_2\_p2\_p2\_p1)\\
+l\_2\_p3\_p2_{\text{species x study}} & \sim & \text{normal}^+(0, l\_2\_p3\_p2\_p1)\\
+l\_2\_p4\_p2_{\text{samples}} & \sim & \text{normal}^+(0, l\_2\_p4\_p2\_p1)\\
 \label{eq:sup-model-7}
 \end{aligned}
 \end{equation}
@@ -490,7 +481,7 @@ The estimated parameter values for \(l_0\), \(k_0\), and \(\alpha\) can be compa
 
 To provide an additional test that the model used in the main text can in principle provide accurate estimates of \(k_0\), \(l_0\), \(\alpha\) when the simulation is as similar to available litterbag experiments as possible, we sampled parameter values from the posterior of the model in the main text and simulated remaining masses and standard deviations of remaining masses which could be observed in the available litterbag experiments if the model approximates the true data generating process. We then estimated \(k_0\), \(l_0\), \(\alpha\) based on the simulated data (model 1-6) and compared the estimates to the parameter values sampled from the model in the main text to simulate the data.
 
-The results of this analysis indicate that all parameters except \(\alpha\) can be successfully estimated for the simulated data (figures \ref{fig:leaching-sup-plot-5-1} to \ref{fig:leaching-sup-plot-5-3}). The true value for \(k_0\) and \(l_0\) is contained in central 95\% posterior intervals more than 95\% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: 0.043 (0.002, 0.105) yr\(^{-1}\) for \(k_0\) and 4.4 (0.1, 12.7) mass-\% for \(l_0\). Biases and errors for both \(k_0\) and \(l_0\) were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true \(l_0\) indicating that small initial leaching losses are not overestimated (supporting information \ref{sup-11}).
+The results of this analysis indicate that all parameters except \(\alpha\) can be successfully estimated for the simulated data (figures \ref{fig:leaching-sup-plot-5-1} to \ref{fig:leaching-sup-plot-5-3}). The true value for \(k_0\) and \(l_0\) is contained in central 95\% posterior intervals more than 95\% of the simulated litterbag experiments. Also the maximum bias (absolute difference) was comparatively small: 0.069 (0.002, 0.211) yr\(^{-1}\) for \(k_0\) and 6 (0.3, 12.1) mass-\% for \(l_0\). Biases and errors for both \(k_0\) and \(l_0\) were smallest when the first litterbags were collected ca. 20 days after the start of the experiment compared to after a year. Importantly, the bias was smallest for all experimental designs for the smallest true \(l_0\) indicating that small initial leaching losses are not overestimated (supporting information \ref{sup-11}).
 
 Estimates for \(\alpha\) were always biased, except when the prior was already similar to the true value, indicating that litterbag data provide little information about this parameter which therefore is dominated by the prior (figure \ref{fig:leaching-sup-plot-5-3}). In our simulations, \(\alpha\) has only a small influence on the estimates of \(k_0\) and \(l_0\) (figures \ref{fig:leaching-sup-plot-5-1} and \ref{fig:leaching-sup-plot-5-2}), indicating that also for available litterbag data, this bias should affect our estimates for \(l_0\) and \(k_0\) not much.
 
