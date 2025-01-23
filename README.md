@@ -2,32 +2,32 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/805337783.svg)](https://zenodo.org/doi/10.5281/zenodo.11472954)
-![Last-changedate](https://img.shields.io/badge/last%20change-2024--11--20-brightgreen.svg)
+![Last-changedate](https://img.shields.io/badge/last%20change-2025--01--23-brightgreen.svg)
 
-## Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates” and “A Test of the Holocene Peatland Model Decomposition Module against *Sphagnum* Litterbag Experiments Could Indicate Larger Anaerobic Decomposition Rates”.
+## Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate Estimates” and “Peat Oxic and Anoxic Controls of *Sphagnum* Decomposition Rates in the Holocene Peatland Model Decomposition Module Estimated from Litterbag Data”.
 
 This repository contains the data and code for our two manuscripts:
 
-Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): A
-Synthesis of *Sphagnum* Litterbag Experiments: Initial Leaching Losses
-Bias Decomposition Rate Estimates. (not peer-reviewed preprint). DOI:
-10.5194/egusphere-2024-1686
+Teickner, H., Pebesma, E., & Knorr, K.-H. (2025). A synthesis of
+*Sphagnum* litterbag experiments: Initial leaching losses bias
+decomposition rate estimates. Biogeosciences, 22(2), 417–433.
+<https://doi.org/10.5194/bg-22-417-2025>
 
-Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): A Test
-of the Holocene Peatland Model Decomposition Module against *Sphagnum*
-Litterbag Experiments Could Indicate Larger Anaerobic Decomposition
-Rates. (not peer-reviewed preprint). DOI: 10.5194/egusphere-2024-1739
+Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): Peat
+Oxic and Anoxic Controls of *Sphagnum* Decomposition Rates in the
+Holocene Peatland Model Decomposition Module Estimated from Litterbag
+Data. (not peer-reviewed preprint). DOI: 10.5194/egusphere-2024-1739
 
 ### How to cite
 
 Please cite this compendium as:
 
-> Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr, (2024).
+> Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr, (2025).
 > Compendium of R code and data for “A Synthesis of *Sphagnum* Litterbag
 > Experiments: Initial Leaching Losses Bias Decomposition Rate
-> Estimates” and “A Test of the Holocene Peatland Model Decomposition
-> Module against *Sphagnum* Litterbag Experiments Could Indicate Larger
-> Anaerobic Decomposition Rates”. Accessed 20 Nov 2024.
+> Estimates” and “Peat Oxic and Anoxic Controls of *Sphagnum*
+> Decomposition Rates in the Holocene Peatland Model Decomposition
+> Module Estimated from Litterbag Data”. Accessed 23 Jan 2025.
 > <https://github.com/henningte/eb1125>
 
 ### Contents
@@ -39,10 +39,10 @@ Pebesma, and Klaus-Holger Knorr (2024): *A Synthesis of *Sphagnum*
 Litterbag Experiments: Initial Leaching Losses Bias Decomposition Rate
 Estimates*. Preprint.  
 - [:file_folder: hpm_decomposition](targets/hpm_decomposition): \>
-Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): *A Test
-of the Holocene Peatland Model Decomposition Module against *Sphagnum*
-Litterbag Experiments Could Indicate Larger Anaerobic Decomposition
-Rates*. Preprint.
+Henning Teickner, Edzer Pebesma, and Klaus-Holger Knorr (2024): *Peat
+Oxic and Anoxic Controls of *Sphagnum* Decomposition Rates in the
+Holocene Peatland Model Decomposition Module Estimated from Litterbag
+Data*. Preprint.
 
 To reproduce the manuscripts, run the ‘targets’ workflow by executing
 `run.R` in above folders.

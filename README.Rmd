@@ -56,7 +56,8 @@ manuscript_year <- rep("2024", 2L)
 
 This repository contains the data and code for our two manuscripts:
 
-`r manuscript_authors[[1]]` (`r manuscript_year[[1]]`): `r manuscript_title[[1]]`. (not peer-reviewed preprint). DOI: 10.5194/egusphere-2024-1686
+Teickner, H., Pebesma, E., & Knorr, K.-H. (2025). A synthesis of *Sphagnum* litterbag experiments: Initial leaching losses bias decomposition rate estimates. Biogeosciences, 22(2), 417–433. https://doi.org/10.5194/bg-22-417-2025
+
 
 `r manuscript_authors[[2]]` (`r manuscript_year[[2]]`): `r manuscript_title[[2]]`. (not peer-reviewed preprint). DOI: 10.5194/egusphere-2024-1739
 
