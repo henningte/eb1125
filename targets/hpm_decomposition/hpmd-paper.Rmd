@@ -46,7 +46,7 @@ availability:
   #data: |
   #  use this to add a statement when having only data sets available
   codedata: |
-    Data and code to reproduce this manuscript are available from @Teickner.2024e. The data used in this study are derived from @Teickner.2024c. An R package to make predictions for litterbag experiments with model `r hpmd_model_id_to_name_2("3-4")` is available from @Teickner.2024b.
+    Data and code to reproduce this manuscript are available from @Teickner.2025a. The data used in this study are derived from @Teickner.2024c. An R package to make predictions for litterbag experiments with model `r hpmd_model_id_to_name_2("3-4")` is available from @Teickner.2024b.
 #  sample: |
 #    use this section when having geoscientific samples available
 #videosupplement: |
