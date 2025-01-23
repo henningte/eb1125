@@ -236,7 +236,7 @@ hpmd_get_plot_for_simulations_3_and_4 <- function(newdata, file_plot = file_plot
     ) +
     facet_wrap(~ hpm_taxon_rank_value) +
     guides(
-      fill = guide_legend(title = "Confidence level")
+      fill = guide_legend(title = "Confidence interval")
     ) +
     theme(
       axis.title.y = ggtext::element_markdown(),
@@ -274,7 +274,7 @@ hpmd_get_plot_for_simulations_3_and_4 <- function(newdata, file_plot = file_plot
     ) +
     facet_wrap(~ hpm_taxon_rank_value) +
     guides(
-      fill = guide_legend(title = "Confidence level")
+      fill = guide_legend(title = "Confidence interval")
     ) +
     theme(
       axis.title.y = ggtext::element_markdown(),
@@ -618,12 +618,12 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
         geom_hline(yintercept = 0, color = "grey50") +
         scale_fill_brewer() +
         labs(
-          y = paste0("<i>k<sub>0,modified</sub></i>(", hpmd_model_id_to_name("3-4"), ") - <i>k<sub>0,standard</sub></i>(", hpmd_model_id_to_name("3-4"), ") (yr<sup>-1</sup>)"),
+          y = paste0("<i>k<sub>0,modified</sub></i>(", hpmd_model_id_to_name_2("3-4"), ") - <i>k<sub>0,standard</sub></i>(", hpmd_model_id_to_name_2("3-4"), ") (yr<sup>-1</sup>)"),
           x = expression("Water table depth below litter (cm)")
         ) +
         facet_wrap(~ parameter_pretty, ncol = 2L, scales = "free_x") +
         guides(
-          fill = guide_legend(title = "Confidence level")
+          fill = guide_legend(title = "Confidence interval")
         ) +
         theme(
           axis.title.y = ggtext::element_markdown(),
@@ -650,7 +650,7 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
           res %>%
             dplyr::mutate(
               microhabitat = "Hummock",
-              wopt = paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name("3-4"), "</sub>")
+              wopt = paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name_2("3-4"), "</sub>")
             ) %>%
             hpmd_predict_fit_4(
               x_stan_fit_4 = x_stan_fit_4,
@@ -670,7 +670,7 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
             )
         ) %>%
         dplyr::mutate(
-          wopt = factor(wopt, levels = c(paste0("<i>W</i><sub><i>opt</i>, standard</sub></i>"), paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name("3-4"), "</sub>")))
+          wopt = factor(wopt, levels = c(paste0("<i>W</i><sub><i>opt</i>, standard</sub></i>"), paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name_2("3-4"), "</sub>")))
         ) %>%
         dplyr::filter(sample_depth_lower <= 50) %>%
         dplyr::select(sample_depth_lower, layer_water_table_depth_to_surface_1, hpm_k_2, wopt) %>%
@@ -683,11 +683,11 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
         coord_flip() +
         scale_x_reverse() +
         labs(
-          y = paste0("<i>k<sub>0</sub></i><sub>, modified</sub>(", hpmd_model_id_to_name("3-4"), ") (yr<sup>-1</sup>)"),
+          y = paste0("<i>k<sub>0</sub></i><sub>, modified</sub>(", hpmd_model_id_to_name_2("3-4"), ") (yr<sup>-1</sup>)"),
           x = expression("Sample depth (cm)")
         ) +
         guides(
-          fill = guide_legend(title = "Confidence level")
+          fill = guide_legend(title = "Confidence interval")
         ) +
         theme(
           axis.title.y = ggtext::element_markdown(),
@@ -719,7 +719,7 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
           newdata %>%
             dplyr::mutate(
               microhabitat = "Hollow",
-              wopt = paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name("3-4"), "</sub>")
+              wopt = paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name_2("3-4"), "</sub>")
             ) %>%
             hpmd_predict_fit_4(
               x_stan_fit_4 = x_stan_fit_4,
@@ -733,7 +733,7 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
                 dplyr::filter(variable == "m69_p1") %>%
                 dplyr::pull(value),
               microhabitat = "Hollow",
-              wopt = paste0("<i>W</i><sub><i>opt</i>, standard</sub>")
+              wopt = paste0("<i>W</i><sub><i>opt</i>, standard</sub></i>")
             ) %>%
             hpmd_predict_fit_4(
               x_stan_fit_4 = x_stan_fit_4,
@@ -742,7 +742,7 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
             )
         )  %>%
         dplyr::mutate(
-          wopt = factor(wopt, levels = c(paste0("<i>W</i><sub><i>opt</i>, standard</sub></i>"), paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name("3-4"), "</sub>")))
+          wopt = factor(wopt, levels = c(paste0("<i>W</i><sub><i>opt</i>, standard</sub></i>"), paste0("<i>W</i><sub><i>opt</i>, ", hpmd_model_id_to_name_2("3-4"), "</sub>")))
         ) %>%
         dplyr::filter(sample_depth_lower <= 50) %>%
         dplyr::select(sample_depth_lower, layer_water_table_depth_to_surface_1, hpm_k_2, wopt) %>%
@@ -754,11 +754,11 @@ hpmd_get_plots_for_simulations <- function(id_simulation, newdata, x_stan_fit_4 
         coord_flip() +
         scale_x_reverse() +
         labs(
-          y = paste0("<i>k<sub>0</sub></i><sub>, modified</sub>(", hpmd_model_id_to_name("3-4"), ") (yr<sup>-1</sup>)"),
+          y = paste0("<i>k<sub>0</sub></i><sub>, modified</sub>(", hpmd_model_id_to_name_2("3-4"), ") (yr<sup>-1</sup>)"),
           x = expression("Sample depth (cm)")
         ) +
         guides(
-          fill = guide_legend(title = "Confidence level")
+          fill = guide_legend(title = "Confidence interval")
         ) +
         theme(
           axis.title.y = ggtext::element_markdown(),

@@ -20,13 +20,13 @@ hpmd_get_plot_1 <- function(x_stan_draws) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name()),
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2()),
       hpm_microhabitat =
         factor(hpm_microhabitat, levels = c("Hollow", "Lawn", "Hummock"))
     )
 
-  res_plot <-
+  p1 <-
     res %>%
     dplyr::filter(index_hpm) %>%
     dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
@@ -36,20 +36,67 @@ hpmd_get_plot_1 <- function(x_stan_draws) {
     geom_abline(intercept = 0, slope = 1, color = "grey50") +
     geom_point(aes(x = mean(hpm_k_2_rep), y = mean(k_2), fill = hpm_microhabitat), shape = 21, size = 2) +
     labs(
+      title = "Decomposition rate (<i>k<sub>0</sub></i>)",
       y = expression("Estimated from litterbag data (yr"^{-1}*")"),
-      x = expression("Predicted by HPM (modifications) (yr"^{-1}*")")
+      x = expression("Predicted by HPM decomposition module (modifications) (yr"^{-1}*")")
     ) +
     scale_fill_manual(values = c("steelblue", "lightgoldenrod", "salmon")) +
     facet_wrap(~ id_model, nrow = 1L) +
     theme(
       legend.position = "bottom",
       strip.background = element_blank(),
-      strip.text.x = ggtext::element_markdown(size = 12)
+      strip.text.x = ggtext::element_markdown(size = 12),
+      plot.title = ggtext::element_markdown(size = 14)
     ) +
     guides(
       fill = guide_legend(title = "Microhabitat", override.aes = list(size = 3))
     ) +
     coord_cartesian(ylim = c(NA, 0.5))
+
+  p2 <-
+    res %>%
+    dplyr::filter(id_citation != "Bengtsson.2017") %>%
+    dplyr::filter(id_model != "HPM-standard") %>%
+    dplyr::filter(index_hpm) %>%
+    #dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
+    dplyr::mutate(
+      mass_relative_mass = mass_relative_mass * 100,
+      m_rep = m_rep * 100,
+      mass_relative_mass_error = mass_relative_mass_error * 100
+    ) %>%
+    ggplot() +
+    # geom_errorbar(aes(x = mean(m_rep), ymin = mass_relative_mass - mass_relative_mass_error, ymax = mass_relative_mass + mass_relative_mass_error), color = "grey", width = 0) +
+    ggdist::stat_interval(aes(xdist = m_rep, y = mass_relative_mass), .width = 0.95, interval_size = 0.5, interval_colour = "grey", show.legend = FALSE) +
+    geom_abline(intercept = 0, slope = 1, color = "grey50") +
+    geom_point(aes(y = mass_relative_mass, x = mean(m_rep), fill = hpm_microhabitat), shape = 21, size = 2) +
+    labs(
+      title = "Remaining mass (<i>m</i>(<i>t</i>))",
+      y = expression("Measured (mass %)"),
+      x = expression("Predicted (mass %)")
+    ) +
+    scale_fill_manual(values = c("steelblue", "lightgoldenrod", "salmon")) +
+    facet_wrap(~ id_model, nrow = 1L) +
+    theme(
+      legend.position = "bottom",
+      strip.background = element_blank(),
+      strip.text.x = ggtext::element_markdown(size = 12),
+      plot.title = ggtext::element_markdown(size = 14)
+    ) +
+    guides(
+      fill = guide_legend(title = "Microhabitat", override.aes = list(size = 3))
+    ) +
+    coord_fixed()
+
+  res_plot <-
+    list(p2, p1) %>%
+    patchwork::wrap_plots(nrow = 2L, byrow = TRUE) +
+    patchwork::plot_annotation(
+      tag_levels = c('a'),
+      tag_prefix = '(',
+      tag_suffix = ')'
+    ) +
+    patchwork::plot_layout(guides = "collect") &
+    theme(legend.position = "bottom")
 
   file_plot <- "figures/hpmd_plot_1.pdf"
 
@@ -57,7 +104,7 @@ hpmd_get_plot_1 <- function(x_stan_draws) {
   ggsave(
     file_plot,
     plot = res_plot,
-    width = 8, height = 3.5, dpi = 300,
+    width = 8, height = 6.5, dpi = 300,
     device = cairo_pdf
   )
 
@@ -95,8 +142,8 @@ hpmd_get_plot_2 <- function(x_stan_draws) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
     )
 
   res_plot <-
@@ -110,7 +157,7 @@ hpmd_get_plot_2 <- function(x_stan_draws) {
     dplyr::mutate(
       x =
         dplyr::case_when(
-          id_model == "HPMf" ~ layer_water_table_depth_1,
+          id_model == "HPM-standard" ~ layer_water_table_depth_1,
           TRUE ~ layer_water_table_depth_to_surface_1 - sample_depth_upper
         )
     ) %>%
@@ -138,8 +185,10 @@ hpmd_get_plot_2 <- function(x_stan_draws) {
     geom_errorbar(aes(ymin = y_lower, ymax = y_upper), width = 0, color = "grey") +
     geom_smooth(aes(color = variable, fill = variable), formula = y ~ x, method = "lm", se = FALSE) +
     geom_point(aes(fill = variable), shape = 21) +
+    geom_hline(yintercept = 0.0, color = "black") +
     facet_grid(taxon_rank_value_pretty ~ id_model, scales = "free_y") +
     scale_y_continuous(limits = c(0, NA), breaks = equal_breaks(n = 4, s = 0.05, digits = 2)) +
+    coord_cartesian(ylim = c(0, NA)) +
     scale_fill_manual(values = c("black", "grey")) +
     scale_color_manual(values = c("black", "grey")) +
     labs(
@@ -184,6 +233,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
 
   res <-
     res %>%
+    dplyr::filter(id_fit != 1) %>%
     dplyr::left_join(
       hpmd_d_models %>%
         dplyr::select(id_fit, model_name),
@@ -192,8 +242,8 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 2:5) |> hpmd_model_id_to_name_2())
     ) %>%
     dplyr::left_join(
       res %>%
@@ -212,6 +262,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     res %>%
     dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
     dplyr::filter(! id_citation == "Hagemann.2015") %>%
+    dplyr::filter(taxon_rank_value != "Sphagnum angustifolium") %>%
     dplyr::mutate(
       l_2 = l_2 * 100,
       l_2_id_fit_1 = l_2_id_fit_1 * 100,
@@ -235,12 +286,13 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     geom_abline(intercept = 0, slope = 1, color = "grey50") +
     geom_point(aes(fill = index_hpm), size = 2, shape = 21) +
     labs(
-      title = expression("Initial leaching loss (mass-%)"),
-      x = expression("Estimated with litterbag model (mass-%)"),
-      y = expression("Estimated with HPM modifications (mass-%)")
+      title = expression("Initial leaching loss (mass %)"),
+      x = expression("Estimated with litterbag model (mass %)"),
+      y = expression("Estimated with HPM modifications (mass %)")
     ) +
     scale_fill_manual(values = c("white", "black")) +
     facet_wrap(~ id_model) +
+    coord_fixed() +
     theme(
       legend.position = "bottom",
       strip.background = element_blank(),
@@ -255,6 +307,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     res %>%
     dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
     dplyr::filter(! id_citation == "Hagemann.2015") %>%
+    dplyr::filter(taxon_rank_value != "Sphagnum angustifolium") %>%
     dplyr::mutate(
       y_mean = mean(k_2),
       y_lower = quantile(k_2, probs = 0.025)[1, ],
@@ -282,6 +335,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     ) +
     scale_fill_manual(values = c("white", "black")) +
     facet_wrap(~ id_model) +
+    #coord_fixed() +
     theme(
       legend.position = "bottom",
       strip.background = element_blank(),
@@ -292,7 +346,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
     )
 
   res_plot <-
-    list(p1, p2) %>%
+    list(p2, p1) %>%
     patchwork::wrap_plots(nrow = 1L, byrow = TRUE) +
     patchwork::plot_annotation(
       tag_levels = c('a'),
@@ -307,7 +361,7 @@ hpmd_get_plot_3 <- function(x_stan_draws) {
   ggsave(
     file_plot,
     plot = res_plot,
-    width = 8, height = 5, dpi = 300,
+    width = 10, height = 4.5, dpi = 300,
     device = cairo_pdf
   )
 
@@ -453,7 +507,7 @@ hpmd_get_plot_4 <- function(x_stan_draws) {
 
   # combine
   res_plot <-
-    list(p2, p1) %>%
+    list(p1, p2) %>%
     patchwork::wrap_plots(nrow = 1L, byrow = TRUE) +
     patchwork::plot_annotation(
       tag_levels = c('a'),
@@ -590,19 +644,19 @@ hpmd_get_plot_6 <- function(x_stan_draws, hpmd_d_models) {
         dplyr::mutate(
           id_model =
             hpmd_d_models$model_name[hpmd_d_models$id_fit == id_fit[[1]]] |>
-            hpmd_model_id_to_name() |>
-            factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+            hpmd_model_id_to_name_2() |>
+            factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
         ) %>%
         dplyr::select(hpm_microhabitat2, taxon_rank_value_pretty, m68_p3_2, id_model)
     }) %>%
     dplyr::bind_rows() %>%
-    ggplot(aes(x = taxon_rank_value_pretty, color = id_model, ydist = m68_p3_2)) +
-    ggdist::stat_pointinterval(.width = c(0.95)) +
+    ggplot(aes(x = taxon_rank_value_pretty, color = id_model, ydist = m68_p3_2, group = hpm_microhabitat2)) +
+    ggdist::stat_pointinterval(.width = c(0.95), position = "dodge") +
     coord_flip() +
     scale_color_manual(values = c("black", "grey")) +
     labs(
-      y = "Species",
-      x = "<i>k</i><sub>0,i</sub> (yr<sup>-1</sup>)"
+      x = "Species",
+      y = "<i>k</i><sub>0,i</sub> (yr<sup>-1</sup>)"
     ) +
     guides(
       color = guide_legend(title = "Model")
@@ -610,6 +664,7 @@ hpmd_get_plot_6 <- function(x_stan_draws, hpmd_d_models) {
     theme(
       axis.text.y = ggtext::element_markdown(),
       axis.title.y = ggtext::element_markdown(),
+      axis.title.x = ggtext::element_markdown(),
       legend.position = "bottom"
     )
 
@@ -617,7 +672,7 @@ hpmd_get_plot_6 <- function(x_stan_draws, hpmd_d_models) {
   ggsave(
     file_plot,
     plot = res_plot,
-    width = 5, height = 5, dpi = 300,
+    width = 5, height = 7, dpi = 300,
     device = cairo_pdf
   )
 
@@ -655,8 +710,8 @@ hpmd_get_plot_7 <- function(x_stan_draws) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
     )
 
   res_plot <-
@@ -670,7 +725,7 @@ hpmd_get_plot_7 <- function(x_stan_draws) {
     dplyr::mutate(
       x =
         dplyr::case_when(
-          id_model == "HPMf" ~ layer_water_table_depth_1,
+          id_model == "HPM-standard" ~ layer_water_table_depth_1,
           TRUE ~ layer_water_table_depth_to_surface_1 - sample_depth_upper
         )
     ) %>%
@@ -703,7 +758,7 @@ hpmd_get_plot_7 <- function(x_stan_draws) {
     scale_fill_manual(values = c("black", "grey")) +
     scale_color_manual(values = c("black", "grey")) +
     labs(
-      y = expression("Initial leaching loss (mass-%)"),
+      y = expression("Initial leaching loss (mass %)"),
       x = "Water table depth below litterbag (cm)"
     ) +
     theme(
@@ -760,8 +815,8 @@ hpmd_get_plot_8 <- function(x_stan_draws, file_plot) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
     ) %>%
     dplyr::bind_rows(
       tibble::tibble(layer_water_table_depth_1 = numeric(), layer_water_table_depth_to_surface_1 = numeric())
@@ -778,7 +833,7 @@ hpmd_get_plot_8 <- function(x_stan_draws, file_plot) {
     dplyr::mutate(
       x =
         dplyr::case_when(
-          id_model == "HPMf" ~ layer_water_table_depth_1,
+          id_model == "HPM-standard" ~ layer_water_table_depth_1,
           TRUE ~ layer_water_table_depth_to_surface_1 - sample_depth_upper
         )
     ) %>%
@@ -867,8 +922,8 @@ hpmd_get_plot_9 <- function(x_stan_draws, hpmd_stan_draws_1) {
     dplyr::mutate(
       id_model =
         model_name |>
-        hpmd_model_id_to_name() |>
-        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
     ) |>
     dplyr::left_join(
       hpmd_stan_draws_1 |>
@@ -906,13 +961,13 @@ hpmd_get_plot_9 <- function(x_stan_draws, hpmd_stan_draws_1) {
     geom_errorbarh(aes(xmin = x_lower, xmax = x_upper), height = 0, color = "grey") +
     geom_errorbar(aes(ymin = y_lower, ymax = y_upper), width = 0, color = "grey") +
     # geom_smooth(aes(color = variable, fill = variable), formula = y ~ x, method = "lm", se = FALSE) +
-    geom_point(shape = 21) +
+    geom_point() +
     facet_grid(taxon_rank_value_pretty ~ id_model, scales = "free_y") +
     scale_y_continuous(breaks = equal_breaks(n = 4, s = 0.05, digits = 2)) +
     # scale_fill_manual(values = c("black", "grey")) +
     # scale_color_manual(values = c("black", "grey")) +
     labs(
-      y = "<i>k<sub>0</sub></i>(HPM modification) - <i>k<sub>0</sub></i>(HPMf) (yr<sup>-1</sup>)",
+      y = "<i>k<sub>0</sub></i>(HPM modification) - <i>k<sub>0</sub></i>(HPM-standard) (yr<sup>-1</sup>)",
       x = "Water table depth below litterbag (cm)"
     ) +
     theme(
@@ -930,6 +985,178 @@ hpmd_get_plot_9 <- function(x_stan_draws, hpmd_stan_draws_1) {
     file_plot,
     plot = res_plot,
     width = 6.5, height = 7, dpi = 300,
+    device = cairo_pdf
+  )
+
+  file_plot
+
+}
+
+
+#' Same as `hpmd_get_plot_2()`, but plots only estimates of HPMD-standard versus LDM-standard
+#'
+#' @param x_stan_draws
+#'
+#' @export
+hpmd_get_plot_10 <- function(x_stan_draws) {
+
+  # function to add custom breaks. Modified from https://stackoverflow.com/a/55980394
+  equal_breaks <- function(n = 3, s = 0.05, ..., digits){
+    function(x){
+      # rescaling
+      d <- s * diff(range(x)) / (1+2*s)
+      round(seq(min(x)+d, max(x)-d, length=n), digits = digits)
+    }
+  }
+
+  # combine data
+  res <-
+    x_stan_draws %>%
+    purrr::map_dfr(readRDS_rvars) %>%
+    dplyr::left_join(
+      hpmd_d_models %>%
+        dplyr::select(id_fit, model_name),
+      by = "id_fit"
+    ) %>%
+    dplyr::mutate(
+      id_model =
+        model_name |>
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
+    )
+
+  p1 <-
+    res %>%
+    leaching_add_taxon_rank_value_pretty() %>%
+    dplyr::filter(index_hpm) %>%
+    dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
+    dplyr::filter(
+      taxon_rank_value %in% c("Sphagnum", "Sphagnum angustifolium", "Sphagnum balticum", "Sphagnum cuspidatum", "Sphagnum fuscum", "Sphagnum magellanicum")
+    ) %>%
+    dplyr::mutate(
+      x = layer_water_table_depth_1
+    ) %>%
+    tidyr::pivot_longer(
+      cols = dplyr::all_of(c("k_2", "hpm_k_2_rep")),
+      names_to = "variable",
+      values_to = "y"
+    ) %>%
+    dplyr::mutate(
+      variable =
+        dplyr::case_when(
+          variable == "k_2" ~ "LDM-standard",
+          TRUE ~ "HPM-standard"
+        ) |>
+        factor(levels = c("LDM-standard", "HPM-standard")),
+      y_mean = mean(y),
+      y_lower = quantile(y, probs = 0.025)[1, ],
+      y_upper = quantile(y, probs = 0.975)[1, ],
+      x_mean = mean(x),
+      x_lower = quantile(x, probs = 0.025)[1, ],
+      x_upper = quantile(x, probs = 0.975)[1, ]
+    ) %>%
+    ggplot(aes(y = y_mean, x = x_mean)) +
+    geom_errorbarh(aes(xmin = x_lower, xmax = x_upper), height = 0, color = "grey") +
+    geom_errorbar(aes(ymin = y_lower, ymax = y_upper), width = 0, color = "grey") +
+    geom_smooth(aes(color = variable, fill = variable), formula = y ~ x, method = "lm", se = FALSE) +
+    geom_point(aes(fill = variable), shape = 21) +
+    # geom_hline(yintercept = 0.0, color = "black") +
+    facet_wrap(~ taxon_rank_value_pretty, scales = "free_y") +
+    scale_y_continuous(limits = c(0, NA), breaks = equal_breaks(n = 4, s = 0.05, digits = 2)) +
+    coord_cartesian(ylim = c(0, NA)) +
+    scale_fill_manual(values = c("black", "grey")) +
+    scale_color_manual(values = c("black", "grey")) +
+    labs(
+      title = "<i>k<sub>0</sub></i> estimates",
+      y = "<i>k<sub>0</sub></i> (yr<sup>-1</sup>)",
+      x = "Water table depth below litterbag (cm)"
+    ) +
+    theme(
+      plot.title = ggtext::element_markdown(size = 15),
+      axis.title.y = ggtext::element_markdown(),
+      axis.title.x = ggtext::element_markdown(),
+      strip.background = element_blank(),
+      legend.position = "bottom",
+      strip.text.x = ggtext::element_markdown(size = 11),
+      strip.text.y = ggtext::element_markdown(angle = 0, hjust = 0, size = 11),
+      panel.spacing.y = unit(0.8, "lines")
+    ) +
+    guides(
+      color = guide_legend(title = "Model", override.aes = list(size = 3)),
+      fill = guide_legend(title = "Model")
+    )
+
+  p2 <-
+    res %>%
+    leaching_add_taxon_rank_value_pretty() %>%
+    dplyr::filter(index_hpm) %>%
+    dplyr::filter(! duplicated(paste0(id_model, "_", id_sample_incubation_start))) %>%
+    dplyr::filter(
+      taxon_rank_value %in% c("Sphagnum", "Sphagnum angustifolium", "Sphagnum balticum", "Sphagnum cuspidatum", "Sphagnum fuscum", "Sphagnum magellanicum")
+    ) %>%
+    dplyr::mutate(
+      x = layer_water_table_depth_1,
+      y = k_2 - hpm_k_2_rep,
+      y_mean = mean(y),
+      y_lower = quantile(y, probs = 0.025)[1, ],
+      y_upper = quantile(y, probs = 0.975)[1, ],
+      x_mean = mean(x),
+      x_lower = quantile(x, probs = 0.025)[1, ],
+      x_upper = quantile(x, probs = 0.975)[1, ],
+      id_citation =
+        dplyr::case_when(
+          id_citation == "Golovatskaya.2017" ~ "Golovatskaya and Nikonova (2017)",
+          id_citation == "Makila.2018" ~ "Mäkilä et al. (2018)",
+          id_citation == "Strakova.2010" ~ "Straková et al. (2010)",
+          id_citation == "Johnson.1991" ~ "Johnson and Damman (1991)",
+          id_citation == "Prevost.1997" ~ "Prevost et al. (1997)",
+          id_citation == "Szumigalski.1996" ~ "Szumigalski and Bayley (1996)",
+          TRUE ~ id_citation
+        )
+    ) %>%
+    ggplot(aes(y = y_mean, x = x_mean)) +
+    geom_errorbarh(aes(xmin = x_lower, xmax = x_upper), height = 0, color = "grey") +
+    geom_errorbar(aes(ymin = y_lower, ymax = y_upper), width = 0, color = "grey") +
+    #geom_smooth(aes(color = variable, fill = variable), formula = y ~ x, method = "lm", se = FALSE) +
+    geom_point(aes(fill = id_citation), shape = 21) +
+    geom_hline(yintercept = 0.0, color = "grey50") +
+    facet_wrap(~ taxon_rank_value_pretty, scales = "free_y") +
+    scale_y_continuous(limits = c(NA, NA), breaks = equal_breaks(n = 4, s = 0.05, digits = 2)) +
+    scale_fill_brewer(palette = "Set2") +
+    guides(fill = guide_legend(title = "Study")) +
+    labs(
+      title = "Difference of <i>k<sub>0</sub></i> estimates",
+      y = "<i>k<sub>0</sub></i>(LDM-standard) - <i>k<sub>0</sub></i>(HPM-standard) (yr<sup>-1</sup>)",
+      x = "Water table depth below litterbag (cm)"
+    ) +
+    theme(
+      plot.title = ggtext::element_markdown(size = 15),
+      axis.title.y = ggtext::element_markdown(),
+      axis.title.x = ggtext::element_markdown(),
+      strip.background = element_blank(),
+      legend.position = "bottom",
+      strip.text.x = ggtext::element_markdown(size = 11),
+      strip.text.y = ggtext::element_markdown(angle = 0, hjust = 0, size = 11),
+      panel.spacing.y = unit(0.8, "lines")
+    )
+
+  res_plot <-
+    list(p1, p2) %>%
+    patchwork::wrap_plots(nrow = 2L, byrow = TRUE) +
+    patchwork::plot_annotation(
+      tag_levels = c('a'),
+      tag_prefix = '(',
+      tag_suffix = ')'
+    ) +
+    #patchwork::plot_layout(guides = "collect") &
+    theme(legend.position = "bottom")
+
+  file_plot <- "figures/hpmd_plot_10.pdf"
+
+  ggsave(
+    file_plot,
+    plot = res_plot,
+    width = 7, height = 8, dpi = 300,
     device = cairo_pdf
   )
 
@@ -994,7 +1221,7 @@ hpmd_get_table_prior_justification <- function(x_stan_data, nsim) {
       }),
     unit =
       dplyr::case_when(
-        stringr::str_detect(parameter_name, "^l_2") ~ "(g g$_\\text{initial}$) (logit scale)",
+        stringr::str_detect(parameter_name, "^l_2") ~ "(g g$_\\text{initial}^{-1}$) (logit scale)",
         stringr::str_detect(parameter_name, "^k_2") ~ "(yr$^{-1}$) (log scale)",
         stringr::str_detect(parameter_name, "^alpha_2") ~ "(-) (log scale)",
         stringr::str_detect(parameter_name, "^phi_2") ~ "(-) (log scale)",
@@ -1009,7 +1236,7 @@ hpmd_get_table_prior_justification <- function(x_stan_data, nsim) {
         parameter_name == "m68_p2" ~ "(cm)",
         parameter_name == "m68_p3_2_p1" ~ "(yr$^{-1}$) (log scale)",
         parameter_name == "hpm_l_2_p1" ~ "(g g$_\\text{initial}^{-1}$) (logit scale)",
-        parameter_name == "hpm_l_2_p3" ~ "(g g$_\\text{initial}$ L$_\\text{water}^{-1}$ L$_\\text{pores}$) (logit scale)",
+        parameter_name == "hpm_l_2_p3" ~ "(g g$_\\text{initial}^{-1}$ L$_\\text{water}^{-1}$ L$_\\text{pores}$) (logit scale)",
       ),
     hpm_parameter_name =
       dplyr::case_when(
@@ -1017,7 +1244,35 @@ hpmd_get_table_prior_justification <- function(x_stan_data, nsim) {
         parameter_name == "m69_p2" ~ "$c_{1}$",
         parameter_name == "m68_p1" ~ "$f_{min}$",
         parameter_name == "m68_p2" ~ "$c_{2}$",
-        parameter_name == "m68_p3_2_p2" ~ "$k_{0,i}$ (log scale)",
+        parameter_name == "m68_p3_2_p1" ~ "$k_{0,i}$",
+        parameter_name == "layer_total_porosity_1" ~ "$P$",
+        parameter_name == "layer_minimum_degree_of_saturation_at_surface_1" ~ "$\\theta_\\text{0,min}$",
+        parameter_name == "layer_water_table_depth_to_surface_1 " ~ "$z_\\text{wt}$",
+        parameter_name == "hpm_l_2_p1" ~ "$\\beta_{l,1}$",
+        parameter_name == "hpm_l_2_p3" ~ "$\\beta_{l,2}$",
+        parameter_name == "hpm_l_2_p4" ~ "$\\phi_l$",
+        parameter_name == "k_2_p1" ~ "$\\beta_{k,1}$",
+        parameter_name == "k_2_p2" ~ "$\\beta_{k,2,\\text{species}}$",
+        parameter_name == "k_2_p3" ~ "$\\beta_{k,3,\\text{species x study}}$",
+        parameter_name == "k_2_p4" ~ "$\\beta_{k,4,\\text{sample}}$",
+        parameter_name == "hpm_k_2_p1" ~ "$\\alpha_{\\mu_k}$",
+        TRUE ~ ""
+      ),
+    equation_in_text =
+      dplyr::case_when(
+        parameter_name %in% paste0("k_2_p", 1:4) ~ "(ref:eq-model-link-2)",
+        parameter_name %in% c("hpm_k_2", "hpm_k_2_p1") ~ "(ref:eq-model-link-1)",
+        parameter_name == "m69_p1" ~ "(ref:eq-hpm-moisture-modifier-1)",
+        parameter_name == "m69_p2" ~ "(ref:eq-hpm-moisture-modifier-1)",
+        parameter_name == "m68_p1" ~ "(ref:eq-hpm-moisture-modifier-2)",
+        parameter_name == "m68_p2" ~ "(ref:eq-hpm-moisture-modifier-2)",
+        parameter_name == "m68_p3_2_p1" ~ "(ref:eq-hpm-decomposition-rate-1)",
+        parameter_name == "layer_total_porosity_1" ~ "(ref:eq-hpm-modified-granberg-1)",
+        parameter_name == "layer_minimum_degree_of_saturation_at_surface_1" ~ "(ref:eq-hpm-modified-granberg-1)",
+        parameter_name == "layer_water_table_depth_to_surface_1 " ~ "(ref:eq-hpm-modified-granberg-1)",
+        parameter_name == "hpm_l_2_p1" ~ "(ref:eq-hpm-hpm-l-2)",
+        parameter_name == "hpm_l_2_p3" ~ "(ref:eq-hpm-hpm-l-2)",
+        parameter_name == "hpm_l_2_p4" ~ "(ref:eq-hpm-hpm-l-2)",
         TRUE ~ ""
       ),
     ci95_normal =
@@ -1087,8 +1342,92 @@ hpmd_get_table_prior_justification <- function(x_stan_data, nsim) {
         parameter_name %>%
         stringr::str_replace_all(pattern = "_", replacement = "\\\\_")
     ) %>%
-    dplyr::select(parameter_name, hpm_parameter_name, unit, parameter_distribution2, justification)
+    dplyr::select(parameter_name, hpm_parameter_name, equation_in_text, unit, parameter_distribution2, justification)
 
+}
+
+
+#### Comparisons ####
+
+#' Computes average differences of k_0 and l_0 estimates of the litterbag decomposition models in the different models and the estimates of LDM-standard
+#'
+#' @param x_stan_draws
+#'
+#' @export
+hpmd_get_adjustment_of_ldm_estimates_to_hpm_prior <- function(x_stan_draws) {
+
+  # combine data
+  res <-
+    x_stan_draws %>%
+    purrr::map_dfr(readRDS_rvars)
+
+  res <-
+    res %>%
+    dplyr::filter(id_fit != 1) %>%
+    dplyr::left_join(
+      hpmd_d_models %>%
+        dplyr::select(id_fit, model_name),
+      by = "id_fit"
+    ) %>%
+    dplyr::mutate(
+      id_model =
+        model_name |>
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 2:5) |> hpmd_model_id_to_name_2())
+    ) %>%
+    dplyr::left_join(
+      res %>%
+        dplyr::filter(id_fit == 1) %>%
+        dplyr::filter(! duplicated(id_sample_incubation_start)) %>%
+        dplyr::select(id_sample_incubation_start, k_2, l_2) %>%
+        dplyr::rename(
+          k_2_id_fit_1 = "k_2",
+          l_2_id_fit_1 = "l_2"
+        ),
+      by = "id_sample_incubation_start"
+    )
+
+  ## compute differences
+
+  # total
+  res_total <-
+    res |>
+    dplyr::filter(index_hpm) |>
+    dplyr::filter(! duplicated(paste0(id_fit, "_", id_sample_incubation_start))) |>
+    dplyr::group_by(id_model) |>
+    dplyr::summarise(
+      k_2_mad = posterior::rvar_mean(abs(k_2 - k_2_id_fit_1), na.rm = TRUE),
+      k_2_md = posterior::rvar_mean(k_2 - k_2_id_fit_1, na.rm = TRUE),
+      l_2_mad = posterior::rvar_mean(abs(l_2 - l_2_id_fit_1), na.rm = TRUE),
+      l_2_md = posterior::rvar_mean(l_2 - l_2_id_fit_1, na.rm = TRUE),
+      n_samples = sum(! is.na(l_2)),
+      .groups = "drop"
+    )
+
+  # grouped by species
+  res_species <-
+    res |>
+    dplyr::filter(index_hpm) |>
+    dplyr::filter(! duplicated(paste0(id_fit, "_", id_sample_incubation_start))) |>
+    dplyr::group_by(id_model, taxon_rank_value) |>
+    dplyr::summarise(
+      k_2_mad = posterior::rvar_mean(abs(k_2 - k_2_id_fit_1), na.rm = TRUE),
+      k_2_md = posterior::rvar_mean(k_2 - k_2_id_fit_1, na.rm = TRUE),
+      l_2_mad = posterior::rvar_mean(abs(l_2 - l_2_id_fit_1), na.rm = TRUE),
+      l_2_md = posterior::rvar_mean(l_2 - l_2_id_fit_1, na.rm = TRUE),
+      n_samples = sum(! is.na(l_2)),
+      .groups = "drop"
+    )
+
+  res <-
+    list(
+      res_total = res_total,
+      res_species = res_species
+    )
+
+  saveRDS_rvars(res, file = "_targets_rvars/hpmd_adjustment_of_ldm_estimates_to_hpm_prior.rds")
+
+  "_targets_rvars/hpmd_adjustment_of_ldm_estimates_to_hpm_prior.rds"
 }
 
 

@@ -8,6 +8,7 @@
 *.rds
 !targets/leaching/derived_data/dpeatdecomposition_snapshot.rds
 *.pdf
+*.svg
 *.bbl
 *.blg
 *.toc
@@ -22,4 +23,5 @@ targets/hpmd/_targets_rvars
 *renv/library
 *renv/sandbox
 *renv/staging
-review
+peer_review
+!targets/hpm_decomposition/figures/eb1125_hpm_decoposition_conceptual.pdf

@@ -1,5 +1,6 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 hpmd_add_cross_validation_indices|function|919b2f77ad4bec75|||||||||||||||
+hpmd_adjustment_of_ldm_estimates_to_hpm_prior|stem|fa53fb6e34ae8ef1|fbd9f38b3531eabe|427d978eaa7066e3|-1303901812|_targets_rvars/hpmd_adjustment_of_ldm_estimates_to_hpm_prior.rds|t20052.3743493765s|567b78a2fd4befd4|9607340|file|local|vector|||71.781||
 hpmd_d_models|object|81373a8635e53041|||||||||||||||
 hpmd_data|stem|929c49cc69365132|ae03559f6e4f5933|927f8944a9f7630f|-1654055806||t19859.5888733704s|c45156f4bd4e30dc|21066|rds|local|vector|||0.022||
 hpmd_data_add_hpm_microhabitat|function|4b8d5103a63ae8c7|||||||||||||||
@@ -14,24 +15,26 @@ hpmd_data_stan_7|stem|a88ca1943928473f|bac453401638497e|349eceb89274f3cd|-376638
 hpmd_data_stan_8|stem|c0421e74d1f573a9|83dfd97709987425|060375220e7d9636|289188479||t19859.5898931344s|73cbee385ea3f117|6401|rds|local|vector|||0.029||
 hpmd_data_stan_9|stem|b48dcc6fdff70131|bf6eecea229d26ef|69e4cc43445c7ee1|591482504||t19859.5900084047s|7a7d0575288ae1a8|6381|rds|local|vector|||9.916||
 hpmd_define_hpm_microhabitats|function|339e7b791143d914|||||||||||||||
+hpmd_get_adjustment_of_ldm_estimates_to_hpm_prior|function|29e06c85770d5a5f|||||||||||||||
 hpmd_get_hpm_standard_parameter_values|function|1272427db0527033|||||||||||||||
 hpmd_get_newdata_for_simulations|function|aba812d6f9da6001|||||||||||||||
 hpmd_get_newdata_simulations_3_and_4|function|b08e231d4c355156|||||||||||||||
 hpmd_get_peat_properties|function|7e25bb219e97d06a|||||||||||||||
-hpmd_get_plot_1|function|0fcc0f628cf4d3ba|||||||||||||||
-hpmd_get_plot_2|function|ef49eda54ae23091|||||||||||||||
-hpmd_get_plot_3|function|cd73ea22d7c86273|||||||||||||||
-hpmd_get_plot_4|function|ae621746bedbdf6c|||||||||||||||
+hpmd_get_plot_1|function|f44d12ce07eb3edd|||||||||||||||
+hpmd_get_plot_10|function|c5645199400b7874|||||||||||||||
+hpmd_get_plot_2|function|76266e73d74501e1|||||||||||||||
+hpmd_get_plot_3|function|f7827bd2f7d42391|||||||||||||||
+hpmd_get_plot_4|function|aad1800df5fd3264|||||||||||||||
 hpmd_get_plot_5|function|6516dd7d219a89a6|||||||||||||||
-hpmd_get_plot_6|function|7b0e55884f3a578f|||||||||||||||
-hpmd_get_plot_7|function|81524ec0d5d92295|||||||||||||||
-hpmd_get_plot_8|function|b28a935e023af7c6|||||||||||||||
-hpmd_get_plot_9|function|6562f0484b405350|||||||||||||||
-hpmd_get_plot_for_simulations_3_and_4|function|e7a670ea2f7780f8|||||||||||||||
-hpmd_get_plots_for_simulations|function|8d32f59c67740bf2|||||||||||||||
+hpmd_get_plot_6|function|9b6b7a83835cbc6c|||||||||||||||
+hpmd_get_plot_7|function|e383279ed15932e4|||||||||||||||
+hpmd_get_plot_8|function|b65e6872dcc11b65|||||||||||||||
+hpmd_get_plot_9|function|4d598712ad54e62b|||||||||||||||
+hpmd_get_plot_for_simulations_3_and_4|function|2eb52e593de260c7|||||||||||||||
+hpmd_get_plots_for_simulations|function|3851b05bfc64a84c|||||||||||||||
 hpmd_get_rmse|function|9115b51e23f2b959|||||||||||||||
 hpmd_get_rmse_one_model|function|e773afda07a90d93|||||||||||||||
-hpmd_get_table_prior_justification|function|eb326d761774c6de|||||||||||||||
+hpmd_get_table_prior_justification|function|884c1fd13d147485|||||||||||||||
 hpmd_get_yhat_fit_1|function|702eeb3f534a06dc|||||||||||||||
 hpmd_has_outlier|object|ba09ba8184ab26f1|||||||||||||||
 hpmd_identify_samples_for_hpm|function|d791c6e485c85547|||||||||||||||
@@ -40,25 +43,27 @@ hpmd_mm39_file|stem|bbcbca2af9d959d3|8b775bda20927d5d|ea9ca750a094f609|138128251
 hpmd_mm40|stem|16c02da0cc56c319|370f2f018781652d|398c23c3ec4b84cd|1935990614||t19765.4380827553s|7cdf2c6416b265d9|52245042|rds|local|vector|||188.654||
 hpmd_mm40_file|stem|2849c0190157f8f1|fe166edb75786bca|a0e0e889214fecc5|754432394|stan/mm40.stan|t19765.4358155235s|c128cf66370358bd|17509|file|local|vector|||0.098||
 hpmd_model_id_to_name|function|2de73a2484d5ab8b|||||||||||||||
-hpmd_paper|stem|b497f4d706b3785e|3a3f2e80d17a3efa|6a4a4d04f4ad9c09|-1142376882|hpmd-paper.pdf*hpmd-paper.Rmd*hpmd-paper_files|t19870.2526110838s||2.22398739666237e-308|file|local|vector|||112.613||LaTeX failed to compile hpmdpaper.tex. See httpsyihui.orgtinytexrdebugging for debugging tips. See hpmdpaper.log for more info.
-hpmd_plot_1|stem|03957d9437f6dc39|9de898ac487afc09|8e3fdd161c7ddb10|-1109704333|figures/hpmd_plot_1.pdf|t19864.2812220305s|54d7e9f88613d7b4|29937|file|local|vector|||68.605|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.|
-hpmd_plot_2|stem|b567959534b23b98|5e64ddb2e16fd40e|6e4cbe8dc58b13d4|-803215876|figures/hpmd_plot_2.pdf|t19860.1509216048s|e4b18055b8bac33f|65672|file|local|vector|||64.028|1m22mRemoved 4 rows containing missing values geom_smooth.|
-hpmd_plot_3|stem|73ce30675c4336ea|65168df769c15f76|b0306e2281d38912|-1601829175|figures/hpmd_plot_3.pdf|t19860.1518219692s|2a82a97e2f011f0a|67325|file|local|vector|||77.754|1m22mRemoved 640 rows containing missing values geom_errorbarh.. 1m22mRemoved 640 rows containing missing values geom_point.. 1m22mRemoved 640 rows containing missing values geom_errorbarh.. 1m22mRemoved 640 rows containing missing values geom_point.|
+hpmd_model_id_to_name_2|function|c8c1a086f9545c8c|||||||||||||||
+hpmd_paper|stem|e1c85bd8b7f472e9|c86b0bb8d588cd97|b8bdec2057993730|-1142376882|hpmd-paper.pdf*hpmd-paper.Rmd|t20111.366889467s|8842a906826cd833|833170|file|local|vector|||138.189|The file hpmdpaper.log is not encoded in UTF8. These lines contain invalid UTF8 characters 835. Package xcolor Warning Incompatible color definition on input line 153.. Package xcolor Warning Incompatible color definition on input line 155.. LaTeX Warning h float specifier changed to ht.. LaTeX Warning h float specifier changed to ht.|
+hpmd_plot_1|stem|20e9fcd4c7dea436|9de898ac487afc09|1617ba96e682eb8c|-1109704333|figures/hpmd_plot_1.pdf|t20060.3818838613s|be7b6c348848ca8d|58691|file|local|vector|||166.305|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.|
+hpmd_plot_10|stem|32c1f3e893f497ba|bea5e205bc22fde3|c7bc78012805f461|1762152542|figures/hpmd_plot_10.pdf|t20060.4371079416s|2c9019d4f6c72925|41392|file|local|vector|||46.731|1m22mRemoved 2 rows containing missing values geom_smooth.|
+hpmd_plot_2|stem|3a488721a61b9cac|5e64ddb2e16fd40e|80d9023ef3efcf29|-803215876|figures/hpmd_plot_2.pdf|t20044.5108141703s|57ee7d8199184178|66061|file|local|vector|||93.882|1m22mRemoved 4 rows containing missing values geom_smooth.|
+hpmd_plot_3|stem|b785fcb92f35c921|65168df769c15f76|18e7cddb5566e0b0|-1601829175|figures/hpmd_plot_3.pdf|t20050.3245248001s|4e99cf3fff1fc92f|51899|file|local|vector|||79.548|1m22mRemoved 450 rows containing missing values geom_errorbarh.. 1m22mRemoved 450 rows containing missing values geom_point.. 1m22mRemoved 450 rows containing missing values geom_errorbarh.. 1m22mRemoved 450 rows containing missing values geom_point.|
 hpmd_plot_4|stem|49cf89747275944b|774fbc6c0af753f6|20f76ac794e121e1|163633469|figures/hpmd_plot_4.pdf|t19768.2942333517s|44b2fccf5f2ebf71|70982|file|local|vector|||11.451||
-hpmd_plot_4_2|stem|ece85f3d6a95449b|6aa3f4581613e853|85b998bc4a042670|-1482184914||t19860.1476331708s|ded833868582137a|50|rds|local|vector|||0||
-hpmd_plot_4_3|stem|2963ce031ed6337f|c3c6c6b8a7a69107|9898fb233aee02b4|310475996||t19860.1477634151s|dff9495c51b724c1|77|rds|local|vector|||11.237||
-hpmd_plot_4_4|stem|e5375f9034d48bab|bdee7e88d57387c3|fb5a86a7c079376f|-886346187||t19860.14849745s|dff9495c51b724c1|77|rds|local|vector|||9.67||
-hpmd_plot_4_5|stem|ece85f3d6a95449b|714de0d4b54e66cd|083caba34b85df37|-1175663688||t19860.3201162293s|ded833868582137a|50|rds|local|vector|||0||
-hpmd_plot_4_6|stem|ece85f3d6a95449b|2c1b5fd9f1e2e0d0|bd34aaeec05c48c8|1848652864||t19860.1542365024s|ded833868582137a|50|rds|local|vector|||0||
-hpmd_plot_4_7|stem|ece85f3d6a95449b|5adb39201823a7dc|255687903820b789|1552847101||t19860.1543456507s|ded833868582137a|50|rds|local|vector|||0||
-hpmd_plot_4_8|stem|ece85f3d6a95449b|b1a88f67604443d2|f6bc87deb945f40a|-1821507909||t19860.1545010105s|ded833868582137a|50|rds|local|vector|||0||
-hpmd_plot_4_9|stem|f5d3c70d1571e340|a140351c119572f4|4130f7fa616acbb2|-2136778458||t19860.154657465s|dff9495c51b724c1|77|rds|local|vector|||13.479|1m22mRemoved 8000 rows containing nonfinite values stat_density.. 1m22mRemoved 1 rows containing missing values geom_segment.. 1m22mRemoved 1 rows containing missing values geom_rich_text.|
+hpmd_plot_4_2|stem|ece85f3d6a95449b|6aa3f4581613e853|83d49931627500de|-1482184914||t20047.5149517696s|ded833868582137a|50|rds|local|vector|||0||
+hpmd_plot_4_3|stem|2963ce031ed6337f|c3c6c6b8a7a69107|c5a57bad14b99137|310475996||t20047.5152621106s|dff9495c51b724c1|77|rds|local|vector|||26.758||
+hpmd_plot_4_4|stem|e5375f9034d48bab|bdee7e88d57387c3|901db640ce477c2d|-886346187||t20047.5154888962s|dff9495c51b724c1|77|rds|local|vector|||19.313||
+hpmd_plot_4_5|stem|ece85f3d6a95449b|714de0d4b54e66cd|c18a0c6264d88c6c|-1175663688||t20047.5154903938s|ded833868582137a|50|rds|local|vector|||0||
+hpmd_plot_4_6|stem|ece85f3d6a95449b|2c1b5fd9f1e2e0d0|879c4cd22e8159cb|1848652864||t20047.5154907557s|ded833868582137a|50|rds|local|vector|||0||
+hpmd_plot_4_7|stem|ece85f3d6a95449b|5adb39201823a7dc|46677099ca526908|1552847101||t20047.5154912733s|ded833868582137a|50|rds|local|vector|||0||
+hpmd_plot_4_8|stem|ece85f3d6a95449b|b1a88f67604443d2|8220d0ae8d735372|-1821507909||t20047.5154918444s|ded833868582137a|50|rds|local|vector|||0.001||
+hpmd_plot_4_9|stem|f5d3c70d1571e340|a140351c119572f4|38fb263e3ccba86d|-2136778458||t20047.5156895469s|dff9495c51b724c1|77|rds|local|vector|||17.033|1m22mRemoved 8000 rows containing nonfinite values stat_density.. 1m22mRemoved 1 rows containing missing values geom_segment.. 1m22mRemoved 1 rows containing missing values geom_rich_text.|
 hpmd_plot_5|stem|7bc43501e3dd3333|c273b0b3e7093f66|d6e815bd2b1718b5|483557216|figures/hpmd_plot_5.pdf|t19860.3195533547s|b038a9b4d339c3ac|137013|file|local|vector|||48.073||
-hpmd_plot_6|stem|37ad67e655cfd78d|35f1ef6b162cb1f0|8763c18c174d3634|-418049050|figures/hpmd_plot_6.pdf|t19860.1486924025s|f4721c7aa7f42524|24267|file|local|vector|||16.822|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.|
-hpmd_plot_7|stem|fc55cb2f6aa58902|77fa5bbf78bcbe48|114db5bd08f42274|1397550144|figures/hpmd_plot_7.pdf|t19860.1493847217s|5c1ccd6e1e8bcf33|49555|file|local|vector|||59.811|1m22mRemoved 132 rows containing nonfinite values stat_smooth.. 1m22mRemoved 132 rows containing missing values geom_errorbarh.. 1m22mRemoved 132 rows containing missing values geom_point.|
-hpmd_plot_8_1|stem|e9068a8a8454dcec|dffb6e500463032e|560affeba7cd3171|-916449461|figures/hpmd_plot_8_1.pdf|t19859.5897854249s|8136c00450a8eae6|42373|file|local|vector|||11.814|1m22mRemoved 2 rows containing missing values geom_smooth.|
-hpmd_plot_8_4|stem|a8efdd6b5a776255|6f6bd3f9a9ec8f02|147a429f788b517c|52071103|figures/hpmd_plot_8_4.pdf|t19860.1495012066s|f42c02c77ab3b53d|41655|file|local|vector|||10.042||
-hpmd_plot_9|stem|75b2c84c48f6b6ea|94f3d5b48515849b|a95bc4cd554e6f11|795354231|figures/hpmd_plot_9.pdf|t19860.1528814139s|c5d0282579ef0d2b|34784|file|local|vector|||91.514||
+hpmd_plot_6|stem|7b91268de5d2ac56|35f1ef6b162cb1f0|007c6888ce1baf86|-418049050|figures/hpmd_plot_6.pdf|t20044.471802873s|d29331633793defa|24433|file|local|vector|||26.263|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.|
+hpmd_plot_7|stem|b94bdaaee657e765|77fa5bbf78bcbe48|cd9ed8aca0ba5359|1397550144|figures/hpmd_plot_7.pdf|t20044.4727063415s|0565d9d7f4239ed9|49513|file|local|vector|||78.036|1m22mRemoved 132 rows containing nonfinite values stat_smooth.. 1m22mRemoved 132 rows containing missing values geom_errorbarh.. 1m22mRemoved 132 rows containing missing values geom_point.|
+hpmd_plot_8_1|stem|824c12f2b60c1263|dffb6e500463032e|0e825409c67de65e|-916449461|figures/hpmd_plot_8_1.pdf|t20044.4706625821s|8136c00450a8eae6|42373|file|local|vector|||21.21|1m22mRemoved 2 rows containing missing values geom_smooth.|
+hpmd_plot_8_4|stem|07549ce63399ff6e|6f6bd3f9a9ec8f02|84aed858ebec46d0|52071103|figures/hpmd_plot_8_4.pdf|t20044.4729029469s|f42c02c77ab3b53d|41655|file|local|vector|||16.928||
+hpmd_plot_9|stem|2798f0a4438d1adc|94f3d5b48515849b|066338c4454e9aa9|795354231|figures/hpmd_plot_9.pdf|t20052.4235072757s|605d87b70239f531|34844|file|local|vector|||58.565||
 hpmd_plot_outlier_trajectories_1|stem||60374b5f2bcf315c|471cb1fa0296294e|1952259720||t19772.308032911s||0|file|local|vector|||0.084||object hpmd_stan_draws not found
 hpmd_predict_fit_4|function|d3a8da2654421283|||||||||||||||
 hpmd_prepare_data|function|b13b50e8be77b82b|||||||||||||||
@@ -71,13 +76,13 @@ hpmd_simulation_1_newdata_3|stem|25855f6d87c7775e|9386d546f2b0d25b|6c83dfb82d5ee
 hpmd_simulation_1_newdata_4|stem|c74958d7e9f5ee22|63501cb50a91fbfa|6c83dfb82d5ee39a|1438631551|_targets_rvars/hpmd_simulation_1_newdata_4.rds|t19860.1361390874s|6fc24b052d360ab9|139023329|file|local|vector|||34.979||
 hpmd_simulation_1_newdata_5|stem|389702abaf5d35af|79726cc700550f4a|6c83dfb82d5ee39a|1749150595|_targets_rvars/hpmd_simulation_1_newdata_5.rds|t19860.1361731147s|fb2fa2d532542735|541|file|local|vector|||0.014||
 hpmd_simulation_1_newdata_6|stem|c3fb8819b8f09726|b5f83307db1de3c7|6c83dfb82d5ee39a|973082368|_targets_rvars/hpmd_simulation_1_newdata_6.rds|t19859.8480605972s|a97bf76e690c0a49|388|file|local|vector|||0.033||
-hpmd_simulation_1_plot_1|stem|598c67ce4e85a324|325cc014ea877ea0|627b5054ce0d3806|1118112019|figures/hpmd_simulation_1_plot_1_1.pdf|t19860.1481578318s|8bdea5cc38a5e56c|31111|file|local|vector|||21.4|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_simulation_1_plot_2|stem|0325edceaf50bd94|06fd945da30502bc|6a613062336a5474|1467167407|figures/hpmd_simulation_1_plot_1_2.pdf|t19860.1482242081s|7fc48c9542ad0f9b|18874|file|local|vector|||5.717|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_simulation_1_plot_3|stem|a1108226bb9e310a|887932a7ef5d321c|073ee656cbbc00f1|-293543732|figures/hpmd_simulation_1_plot_1_3.pdf|t19860.1482678169s|1f08700e4ad786e5|37683|file|local|vector|||3.75|Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_simulation_1_plot_4|stem|1a7930abec65915d|4eca4d5cb2e5f0b6|6adf4b3f53a3233a|-1069677497|figures/hpmd_simulation_1_plot_1_4.pdf|t19860.1483114514s|97f3d4b135802fe5|37734|file|local|vector|||3.766|Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_simulation_1_plot_5|stem|7104031c03134d2e|0f8eae5446d1cf33|345e6bf7b0da0b72|200383405|figures/hpmd_simulation_1_plot_1_5.pdf|t19860.1483850827s|4e406d4d9df0b57d|18743|file|local|vector|||6.345|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_simulation_1_plot_6|stem|f1c59a647baf3606|816116f9aacf6fa5|7958589487320333|497827618|figures/hpmd_simulation_1_plot_1_6.pdf|t19860.1479099565s|c95bb9a400f8a85f|17653|file|local|vector|||3.907|1m22mUsing the size aesthetic with geom_ribbon was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. 1m22mUsing the size aesthetic with geom_line was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
-hpmd_stan_checks|stem|7f92e4872ddc3d59|dc633bdd65c0f8ab|e3c9c4c8ae14957f|-120444192||t19860.3257621937s|13b848670dd363c6|2370551|rds|local|vector|||465.385|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 23 rows containing missing values geom_segment.. 1m22mRemoved 23 rows containing missing values geom_segment.|
+hpmd_simulation_1_plot_1|stem|572e7e733ac84a4a|325cc014ea877ea0|7daf49f7b9e4851e|1118112019|figures/hpmd_simulation_1_plot_1_1.pdf|t20044.4712056304s|6f90afeebc871ee3|31143|file|local|vector|||27.127|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_simulation_1_plot_2|stem|5d43a663dc7f9982|06fd945da30502bc|2b855553e1be7b5b|1467167407|figures/hpmd_simulation_1_plot_1_2.pdf|t20044.4712938142s|655e633ce17c5e89|18869|file|local|vector|||7.588|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_simulation_1_plot_3|stem|bf96ee73e0ddb4f1|887932a7ef5d321c|0afb5aba5194e6f8|-293543732|figures/hpmd_simulation_1_plot_1_3.pdf|t20044.4713553453s|2ab73bdcc6fa26be|37690|file|local|vector|||5.254|Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_simulation_1_plot_4|stem|df69d7188b9a0431|4eca4d5cb2e5f0b6|26ae4d3871f6b2d9|-1069677497|figures/hpmd_simulation_1_plot_1_4.pdf|t20044.4714057185s|bc3a673491e6d02f|37740|file|local|vector|||4.327|Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_simulation_1_plot_5|stem|996155ea9991c15a|0f8eae5446d1cf33|4af543c802542f23|200383405|figures/hpmd_simulation_1_plot_1_5.pdf|t20044.4714980447s|4007fec64aeb042e|18810|file|local|vector|||7.924|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument k0  posteriorrvar_rng....Caused by warning33m39m NAs produced. 1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument mass_relative_mass  posteriorrvar_rng....Caused by warning33m39m NAs produced. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_simulation_1_plot_6|stem|10ba420bc9bfaf7a|816116f9aacf6fa5|d4df37d3b352e9d5|497827618|figures/hpmd_simulation_1_plot_1_6.pdf|t20044.4708912678s|c95bb9a400f8a85f|17653|file|local|vector|||5.902|1m22mUsing the size aesthetic with geom_ribbon was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. 1m22mUsing the size aesthetic with geom_line was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_stan_checks|stem|7f92e4872ddc3d59|dc633bdd65c0f8ab|f70a16b4785e7462|-120444192||t20044.5184019747s|13b848670dd363c6|2370551|rds|local|vector|||500.921|1m22mUsing the size aesthetic with geom_segment was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 319 rows containing missing values geom_segment.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 543 rows containing missing values stat_slabinterval.. 1m22mRemoved 23 rows containing missing values geom_segment.. 1m22mRemoved 23 rows containing missing values geom_segment.|
 hpmd_stan_cur_d_models_2|stem|0d6f7332d3452b4f|0a7ece06cbfe47b3|7495275bca5de1f3|-1679795510||t19772.3601099685s|dcfb5579c9d2f932|290|rds|local|vector|||0.125||
 hpmd_stan_cur_d_models_3|stem|a35dde177e918c42|3cef6ff3322fa2c0|7495275bca5de1f3|-1457621690||t19772.3601118188s|dcfb5579c9d2f932|290|rds|local|vector|||0.001||
 hpmd_stan_cur_d_models_4|stem|8761a3a7352ab4ee|a5336304c85509e2|7495275bca5de1f3|-1526174434||t19772.3601129682s|815c38d038fbe0c4|289|rds|local|vector|||0.001||
@@ -115,7 +120,7 @@ hpmd_stan_fit_cv_7|stem|e0d1f2ac79fc7e12|8f63752646e844b1|662d7cd4bb45ac68|75579
 hpmd_stan_fit_cv_8|stem|e0d1f2ac79fc7e12|b72877c843d8dcae|d2447793ad8e8312|1072051903||t19860.3137572153s|44e327d1ee1978d7|43|rds|local|vector|||0||
 hpmd_stan_fit_cv_9|stem|e0d1f2ac79fc7e12|8cf6ca2bb464fdf9|74f10c0e8984b59a|1320932458||t19860.313757949s|44e327d1ee1978d7|43|rds|local|vector|||0.001||
 hpmd_stan_fit_mm40_3|stem|62d4b10e9a64beda|157a5e5f6cc9e2d5|6bfdb30e3148c8c5|-2063296126||t19765.447051256s|31014c98a2d6a665|147319124|rds|local|vector|||760.652|Some levels of factor index_samples_to_hpm are unused. This may cause issues if you are using it as the dimension for a variable in a model.. Bulk Effective Samples Size ESS is too low, indicating posterior means and medians may be unreliable.Running the chains for more iterations may help. Seehttpsmcstan.orgmiscwarnings.htmlbulkess. Tail Effective Samples Size ESS is too low, indicating posterior variances and tail quantiles may be unreliable.Running the chains for more iterations may help. Seehttpsmcstan.orgmiscwarnings.htmltailess|
-hpmd_stan_get_all_checks|function|d9c26a6dfff69d79|||||||||||||||
+hpmd_stan_get_all_checks|function|885fc87a4b540245|||||||||||||||
 hpmd_stan_initial_values_2|stem|8130d438c6d0d70f|da0a881d33d94408|69e6c4c392926b1b|-723132669||t19772.3601263808s|2c271ae4f26b7758|273|rds|local|vector|||0.349||
 hpmd_stan_initial_values_3|stem|b1dd39d20f0aa088|690c804044fdce01|abe2c6456611b020|753733392||t19772.3601269234s|73e9d248c95c1f30|330|rds|local|vector|||0||
 hpmd_stan_initial_values_4|stem|883369443859a4e6|b6c1969394a905e3|e034d8607f7f6377|1533078519||t19772.3601277522s|6933a0e233824cd5|374|rds|local|vector|||0.001||
@@ -133,8 +138,8 @@ hpmd_stan_rmse_6|stem|381c9a4726cc2e9a|1d36cc56b3e70601|55f79bdfcd4e628a|-795780
 hpmd_stan_rmse_7|stem|ba523a4ba8eae2fa|a8c7ed902c8ef556|df3b19c0adbb5903|-505742225|_targets_rvars/hpmd_stan_rmse_train_7.rds|t19860.1543443093s|3a51c0758f248c9d|5038922|file|local|vector|||9.292||
 hpmd_stan_rmse_8|stem|ab1346ce5a8331fc|7b16e7e5b2467181|26d3dbac9b374430|-1519942775|_targets_rvars/hpmd_stan_rmse_train_8.rds|t19860.1544979994s|0bb46881e97aae7b|5039816|file|local|vector|||13.139||
 hpmd_stan_rmse_9|stem|c90c5aa689a23fb5|12b4e92132bdb788|c6256678370def61|-1220663498|_targets_rvars/hpmd_stan_rmse_train_9.rds|t19860.3258708262s|bdf1d0884f6f91f7|4909341|file|local|vector|||9.301||
-hpmd_supporting_info|stem|03a6bc91c0c7be76|35cbb1cf66e1a625|df8b6c52449aada0|-388096648|hpmd-supporting-info.pdf*hpmd-supporting-info.Rmd*hpmd-supporting-info_files|t19882.3681652402s|73d9634338e48daf|9064884|file|local|vector|||27.666|Package tocloft Warning \starttoc has already been redefined tocloft bailing.  out. on input line 1156.. LaTeX Warning Unused global options.     12pt.|
-hpmd_tables|stem|83612b505eb92c7b|1743edc18dda50a1|14c72ede2df99c0a|1120290674||t19859.6783030446s|88eeeee5fa9a57d3|1229|rds|local|vector|||1.861|NAs produced. NAs produced. NAs produced. NAs produced. NAs produced. NAs produced. NAs produced|
+hpmd_supporting_info|stem|12a37dc4270b0f0d|df7a79d12f05c98c|0ba41870539daad3|-388096648|hpmd-supporting-info.pdf*hpmd-supporting-info.Rmd*hpmd-supporting-info_files|t20111.3671366076s|916c5f5fd9a873c2|9006925|file|local|vector|||20.968||
+hpmd_tables|stem|a7a8095385f00fd5|1743edc18dda50a1|285ff0099bee8c4c|1120290674||t20061.400889373s|f05b7d2b38f0a388|1287|rds|local|vector|||2.314|NAs produced. NAs produced. NAs produced. NAs produced. NAs produced. NAs produced. NAs produced|
 hpmd_yhat_1|stem|fddfbd257b920846|6b1ff170b4ec211e|c4e84c5a17546fae|1672010559|_targets_rvars/hpmd_yhat_1.rds|t19759.4127469524s|65b5a6db1903d7e3|711448065|file|local|vector|||59.309|1m22mThere was 1 warning in dplyrmutate.1m22m36mℹ39m In argument water_table_depth_to_surface_1   ... .Caused by warning33m39m NAs produced|
 leaching_add_metadata_1|function|1f0adb3ceaa09245|||||||||||||||
 leaching_add_taxon_rank_value_pretty|function|492524bc5015fddc|||||||||||||||
@@ -142,12 +147,12 @@ leaching_check_coverage_simulation|function|fdb30fd044abb693|||||||||||||||
 leaching_check_stan_diagnostics|function|02cc2d2881b675ea|||||||||||||||
 leaching_check_stan_diagnostics_summary|function|bf444118158722b3|||||||||||||||
 leaching_check_stan_plot_ppc|function|e6e05d76bdb265d3|||||||||||||||
-leaching_check_stan_plot_ppc_combined|function|315060277a69fffb|||||||||||||||
+leaching_check_stan_plot_ppc_combined|function|7e3509fc590a7576|||||||||||||||
 leaching_check_stan_plot_y_vs_yrep|function|b7639ddbc45e6ef8|||||||||||||||
-leaching_check_stan_plot_y_vs_yrep_combined|function|4df75a30006bae49|||||||||||||||
+leaching_check_stan_plot_y_vs_yrep_combined|function|3e087251dc2ba72b|||||||||||||||
 leaching_combine_x_with_stan_draws|function|3ccb4dc8f63922e4|||||||||||||||
 leaching_correct_erroneous_database_entries|function|622865b5c4d07ed2|||||||||||||||
-leaching_d_models|object|69be14f1ae2eebda|||||||||||||||
+leaching_d_models|object|96e5c1f6ce3bc526|||||||||||||||
 leaching_data_add_niche_wtd|function|e451060019caa2b8|||||||||||||||
 leaching_data_adjust_taxon_rank_value|function|ad8f49c6f99b2afd|||||||||||||||
 leaching_data_from_database|stem|9f28277c2c02b293|e245391ade9ecf20|f63906a5f041f4dd|1124250577||t19859.5869621249s|08d6d5f8c751b59a|20510|rds|local|vector|||0.006||
@@ -162,20 +167,20 @@ leaching_filter_data_2|function|41fedfa0950fce7d|||||||||||||||
 leaching_get_average_wtd|function|af6f0ef9f0340bf8|||||||||||||||
 leaching_get_data_database|function|3b2e615919fe6f4b|||||||||||||||
 leaching_get_plot_3|function|bd915e4f14342856|||||||||||||||
-leaching_get_plot_4_individual|function|75ebc457af8ecfce|||||||||||||||
+leaching_get_plot_4_individual|function|a82e9c15ccec10ee|||||||||||||||
 leaching_get_plot_5|function|fc22653f4f6bf0ae|||||||||||||||
-leaching_get_plot_outlier_trajectories|function|54b47bfaecc14a69|||||||||||||||
-leaching_get_simulated_data|function|fec4335e94cb5a01|||||||||||||||
+leaching_get_plot_outlier_trajectories|function|30feddecf0183d25|||||||||||||||
+leaching_get_simulated_data|function|776c81fc603da48d|||||||||||||||
 leaching_get_simulation_interpretation_alpha_1|function|1506319a23bcff21|||||||||||||||
-leaching_get_table_estimates|function|f0dd01fc0e350d4e|||||||||||||||
-leaching_get_table_estimates_species|function|806a84890c586912|||||||||||||||
+leaching_get_table_estimates|function|3eaf01b419afc77d|||||||||||||||
+leaching_get_table_estimates_species|function|08daf2fa58955acc|||||||||||||||
 leaching_get_table_prior_justification|function|19a11884640e1780|||||||||||||||
 leaching_gsa_eriksson2019|function|ba3bc60a1315c2f3|||||||||||||||
 leaching_identify_outliers_mass_relative_mass_mu|function|e91fce2495699815|||||||||||||||
 leaching_load_data_database|function|13e2eb5b56340168|||||||||||||||
 leaching_make_uncertainty_analysis_1|function|b5b06d3e068a3bc6|||||||||||||||
 leaching_mcmc_config|object|4dc10de4f1dddf28|||||||||||||||
-leaching_plot_estimates_for_species_and_studies|function|6a571980d3e47d2f|||||||||||||||
+leaching_plot_estimates_for_species_and_studies|function|c7c37dc312b2553f|||||||||||||||
 leaching_plot_k0_l0|function|4fc8be8a148852ed|||||||||||||||
 leaching_prepare_data|function|6df99466b9b2c1a1|||||||||||||||
 leaching_prepare_data_stan|function|bbff1543009d2971|||||||||||||||
@@ -186,7 +191,7 @@ leaching_stan_data_add_indices|function|4ffbc3b4d4a980d5|||||||||||||||
 leaching_stan_draws_4|stem|1649d7913f6cef0d|28f3a9667a6a0546|ef46db3751d8e999|485840578|../leaching/_targets_rvars/leaching_stan_draws_4.rds|t19859.4929269746s|6daec2d58f88e05f|601911133|file|local|vector|||0||
 leaching_stan_extract_draws|function|d72d09551a02e874|||||||||||||||
 leaching_stan_fit_4|stem|a3ff23971e071983|c9222e99c807234f|ef46db3751d8e999|-1591481887|../leaching/_targets/objects/leaching_stan_fit_4|t19859.4356381202s|f50fabfb4a143334|393083594|file|local|vector|||0||
-leaching_stan_get_all_checks|function|688154939b370be4|||||||||||||||
+leaching_stan_get_all_checks|function|d22de7527a57d720|||||||||||||||
 m68|function|c973cb88dbea201b|||||||||||||||
 m69|function|36bf3facc7783b38|||||||||||||||
 m7|function|0e11cfa933103d5b|||||||||||||||

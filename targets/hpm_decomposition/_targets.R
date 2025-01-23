@@ -102,8 +102,8 @@ leaching_d_models <-
   dplyr::mutate(
     model_name =
       model_name |>
-      hpmd_model_id_to_name() |>
-      factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name())
+      hpmd_model_id_to_name_2() |>
+      factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
   )
 
 
@@ -532,6 +532,31 @@ list(
       v <- c("l_2_p1", "k_2_p1", "alpha_2_p1", "phi_2_p1", "layer_total_porosity_1", "layer_minimum_degree_of_saturation_at_surface_1", "layer_water_table_depth_to_surface_1", "hpm_k_2_p1", "m69_p1", "m69_p2", "m68_p1", "m68_p2", "m68_p3_2_p1", "hpm_l_2_p4", "hpm_l_2_p1", "hpm_l_2_p3")
       priorsense::powerscale_sensitivity(hpmd_stan_fit_4, variable = v)
     }
+  ),
+  tar_target(
+    hpmd_adjustment_of_ldm_estimates_to_hpm_prior,
+    command =
+      hpmd_get_adjustment_of_ldm_estimates_to_hpm_prior(
+        x_stan_draws =
+          list(
+            hpmd_stan_draws_1,
+            hpmd_stan_draws_2,
+            hpmd_stan_draws_3,
+            hpmd_stan_draws_4
+          )
+      ),
+    format = "file"
+  ),
+  tar_target(
+    hpmd_plot_10,
+    command =
+      hpmd_get_plot_10(
+        x_stan_draws =
+          list(
+            hpmd_stan_draws_1
+          )
+      ),
+    format = "file"
   ),
   tar_render(
     hpmd_supporting_info,

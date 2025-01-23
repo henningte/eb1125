@@ -70,3 +70,22 @@ hpmd_model_id_to_name <- function(x) {
   })
 
 }
+
+#' Converts model ids into model names
+#'
+#' @export
+hpmd_model_id_to_name_2 <- function(x) {
+
+  id_models <- paste0(3, "-", 1:5)
+
+  purrr::map_chr(x, function(.x) {
+    index <- id_models == .x
+    if(sum(index) == 0) {
+      NA_character_
+    } else {
+      c("HPM-standard", "HPM-peat", "HPM-all", "HPM-leaching", "HPM-outlier")[index]
+    }
+
+  })
+
+}

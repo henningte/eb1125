@@ -37,7 +37,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Supporting information to: Underestimation of Anaerobic Decomposition Rates in Sphagnum Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses},
+  pdftitle={Supporting information to: Peat Oxic and Anoxic Controls of Sphagnum Decomposition Rates in the Holocene Peatland Model Decomposition Module Estimated from Litterbag Data},
   pdfauthor={Henning Teickner1,; Edzer Pebesma2; Klaus-Holger Knorr1},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -141,27 +141,13 @@
 \usepackage{xr} \externaldocument[main-]{hpmd-paper}
 \usepackage{tocloft}
 \setlength{\cftsecnumwidth}{5ex}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
-\title{Supporting information to: Underestimation of Anaerobic Decomposition Rates in \emph{Sphagnum} Litterbag Experiments by the Holocene Peatland Model Depends on Initial Leaching Losses}
+\title{Supporting information to: Peat Oxic and Anoxic Controls of \emph{Sphagnum} Decomposition Rates in the Holocene Peatland Model Decomposition Module Estimated from Litterbag Data}
 \author{Henning Teickner\textsuperscript{1,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{08 June, 2024}
+\date{23 January, 2025}
 
 \begin{document}
 \maketitle
@@ -180,62 +166,6 @@
 \renewcommand{\thesection}{S\arabic{section}}
 \renewcommand{\theequation}{S\arabic{equation}}
 
-\hypertarget{sup-1}{%
-\section{Model equations}\label{sup-1}}
-
-The litterbag decomposition model combined with each modification of the HPM is obtained from Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) (model 1-4, see the supporting information to Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) for details). Here, we describe the modules which were added to this model in the different modifications of the HPM. All parameters are listed in Tab. \ref{tab:sup-out-d-sdm-all-models-priors-1}.
-
-In models HPMf-LE-peat, HPMe-LE-peat, and HPMe-LE-peat-l0, decomposition rates estimated from litterbag data (\(k\_2_{\text{sample}}\)) are modeled with decomposition rates predicted by the HPM decomposition module:
-
-\begin{equation}
-\begin{aligned}
-k\_2_{\text{sample}} & \sim & \text{gamma}\left(hpm\_k\_2\_p1, \frac{hpm\_k\_2\_p1}{hpm\_k\_2_{\text{sample}}} \right)\\
-hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
-hpm\_k\_2_{\text{sample}} & = & f(ldos\_1_{\text{sample}}, lwtds\_1_{\text{sample}}\\
-          && m69\_p1, m69\_p2, m68\_p1, m68\_p2, m68\_p3\_2_{\text{sample}})\\
-          && (\text{HPM decomposition module})\\
-ldos\_1_{\text{sample}} & = & g(layer\_depth\_midpoint\_1_{\text{sample}},
-        lwtds\_1_{\text{sample}},\\
-          && layer\_total\_porosity\_1_{\text{sample}},\\
-          && lmdosas\_1)\\
-          && (\text{Modified Granberg model})\\
-layer\_total\_porosity\_1_{\text{sample}} & \sim & \text{beta}(layer\_total\_porosity\_1\_p1, layer\_total\_porosity\_1\_p2)\\
-lmdosas\_1_{\text{sample}} & \sim & \text{beta}(lmdosas\_1\_p1, lmdosas\_1\_p2)\\
-lwtds\_1_{\text{sample}} & \sim & \text{normal}(lwtds\_1\_p1_{\text{sample}}, lwtds\_1\_p2)\\
-hpm\_k\_2\_p1 & \sim & \text{gamma}(hpm\_k\_2\_p1\_p1, hpm\_k\_2\_p1\_p2)\\
-\label{eq:sup-model-1}
-\end{aligned}
-\end{equation}
-
-\(ldos\_1\) is short for \(layer\_degree\_of\_saturation\_1\). \(lmdosas\_1\) is short for \(layer\_minimum\_degree\_of\_saturation\_at\_surface\_1\). \(lwtds\_1\) is short for \(layer\_water\_table\_depth\_at\_surface\_1\). The HPM decomposition module is described in Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}) (equations (7) to (9)). The Modified Granberg model is described in Granberg et al. (\protect\hyperlink{ref-Granberg.1999}{1999}) (equations (1) to (3)) and Kettridge and Baird (\protect\hyperlink{ref-Kettridge.2007}{2007}) (equations (6) to (9)).
-
-In HPMe-LE-peat and HPMe-LE-peat-l0, HPM parameters are estimated from the litterbag data and we assumed the following prior distributions:
-
-\begin{equation}
-\begin{aligned}
-m68\_p3\_2_{\text{sample}} & = & \exp(m68\_p3\_2\_p2_{\text{species[sample]}})\\
-m69\_p1 & \sim & \text{beta}(m69\_p1\_p1, m69\_p1\_p2)\\
-m69\_p2 & \sim & \text{gamma}(m69\_p2\_p1, m69\_p2\_p2)\\
-m68\_p1 & \sim & \text{gamma}(m68\_p1\_p1, m68\_p1\_p2)\\
-m68\_p2 & \sim & \text{gamma}(m68\_p2\_p1, m68\_p2\_p2)\\
-m68\_p3\_2\_p2 & \sim & \text{normal}(m68\_p3\_2\_p2\_p1, 68\_p3\_2\_p2\_p2)\\
-\label{eq:sup-model-2}
-\end{aligned}
-\end{equation}
-
-HPMe-LE-peat-l0 in addition modeled the initial leaching loss of \emph{Sphagnum} species as a maximum possible initial leaching loss per species (\(hpm\_l\_2\_p1\)) which is modified by the degree of saturation:
-
-\begin{equation}
-\begin{aligned}
-l\_2_{\text{sample}} & \sim & \text{beta}(hpm\_l\_2~hpm\_l\_2\_p3, (1 - hpm\_l\_2)~hpm\_l\_2\_p3)\\
-hpm\_l\_2_{\text{sample}} & = & \text{logit}^{-1}(hpm\_l\_2\_p1_{\text{species[sample]}} + hpm\_l\_2\_p2~ldos\_1_{\text{sample}})\\
-hpm\_l\_2\_p1 & \sim & \text{normal}(hpm\_l\_2\_p1\_p1, hpm\_l\_2\_p1\_p2)\\
-hpm\_l\_2\_p2 & \sim & \text{normal}(hpm\_l\_2\_p2\_p1, hpm\_l\_2\_p2\_p2)\\
-hpm\_l\_2\_p3 & \sim & \text{gamma}(hpm\_l\_2\_p3\_p1, hpm\_l\_2\_p3\_p2)\\
-\label{eq:sup-model-3}
-\end{aligned}
-\end{equation}
-
 \hypertarget{sup-2}{%
 \section{Prior choices and justification}\label{sup-2}}
 
@@ -243,65 +173,75 @@ hpm\_l\_2\_p3 & \sim & \text{gamma}(hpm\_l\_2\_p3\_p1, hpm\_l\_2\_p3\_p2)\\
 
 
 
+
+
+
+
+
+
+
+
 \begin{table}[H]
 
-\caption{\label{tab:sup-out-d-sdm-all-models-priors-1}Prior distributions of all Bayesian models and their justifications. ``HPM parameter'' is the name of the corresponding parameter in the Holocene Peatland Model (\protect\hyperlink{ref-Frolking.2010}{Frolking et al., 2010}). When there is no value for ``Justification'', the prior was chosen based on prior predictive checks against the data. This prior predictive check tests whether the models can produce distributions of measured variables we expect based on prior knowledge.}
+\caption{\label{tab:sup-out-d-sdm-all-models-priors-1}Prior distributions of all Bayesian models and their justifications. ``Parameter name in code'' is the name for the parameter as used in our Stan models. ``Parameter name in text'' is the name of the corresponding parameter we use in the main text and figures. ``Equation in main text'' references the equation in the main text where the parameter occurs. When there is no value for ``Justification'', the prior was chosen based on prior predictive checks against the data. This prior predictive check tests whether the models can produce distributions of measured variables we expect based on prior knowledge. The results of these prior predictive checks are shown in supporting section \ref{sup-3}.}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{llll>{\raggedright\arraybackslash}p{7cm}}
+\begin{tabular}[t]{lllll>{\raggedright\arraybackslash}p{7cm}}
 \toprule
-Parameter & HPM parameter & Unit & Prior distribution & Justification\\
+Parameter name in code & Parameter name in text & Equation in main text & Unit & Prior distribution & Justification\\
 \midrule
-l\_2\_p1 &  & (g g$_\text{initial}$) (logit scale) & normal(-3.5, l\_2\_p1\_p2) & Assumes an average initial leaching loss across all available litterbag data within (95\% confidence interval) (0.012, 0.068) g g$_\text{initial}^{-1}$\\
-l\_2\_p2 &  & (g g$_\text{initial}$) (logit scale) & normal(0, l\_2\_p2\_p2) & \\
-l\_2\_p3 &  & (g g$_\text{initial}$) (logit scale) & normal(0, l\_2\_p3\_p2) & \\
-l\_2\_p4 &  & (g g$_\text{initial}$) (logit scale) & normal(0, l\_2\_p4\_p2) & \\
-k\_2\_p1 &  & (yr$^{-1}$) (log scale) & normal(-2.9, k\_2\_p1\_p2) & Assumes an average initial decomposition rate across all available litterbag data within (95\% confidence interval) (0.024, 0.131) yr$^{-1}$\\
+l\_2\_p1 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & normal(-3.5, l\_2\_p1\_p2) & Assumes an average initial leaching loss across all available litterbag data within (95\% confidence interval) (0.012, 0.068) g g$_\text{initial}^{-1}$\\
+l\_2\_p2 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & normal(0, l\_2\_p2\_p2) & \\
+l\_2\_p3 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & normal(0, l\_2\_p3\_p2) & \\
+l\_2\_p4 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & normal(0, l\_2\_p4\_p2) & \\
+k\_2\_p1 & $\beta_{k,1}$ & \ref{main-eq:model-link-2} & (yr$^{-1}$) (log scale) & normal(-2.9, k\_2\_p1\_p2) & Assumes an average initial decomposition rate across all available litterbag data within (95\% confidence interval) (0.024, 0.131) yr$^{-1}$\\
 \addlinespace
-k\_2\_p2 &  & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p2\_p2) & \\
-k\_2\_p3 &  & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p3\_p2) & \\
-k\_2\_p4 &  & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p4\_p2) & \\
-phi\_2\_p2\_p1 &  & (-) (log scale) & normal(5, phi\_2\_p2\_p1\_p2) & \\
-phi\_2\_p2\_p2 &  & (-) (log scale) & normal(0, phi\_2\_p2\_p2\_p2) & \\
+k\_2\_p2 & $\beta_{k,2,\text{species}}$ & \ref{main-eq:model-link-2} & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p2\_p2) & Centered at the standard value used in the HPM.\\
+k\_2\_p3 & $\beta_{k,3,\text{species x study}}$ & \ref{main-eq:model-link-2} & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p3\_p2) & Centered at the standard value used in the HPM.\\
+k\_2\_p4 & $\beta_{k,4,\text{sample}}$ & \ref{main-eq:model-link-2} & (yr$^{-1}$) (log scale) & normal(0, k\_2\_p4\_p2) & Centered at the standard value used in the HPM.\\
+phi\_2\_p2\_p1 &  &  & (-) (log scale) & normal(5, phi\_2\_p2\_p1\_p2) & \\
+phi\_2\_p2\_p2 &  &  & (-) (log scale) & normal(0, phi\_2\_p2\_p2\_p2) & \\
 \addlinespace
-phi\_2\_p2\_p3 &  & (-) (log scale) & normal(0, phi\_2\_p2\_p3\_p2) & \\
-phi\_2\_p2\_p4 &  & (-) (log scale) & normal(0, phi\_2\_p2\_p4\_p2) & \\
-alpha\_2\_p1 &  & (-) (log scale) & normal(-0.2, 0.3) & Assumes an average $\alpha$ across all available litterbag data within (95\% confidence interval) (1.451, 2.473)\\
-alpha\_2\_p2 &  & (-) (log scale) & normal(0, 0.3) & \\
-alpha\_2\_p3 &  & (-) (log scale) & normal(0, 0.3) & \\
+phi\_2\_p2\_p3 &  &  & (-) (log scale) & normal(0, phi\_2\_p2\_p3\_p2) & \\
+phi\_2\_p2\_p4 &  &  & (-) (log scale) & normal(0, phi\_2\_p2\_p4\_p2) & \\
+alpha\_2\_p1 &  &  & (-) (log scale) & normal(-0.2, 0.3) & Assumes an average $\alpha$ across all available litterbag data within (95\% confidence interval) (1.451, 2.473)\\
+alpha\_2\_p2 &  &  & (-) (log scale) & normal(0, 0.3) & \\
+alpha\_2\_p3 &  &  & (-) (log scale) & normal(0, 0.3) & \\
 \addlinespace
-alpha\_2\_p4 &  & (-) (log scale) & normal(0, 0.2) & \\
-k\_2\_p1\_p2 &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
-k\_2\_p2\_p2 &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
-k\_2\_p3\_p2 &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
-k\_2\_p4\_p2 &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
+alpha\_2\_p4 &  &  & (-) (log scale) & normal(0, 0.2) & \\
+k\_2\_p1\_p2 &  &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
+k\_2\_p2\_p2 &  &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
+k\_2\_p3\_p2 &  &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
+k\_2\_p4\_p2 &  &  & (yr$^{-1}$) (log scale) & half-normal(0, 0.4) & \\
 \addlinespace
-phi\_2\_p2\_p1\_p2 &  & (-) (log scale) & half-normal(0, 0.3) & \\
-phi\_2\_p2\_p2\_p2 &  & (-) (log scale) & half-normal(0, 0.3) & \\
-phi\_2\_p2\_p3\_p2 &  & (-) (log scale) & half-normal(0, 0.3) & \\
-phi\_2\_p2\_p4\_p2 &  & (-) (log scale) & half-normal(0, 0.3) & \\
-l\_2\_p1\_p2 &  & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
+phi\_2\_p2\_p1\_p2 &  &  & (-) (log scale) & half-normal(0, 0.3) & \\
+phi\_2\_p2\_p2\_p2 &  &  & (-) (log scale) & half-normal(0, 0.3) & \\
+phi\_2\_p2\_p3\_p2 &  &  & (-) (log scale) & half-normal(0, 0.3) & \\
+phi\_2\_p2\_p4\_p2 &  &  & (-) (log scale) & half-normal(0, 0.3) & \\
+l\_2\_p1\_p2 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & half-normal(0, 0.4) & \\
 \addlinespace
-l\_2\_p2\_p2 &  & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
-l\_2\_p3\_p2 &  & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
-l\_2\_p4\_p2 &  & (g g$_\text{initial}$) (logit scale) & half-normal(0, 0.4) & \\
-layer\_total\_porosity\_1 &  & L$_\text{pores}$ L$_\text{sample}^{-1}$ & beta(12, 3) & The total porosity was not reported in any study and therefore we assumed an average value of 80\% with a standard deviation of 10\%, roughly based on values reported for low-density \emph{Sphagnum} peat (\protect\hyperlink{ref-Liu.2019}{Liu and Lennartz, 2019}).\\
-layer\_minimum\_degree\_of\_saturation\_at\_surface\_1 &  & L$_\text{water}$ L$_\text{pores}^{-1}$ & beta(0.9, 17.1) & This parameter comes from the modified Granberg model. The prior distribution assumes a minimum degree of saturation at the surface in different litterbag experiments of (95\% confidence interval) (0.001, 0.191)\\
+l\_2\_p2\_p2 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & half-normal(0, 0.4) & \\
+l\_2\_p3\_p2 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & half-normal(0, 0.4) & \\
+l\_2\_p4\_p2 &  &  & (g g$_\text{initial}^{-1}$) (logit scale) & half-normal(0, 0.4) & \\
+layer\_total\_porosity\_1 & $P$ & \ref{main-eq:hpm-modified-granberg-1} & L$_\text{pores}$ L$_\text{sample}^{-1}$ & beta(12, 3) & Centered at the standard value used in the HPM.\\
+layer\_minimum\_degree\_of\_saturation\_at\_surface\_1 & $\theta_\text{0,min}$ & \ref{main-eq:hpm-modified-granberg-1} & L$_\text{water}$ L$_\text{pores}^{-1}$ & beta(0.9, 17.1) & Centered at the standard value used in the HPM.\\
 \addlinespace
-layer\_water\_table\_depth\_to\_surface\_1 &  & cm & normal(average reported WTD, 3) & The average was set to the average water table depths reported in the litterbag studies.\\
-hpm\_k\_2\_p1 &  & (-) & gamma(20, 1) & \\
-m69\_p1 & $W_{opt}$ & L$_\text{water}$ L$_\text{pores}^{-1}$ & beta(13.5, 16.5) & Centered at the standard value used in the HPM.\\
-m69\_p2 & $c_{1}$ & (-) & gamma(20, 8.66) & Centered at the standard value used in the HPM.\\
-m68\_p1 & $f_{min}$ & (yr$^{-1}$) & gamma(5, 5000) & Centered at the standard value used in the HPM.\\
+layer\_water\_table\_depth\_to\_surface\_1 &  &  & cm & normal(average reported WTD, 3) & The average was set to the average water table depths reported in the litterbag studies.\\
+hpm\_k\_2\_p1 & $\alpha_{\mu_k}$ & \ref{main-eq:model-link-1} & (-) & gamma(20, 1) & Centered at the standard value used in the HPM.\\
+m69\_p1 & $W_{opt}$ & \ref{main-eq:hpm-moisture-modifier-1} & L$_\text{water}$ L$_\text{pores}^{-1}$ & beta(13.5, 16.5) & Centered at the standard value used in the HPM.\\
+m69\_p2 & $c_{1}$ & \ref{main-eq:hpm-moisture-modifier-1} & (-) & gamma(20, 8.66) & Centered at the standard value used in the HPM.\\
+m68\_p1 & $f_{min}$ & \ref{main-eq:hpm-moisture-modifier-2} & (yr$^{-1}$) & gamma(5, 5000) & Centered at the standard value used in the HPM.\\
 \addlinespace
-m68\_p2 & $c_{2}$ & (cm) & gamma(5, 16.67) & Centered at the standard value used in the HPM.\\
-m68\_p3\_2\_p1 &  & (yr$^{-1}$) (log scale) & normal(-2.2, 0.3) & Assumes a maximum potential initial decomposition rate across all species within (95\% confidence interval) (0.061, 0.2) yr$^{-1}$\\
-hpm\_l\_2\_p1 &  & (g g$_\text{initial}^{-1}$) (logit scale) & normal(-2.2, 0.3) & Assumes a maximum possible initial leaching loss across all available litterbag data within (95\% confidence interval) (0.058, 0.167) g g$_\text{initial}^{-1}$\\
-hpm\_l\_2\_p3 &  & (g g$_\text{initial}$ L$_\text{water}^{-1}$ L$_\text{pores}$) (logit scale) & normal(0, 0.5) & \\
-hpm\_l\_2\_p4 &  & (-) & gamma(10, 0.25) & \\
+m68\_p2 & $c_{2}$ & \ref{main-eq:hpm-moisture-modifier-2} & (cm) & gamma(5, 16.67) & Centered at the standard value used in the HPM.\\
+m68\_p3\_2\_p1 & $k_{0,i}$ & \ref{main-eq:hpm-decomposition-rate-1} & (yr$^{-1}$) (log scale) & normal(-2.2, 0.3) & Assumes a maximum potential initial decomposition rate across all species within (95\% confidence interval) (0.061, 0.2) yr$^{-1}$\\
+hpm\_l\_2\_p1 & $\beta_{l,1}$ & \ref{main-eq:hpm-hpm-l-2} & (g g$_\text{initial}^{-1}$) (logit scale) & normal(-2.2, 0.3) & Centered at the standard value used in the HPM.\\
+hpm\_l\_2\_p3 & $\beta_{l,2}$ & \ref{main-eq:hpm-hpm-l-2} & (g g$_\text{initial}^{-1}$ L$_\text{water}^{-1}$ L$_\text{pores}$) (logit scale) & normal(0, 0.5) & Centered at the standard value used in the HPM.\\
+hpm\_l\_2\_p4 & $\phi_l$ & \ref{main-eq:hpm-hpm-l-2} & (-) & gamma(10, 0.25) & Centered at the standard value used in the HPM.\\
 \bottomrule
 \end{tabular}}
 \end{table}
+
+\clearpage
 
 \hypertarget{sup-12}{%
 \section{Further Information on Bayesian Data Analysis}\label{sup-12}}
@@ -310,7 +250,7 @@ hpm\_l\_2\_p4 &  & (-) & gamma(10, 0.25) & \\
 \paragraph*{Monte Carlo Standard Errors}\label{monte-carlo-standard-errors}}
 \addcontentsline{toc}{paragraph}{Monte Carlo Standard Errors}
 
-Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.012 yr\(^{-1}\) for \(k_0\), 0.363 mass-\% for \(l_0\), 0.043 for \(\alpha\), 0.401 mass-\% for the remaining mass, 0.001 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.004 for \(c_{1}\), 0.001 yr\(^{-1}\) for \(f_{min}\), 0.002 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.342 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.088 yr\(^{-1}\) for \(k_0\), 0.646 mass-\% for \(l_0\), 0.147 for \(\alpha\), 2.742 mass-\% for the remaining mass, 0.004 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.006 for \(c_{1}\), 0.005 yr\(^{-1}\) for \(f_{min}\), 0.007 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.293 mass-\% for \(l_0\) predicted by HPMe-LE-peat-l0.
+Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari et al., 2021}) for the median were at most 0.012 yr\(^{-1}\) for \(k_0\), 0.363 mass-\% for \(l_0\), 0.043 for \(\alpha\), 0.401 mass-\% for the remaining mass, 0.001 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.004 for \(c_{1}\), 0.001 yr\(^{-1}\) for \(f_{min}\), 0.002 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.342 mass-\% for \(l_0\) predicted by HPM-leaching. For the 2.5\% and 97.5\% quantiles, MCSE were at most 0.088 yr\(^{-1}\) for \(k_0\), 0.646 mass-\% for \(l_0\), 0.147 for \(\alpha\), 2.742 mass-\% for the remaining mass, 0.004 L\(_\text{water}\) L\(_\text{pores}^{-1}\) for \(W_{opt}\), 0.006 for \(c_{1}\), 0.005 yr\(^{-1}\) for \(f_{min}\), 0.007 m for \(c_{2}\), 0.003 yr\(^{-1}\) for \(k_0\) predicted by the HPM modifications, and 0.293 mass-\% for \(l_0\) predicted by HPM-leaching.
 
 \hypertarget{power-scaling}{%
 \paragraph*{Power-scaling}\label{power-scaling}}
@@ -318,13 +258,13 @@ Monte Carlo standard errors (MSCE) (\protect\hyperlink{ref-Vehtari.2021}{Vehtari
 
 Power-scaling exponentiates prior (to analyze prior sensitivity) or likelihood (to analyze likelihood sensitivity) distributions by different constants \(\alpha>0\), where \(\alpha>1\) means that the scaled component gets more important relative to the other component, and \(\alpha<1\) means it gets less important (\protect\hyperlink{ref-Kallioinen.2024}{Kallioinen et al., 2024}). We varied \(\alpha\) from \(0.99\) to \(1.01\) (default option) and identified sensitivity with the cumulative Jensen-Shannon distance and a threshold of 0.05, as suggested in Kallioinen et al. (\protect\hyperlink{ref-Kallioinen.2024}{2024}).
 
-The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2024f}{Teickner et al., 2024}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
+The power-scaling sensitivity analysis indicates a weak likelihood for all peat properties for most litterbag experiments, indicating that, not surprisingly, remaining masses alone do not give much information about peat properties. For \(W_{opt}\), \(c_{1}\), and \(c_{2}\) the analysis suggested a prior-data conflict which supports our finding that parameter values different from the standard values are more compatible with the data. For \(k_{0,i}\), the analysis suggested a prior-data conflict for most species, and similar for the parameters with which we modeled how initial leaching losses depend on the degree of saturation. We did not attempt to resolve these conflicts, either because we know from our previous study that the data provide only uncertain information (\protect\hyperlink{ref-Teickner.2025}{Teickner et al., 2025}) which makes prior-data conflicts more likely, or because we wanted to use HPM standard parameter values as prior information. A future update of our study with more accurate data may address these challenges.
 
 \hypertarget{software}{%
 \paragraph*{Software}\label{software}}
 \addcontentsline{toc}{paragraph}{Software}
 
-All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{R Core Team, 2022}). We computed prior and posterior predictive checks with the bayesplot package (1.9.0) (\protect\hyperlink{ref-Gabry.2022}{Gabry and Mahr, 2022}) (supporting section \ref{sup-3}). Data were handled with tidyverse packages (\protect\hyperlink{ref-Wickham.2019}{Wickham et al., 2019}), MCMC samples with the posterior (1.5.0) (\protect\hyperlink{ref-Burkner.2023}{Bürkner et al., 2023}) and tidybayes (3.0.2) (\protect\hyperlink{ref-Kay.2022}{Kay, 2022b}) packages. Graphics were created with ggplot2 (3.4.4) (\protect\hyperlink{ref-Wickham.2016}{Wickham, 2016}), ggdist (3.1.1) (\protect\hyperlink{ref-Kay.2022a}{Kay, 2022a}) and patchwork (1.1.1) (\protect\hyperlink{ref-Pedersen.2020}{Pedersen, 2020}).
+All computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{R Core Team, 2022}). We computed prior and posterior predictive checks with the bayesplot package (1.9.0) (\protect\hyperlink{ref-Gabry.2022}{Gabry and Mahr, 2022}) (supporting section \ref{sup-3}). Data were handled with tidyverse packages (\protect\hyperlink{ref-Wickham.2019}{Wickham et al., 2019}), MCMC samples with the posterior (1.5.0) (\protect\hyperlink{ref-Burkner.2023}{Bürkner et al., 2023}) and tidybayes (3.0.2) (\protect\hyperlink{ref-Kay.2022}{Kay, 2022b}) packages. Graphics were created with ggplot2 (3.4.4) (\protect\hyperlink{ref-Wickham.2016}{Wickham, 2016}), ggdist (3.1.1) (\protect\hyperlink{ref-Kay.2022a}{Kay, 2022a}) and patchwork (1.1.1) (\protect\hyperlink{ref-Pedersen.2020}{Pedersen, 2020}).
 
 \hypertarget{sup-3}{%
 \section{Prior and posterior predictive checks}\label{sup-3}}
@@ -403,7 +343,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Density estimate of 100 sets of initial leaching losses (\(l_0\)) predicted by HPMe-LE-peat-l0 sampled from the prior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-prior-hpm-l-2}
+\caption{Density estimate of 100 sets of initial leaching losses (\(l_0\)) predicted by HPM-leaching sampled from the prior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-prior-hpm-l-2}
 \end{figure}
 
 
@@ -414,11 +354,11 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Density estimate of 100 sets of initial leaching losses (\(l_0\)) predicted by HPMe-LE-peat-l0 sampled from the posterior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-posterior-hpm-l-2}
+\caption{Density estimate of 100 sets of initial leaching losses (\(l_0\)) predicted by HPM-leaching sampled from the posterior distribution (light blue lines) versus density estimate of the initial leaching loss estimated from the litterbag studies.}\label{fig:sup-hpmd-plot-ppc-posterior-hpm-l-2}
 \end{figure}
 
 \hypertarget{sup-4}{%
-\section{\texorpdfstring{\(k_{0,i}\) estimates in HPMe-LE-peat and in HPMe-LE-peat-l0}{k\_\{0,i\} estimates in HPMe-LE-peat and in HPMe-LE-peat-l0}}\label{sup-4}}
+\section{\texorpdfstring{\(k_{0,i}\) estimates in HPM-all and in HPM-leaching}{k\_\{0,i\} estimates in HPM-all and in HPM-leaching}}\label{sup-4}}
 
 
 
@@ -428,11 +368,11 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{\(k_{0,i}\) estimates in HPMe-LE-peat-l0 and in HPMe-LE-peat-l0 for each \emph{Sphagnum} species. Points are average values and error bars are 95\% confidence intervals. \emph{Sphagnum} spec. are samples which have been identified only to the genus level and there are two values here because we defined two separate species in the HPM to estimate maximum possible decomposition rates separately for initial peat samples collected from 10 or 20 cm depth in Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}).}\label{fig:sup-hpmd-plot-6}
+\caption{\(k_{0,i}\) estimates in HPM-all and in HPM-leaching for each \emph{Sphagnum} species. Points are average values and error bars are 95\% confidence intervals. \emph{Sphagnum} spec. are samples which have been identified only to the genus level and there are two values here because we defined two separate species in the HPM to estimate maximum possible decomposition rates separately for initial peat samples collected from 10 or 20 cm depth in Prevost et al. (\protect\hyperlink{ref-Prevost.1997}{1997}).}\label{fig:sup-hpmd-plot-6}
 \end{figure}
 
 \hypertarget{sup-5}{%
-\section{Marginal posterior distributions of HPM parameters in HPMe-LE-peat and HPMe-LE-peat-l0}\label{sup-5}}
+\section{Marginal posterior distributions of HPM parameters in HPM-all and HPM-leaching}\label{sup-5}}
 
 
 
@@ -442,7 +382,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPMe-LE-peat. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-3}
+\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-all. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-3}
 \end{figure}
 
 
@@ -453,7 +393,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPMe-LE-peat-l0. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-4}
+\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-leaching. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-4}
 \end{figure}
 
 
@@ -464,21 +404,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPMe-LE-peat-l0 during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) \(k_{0,i}\) estimated for each species for which data were removed during the cross-validation. (b) other HPM parameters.}\label{fig:sup-hpmd-plot-5}
-\end{figure}
-
-\hypertarget{sup-6}{%
-\section{\texorpdfstring{\(l_0\) versus estimated water table depths below the litter samples}{l\_0 versus estimated water table depths below the litter samples}}\label{sup-6}}
-
-
-
-\begin{figure}[H]
-
-{\centering \includegraphics[width=1\linewidth]{figures/hpmd_plot_7} 
-
-}
-
-\caption{Estimated for \(l_0\) from the litterbag data (Predicted with HPM = No) and predicted by different versions of the HPM decomposition module (Predicted with HPM = Yes) (HPMf, HPMf-LE-peat, and HPMe-LE-peat) versus reported (HPMf) or estimated (HPMf-LE-peat and HPMe-LE-peat) average water table depths below the litterbags. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown.}\label{fig:sup-hpmd-plot-7}
+\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-leaching during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) \(k_{0,i}\) estimated for each species for which data were removed during the cross-validation. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details).}\label{fig:sup-hpmd-plot-5}
 \end{figure}
 
 \hypertarget{sup-8}{%
@@ -492,7 +418,7 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{\(k_0\) estimated with the litterbag decomposition model from Teickner et al. (\protect\hyperlink{ref-Teickner.2024f}{2024}) (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPMf, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
+\caption{\(k_0\) estimated with LDM-standard (Predicted with HPM = No) and predicted by the HPM decomposition module with standard parameter values (HPM-standard, Predicted with HPM = Yes) versus reported average water table depths below the litterbags for different species and studies (negative values represent litterbags placed below the water table, positive values represent litterbags placed above the water table in the unsaturated zone). Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-1}
 \end{figure}
 
 
@@ -503,11 +429,11 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{\(k_0\) estimated with the litterbag decomposition model in HPMe-LE-peat-l0 from the litterbag data (Predicted with HPM = No) and predicted by the HPM decomposition module with parameter values estimated from the litterbag data (HPMe-LE-peat-l0, Predicted with HPM = Yes) versus estimated average water table depths below the litterbags for different species and studies. Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-4}
+\caption{\(k_0\) estimated with the litterbag decomposition model in HPM-leaching from the litterbag data (Predicted with HPM = No) and predicted by the HPM decomposition module with parameter values estimated from the litterbag data (HPM-leaching, Predicted with HPM = Yes) versus estimated average water table depths below the litterbags for different species and studies (negative values represent litterbags placed below the water table, positive values represent litterbags placed above the water table in the unsaturated zone). Points represent average estimates and error bars 95\% posterior intervals. Lines are predictions of linear models fitted to the average estimates. \emph{Sphagnum} spec. are samples which have been identified only to the genus level. Only data for species with at least three replicates are shown. Error bars exceeding 0.5 yr\(^{-1}\) are clipped.}\label{fig:sup-hpmd-plot-8-4}
 \end{figure}
 
 \hypertarget{sup-9}{%
-\section{\texorpdfstring{Depth profiles of predicted decomposition rates with \(W_{opt}\) estimated by HPMe-LE-peat-l0 or set to its standard value for \emph{S. fallax}}{Depth profiles of predicted decomposition rates with W\_\{opt\} estimated by HPMe-LE-peat-l0 or set to its standard value for S. fallax}}\label{sup-9}}
+\section{\texorpdfstring{Depth profiles of predicted decomposition rates with \(W_{opt}\) estimated by HPM-leaching or set to its standard value for \emph{S. fallax}}{Depth profiles of predicted decomposition rates with W\_\{opt\} estimated by HPM-leaching or set to its standard value for S. fallax}}\label{sup-9}}
 
 
 
@@ -517,11 +443,11 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Decomposition rates predicted with HPMe-LE-peat-l0 (\(k_{0,\text{modified}}(\text{HPMe-LE-peat-l0})\)) for \emph{S. fallax} (hollows), using either the standard value for \(W_{opt}\) or the \(W_{opt}\) value estimated by HPMe-LE-peat-l0 versus depth of the litter below the peat surface. The horizontal line is the average water table depth.}\label{fig:sup-hpmd-simulation-1-plot-5}
+\caption{Decomposition rates predicted with HPM-leaching (\(k_{0,\text{modified}}(\text{HPM-leaching})\)) for \emph{S. fallax} (hollows), using either the standard value for \(W_{opt}\) or the \(W_{opt}\) value estimated by HPM-leaching versus depth of the litter below the peat surface. The horizontal line is the average water table depth.}\label{fig:sup-hpmd-simulation-1-plot-5}
 \end{figure}
 
 \hypertarget{sup-10}{%
-\section{Results for HPMe-LE-peat-l0-outlier}\label{sup-10}}
+\section{Results for HPM-outlier}\label{sup-10}}
 
 
 
@@ -531,13 +457,13 @@ All other computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPMe-LE-peat-l0-outlier. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-9}
+\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-outlier. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-9}
 \end{figure}
 
 \hypertarget{sup-11}{%
-\section{Prediction uncertainties of HPMe-LE-peat-l0}\label{sup-11}}
+\section{Prediction uncertainties of HPM-leaching}\label{sup-11}}
 
-To illustrate that the HPM decomposition module implies large uncertainties if its parameters are estimated from available litterbag data, we simulate decomposition of \emph{S, fallax} and \emph{S. fuscum} litter during 50 years, either incubated under a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\), or 20 cm below the water table. The results are shown in Fig. \ref{fig:sup-hpmd-simulation-1-plot-6}.
+To illustrate that the HPM decomposition module implies large uncertainties if its parameters are estimated from available litterbag data, we simulate decomposition of \emph{S. fallax} and \emph{S. fuscum} litter during 50 years, either incubated at 10 cm depth under a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\), or 20 cm below the water table. The results are shown in Fig. \ref{fig:sup-hpmd-simulation-1-plot-6}.
 
 
 
@@ -547,13 +473,13 @@ To illustrate that the HPM decomposition module implies large uncertainties if i
 
 }
 
-\caption{Fraction of initial mass remaining of \emph{S. fuscum} and \emph{S. fallax} versus incubation duration as predicted by HPMe-LE-peat-l0, assuming average species \(\alpha\) and uncertainty of remaining masses averaged across litterbag experiments. (a) Shows predicted fractions of initial mass remaining and (b) predicted fractions of initial mass remaining for one individual sample. Samples are either incubated in the saturated zone 20 cm below the water table, or in the unsaturated zone 10 cm above the water table. Shaded areas are 50, 80, and 95\% confidence and prediction intervals, respectively.}\label{fig:sup-hpmd-simulation-1-plot-6}
+\caption{Fraction of initial mass remaining of \emph{S. fuscum} and \emph{S. fallax} versus incubation duration as predicted by HPM-leaching, assuming average species \(\alpha\) and uncertainty of remaining masses averaged across litterbag experiments. (a) Shows predicted fractions of initial mass remaining and (b) predicted fractions of initial mass remaining for one individual sample. Samples are either incubated in the saturated zone 20 cm below the water table, or in the unsaturated zone 10 cm above the water table. Shaded areas are 50, 80, and 95\% confidence and prediction intervals, respectively.}\label{fig:sup-hpmd-simulation-1-plot-6}
 \end{figure}
 
 \hypertarget{sup-7}{%
-\section{\texorpdfstring{R code to predict \(k_0\), \(l_0\), and remaining masses with HPMe-LE-peat-l0}{R code to predict k\_0, l\_0, and remaining masses with HPMe-LE-peat-l0}}\label{sup-7}}
+\section{\texorpdfstring{R code to predict \(k_0\), \(l_0\), and remaining masses with HPM-leaching}{R code to predict k\_0, l\_0, and remaining masses with HPM-leaching}}\label{sup-7}}
 
-HPMe-LE-peat-l0 and functions to predict \(k_0\) and \(l_0\) for different species and water table levels are available via the R package hpmdpredict (\protect\hyperlink{ref-Teickner.2024b}{Teickner and Knorr, 2024}). To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for \emph{S. fuscum} incubated at a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\) during the first five years.
+HPM-leaching and functions to predict \(k_0\) and \(l_0\) for different species and water table levels are available via the R package hpmdpredict (\protect\hyperlink{ref-Teickner.2024b}{Teickner and Knorr, 2024}). To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for \emph{S. fuscum} incubated at a degree of saturation of 0.6 L\(_\text{water}\) L\(_\text{pores}^{-1}\) during the first five years.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -615,9 +541,6 @@ Frolking, S., Roulet, N. T., Tuittila, E., Bubier, J. L., Quillet, A., Talbot, J
 \leavevmode\vadjust pre{\hypertarget{ref-Gabry.2022}{}}%
 Gabry, J. and Mahr, T.: {bayesplot}: {Plotting} for bayesian models, 2022.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Granberg.1999}{}}%
-Granberg, G., Grip, H., Löfvenius, M. O., Sundh, I., Svensson, B. H., and Nilsson, M.: A simple model for simulation of water content, soil frost, and soil temperatures in boreal mixed mires, Water Resources Research, 35, 3771--3782, \url{https://doi.org/10.1029/1999WR900216}, 1999.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Kallioinen.2024}{}}%
 Kallioinen, N., Paananen, T., Bürkner, P.-C., and Vehtari, A.: Detecting and diagnosing prior and likelihood sensitivity with power-scaling, Statistics and Computing, 34, 57, \url{https://doi.org/10.1007/s11222-023-10366-5}, 2024.
 
@@ -626,9 +549,6 @@ Kay, M.: {ggdist}: {Visualizations} of distributions and uncertainty, Manual, \u
 
 \leavevmode\vadjust pre{\hypertarget{ref-Kay.2022}{}}%
 Kay, M.: {tidybayes}: {Tidy} data and geoms for {Bayesian} models, \url{https://doi.org/10.5281/zenodo.1308151}, 2022b.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Kettridge.2007}{}}%
-Kettridge, N. and Baird, A.: In situ measurements of the thermal properties of a northern peatland: {Implications} for peatland temperature models, Journal of Geophysical Research: Earth Surface, 112, \url{https://doi.org/10.1029/2006JF000655}, 2007.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Liu.2019}{}}%
 Liu, H. and Lennartz, B.: Hydraulic properties of peat soils along a bulk density gradient-{A} meta study, Hydrological Processes, 33, 101--114, \url{https://doi.org/10.1002/hyp.13314}, 2019.
@@ -645,8 +565,8 @@ R Core Team: R: {A} language and environment for statistical computing, Manual, 
 \leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024b}{}}%
 Teickner, H. and Knorr, K.-H.: {hpmdpredict}: {Predictions} with model {HPMe-LE-peat-l0} from {Teickner} et al. (2024), \url{https://doi.org/10.5281/ZENODO.11339733}, 2024.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2024f}{}}%
-Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: {Initial} leaching losses bias decomposition rate estimates, EGUsphere, 2024, 1--30, \url{https://doi.org/10.5194/egusphere-2024-1686}, 2024.
+\leavevmode\vadjust pre{\hypertarget{ref-Teickner.2025}{}}%
+Teickner, H., Pebesma, E., and Knorr, K.-H.: A synthesis of {\emph{Sphagnum}} litterbag experiments: Initial leaching losses bias decomposition rate estimates, Biogeosciences, 22, 417--433, \url{https://doi.org/10.5194/bg-22-417-2025}, 2025.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Vehtari.2021}{}}%
 Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P.-C.: Rank-{Normalization}, {Folding}, and {Localization}: {An Improved R{\^{}}} for {Assessing Convergence} of {MCMC} (with {Discussion}), Bayesian Analysis, 16, \url{https://doi.org/10.1214/20-BA1221}, 2021.
