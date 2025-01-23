@@ -282,7 +282,7 @@ knitr::include_graphics(tar_read(hpmd_simulation_1_plot_6))
 
 # R code to predict $k_0$, $l_0$, and remaining masses with `r hpmd_model_id_to_name_2("3-4")` {#sup-7}
 
-`r hpmd_model_id_to_name_2("3-4")` and functions to predict $k_0$ and $l_0$ for different species and water table levels are available via the R package hpmdpredict [@Teickner.2024b]. To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for *S. fuscum* incubated at a degree of saturation of 0.6 L$_\text{water}$ L$_\text{pores}^{-1}$ during the first five years.
+`r hpmd_model_id_to_name_2("3-4")` and functions to predict $k_0$ and $l_0$ for different species and water table levels are available via the R package hpmdpredict [@Teickner.2025b]. To make predictions, one first has to define some variables like the incubation duration. Here, we predict remaining masses and initial leaching losses for *S. fuscum* incubated at a degree of saturation of 0.6 L$_\text{water}$ L$_\text{pores}^{-1}$ during the first five years.
 
 ```{r sup-hpmd-hpmdpredict-1, eval=TRUE, echo=TRUE}
 d <- 

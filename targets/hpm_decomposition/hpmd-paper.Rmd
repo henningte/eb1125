@@ -46,7 +46,7 @@ availability:
   #data: |
   #  use this to add a statement when having only data sets available
   codedata: |
-    Data and code to reproduce this manuscript are available from @Teickner.2025a. The data used in this study are derived from @Teickner.2024c. An R package to make predictions for litterbag experiments with model `r hpmd_model_id_to_name_2("3-4")` is available from @Teickner.2024b.
+    Data and code to reproduce this manuscript are available from @Teickner.2025a. The data used in this study are derived from @Teickner.2024c. An R package to make predictions for litterbag experiments with model `r hpmd_model_id_to_name_2("3-4")` is available from @Teickner.2025b.
 #  sample: |
 #    use this section when having geoscientific samples available
 #videosupplement: |
@@ -837,7 +837,7 @@ Despite these uncertainties, our analysis of the HPM decomposition module sugges
 
 In the following sections, we discuss these discrepancies. In particular, we show that they imply a less steep gradient of decomposition rates from oxic to anoxic conditions than assumed by the standard HPM decomposition module. We discuss how reliable this pattern is, considering that the data are from heterogeneous studies, what processes may cause the less steep gradient, and how important the suggested differences in parameter values are for the predicted C accumulation.-->
 
-<!--In supporting information \@ref(sup-7), we present R code to predict decomposition rates and remaining masses in litterbag experiments with different species and water table levels with `r hpmd_model_id_to_name_2("3-4")` [@Teickner.2024b] which can be useful to improve the HPM, test `r hpmd_model_id_to_name_2("3-4")` against novel litterbag data, or plan litterbag studies.-->
+<!--In supporting information \@ref(sup-7), we present R code to predict decomposition rates and remaining masses in litterbag experiments with different species and water table levels with `r hpmd_model_id_to_name_2("3-4")` [@Teickner.2025b] which can be useful to improve the HPM, test `r hpmd_model_id_to_name_2("3-4")` against novel litterbag data, or plan litterbag studies.-->
 
 
 <!--## HPM decomposition module parameters for which estimates differ from their standard values {#out-discussion-1}
@@ -942,7 +942,7 @@ We suggest the following steps to estimate peatland decomposition module paramet
 
 7. Understanding how $c_2$ and $W_{opt}$ vary between sites and in dependency of peat characteristics: Too few litterbag experiments with too few replicates are available to estimate $c_2$ and $W_{opt}$ separately for individual sites (or how they may vary over time). Systematic litterbag experiments are needed to estimate how environmental conditions control the magnitude of these parameters, for example due to temporal variations in water and oxygen availability or differences in availability of alternative electron acceptors under anoxic conditions.
 
-Systematic and high-quality litterbag experiments that are designed specifically to test peatland decomposition modules are required to achieve these improvements. To support the design of such experiments, we created an R package (hpmdpredict, supporting information \@ref(si-sup-7)) that allows to make predictions with `r hpmd_model_id_to_name_2("3-4")` for hypothetical litterbag experiments and that also allows to change parameter values [@Teickner.2024b]. This could for example be useful to estimate the sample sizes that are required to detect specific differences in remaining masses, to test to what extent litterbag experiments are compatible with `r hpmd_model_id_to_name_2("3-4")`, or to analyze the effect of changing HPM decomposition module parameter values from the standard values or our estimates.
+Systematic and high-quality litterbag experiments that are designed specifically to test peatland decomposition modules are required to achieve these improvements. To support the design of such experiments, we created an R package (hpmdpredict, supporting information \@ref(si-sup-7)) that allows to make predictions with `r hpmd_model_id_to_name_2("3-4")` for hypothetical litterbag experiments and that also allows to change parameter values [@Teickner.2025b]. This could for example be useful to estimate the sample sizes that are required to detect specific differences in remaining masses, to test to what extent litterbag experiments are compatible with `r hpmd_model_id_to_name_2("3-4")`, or to analyze the effect of changing HPM decomposition module parameter values from the standard values or our estimates.
 
 
 # Conclusions
