@@ -606,8 +606,8 @@ hpmd_get_plot_5 <- function(x_stan_draws) {
   ## combine
   res_plot <-
     list(
-      p2,
-      p1
+      p1,
+      p2
     ) %>%
     patchwork::wrap_plots(nrow = 1L, byrow = TRUE, widths = c(1, 0.7)) +
     patchwork::plot_annotation(

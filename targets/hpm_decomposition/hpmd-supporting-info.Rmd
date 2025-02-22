@@ -215,20 +215,20 @@ knitr::include_graphics(tar_read(hpmd_plot_6))
 
 # Marginal posterior distributions of HPM parameters in `r hpmd_model_id_to_name_2(c("3-3", "3-4")) |> knitr::combine_words(and = " and ")` {#sup-5}
 
-(ref:sup-hpmd-plot-4-3-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name_2("3-3")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+(ref:sup-hpmd-plot-4-3-caption) Marginal posterior distributions of HPM decomposition module parameters as estimated by `r hpmd_model_id_to_name_2("3-3")`. (a) Marginal posterior distributions for $c_1$, $W_{opt}$, $f_{min}$, and $c_2$ (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). Vertical black lines are the standard parameter values from @Frolking.2010. (b) Marginal posterior distributions for $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. *Sphagnum* spec. are samples which have been identified only to the genus level.
 
 ```{r sup-hpmd-plot-4-3, fig.cap='(ref:sup-hpmd-plot-4-3-caption)', out.width="100%"}
 knitr::include_graphics(tar_read(hpmd_plot_4_3))
 ```
 
-(ref:sup-hpmd-plot-4-4-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name_2("3-4")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+(ref:sup-hpmd-plot-4-4-caption) Marginal posterior distributions of HPM decomposition module parameters as estimated by `r hpmd_model_id_to_name_2("3-4")`. (a) Marginal posterior distributions for $c_1$, $W_{opt}$, $f_{min}$, and $c_2$ (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). Vertical black lines are the standard parameter values from @Frolking.2010. (b) Marginal posterior distributions for $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. *Sphagnum* spec. are samples which have been identified only to the genus level.
 
 ```{r sup-hpmd-plot-4-4, fig.cap='(ref:sup-hpmd-plot-4-4-caption)', out.width="100%"}
 knitr::include_graphics(tar_read(hpmd_plot_4_4))
 ```
 
 
-(ref:sup-hpmd-plot-5-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name_2("3-4")` during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) $k_{0,i}$ estimated for each species for which data were removed during the cross-validation. (b) other HPM parameters (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). 
+(ref:sup-hpmd-plot-5-caption) Marginal posterior distributions of HPM decomposition module parameters as estimated by `r hpmd_model_id_to_name_2("3-4")` during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) Marginal posterior distributions for $c_1$, $W_{opt}$, $f_{min}$, and $c_2$ (see Tab. \@ref(main-tab:hpmd-m-tab-hpm-parameters-standard-values) in the main text for details). (b) Marginal posterior distributions for $k_0$ estimated for each species for which data were removed during the cross-validation.
 
 ```{r sup-hpmd-plot-5, fig.cap='(ref:sup-hpmd-plot-5-caption)', out.width="100%"}
 knitr::include_graphics(tar_read(hpmd_plot_5))
@@ -261,7 +261,7 @@ knitr::include_graphics(tar_read(hpmd_simulation_1_plot_5))
 
 # Results for `r hpmd_model_id_to_name_2("3-5")`  {#sup-10}
 
-(ref:sup-hpmd-plot-4-9-caption) Marginal posterior distributions of HPM decomposition model parameters as estimated by `r hpmd_model_id_to_name_2("3-5")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
+(ref:sup-hpmd-plot-4-9-caption) Marginal posterior distributions of HPM decomposition module parameters as estimated by `r hpmd_model_id_to_name_2("3-5")`. (a) $k_0$ estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from @Frolking.2010. *Sphagnum* spec. are samples which have been identified only to the genus level.
 
 ```{r sup-hpmd-plot-4-9, fig.cap='(ref:sup-hpmd-plot-4-9-caption)', out.width="100%"}
 knitr::include_graphics(tar_read(hpmd_plot_4_9))

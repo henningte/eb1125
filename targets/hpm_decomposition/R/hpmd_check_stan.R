@@ -12,7 +12,25 @@ hpmd_stan_get_all_checks <- function(
   prior_models <- purrr::map(prior_models, readRDS_rvars)
   posterior_models <- purrr::map(posterior_models, readRDS_rvars)
 
-  leaching_d_models <- hpmd_d_models
+  #leaching_d_models <- hpmd_d_models
+
+  # for panel titles
+  hpmd_d_models2 <-
+    hpmd_d_models |>
+    dplyr::mutate(
+      model_name =
+        model_name |>
+        hpmd_model_id_to_name_2() |>
+        factor(levels = paste0(3, "-", 1:5) |> hpmd_model_id_to_name_2())
+    ) |>
+    dplyr::mutate(
+      model_name =
+        dplyr::case_when(
+          model_name == "HPM-standard" ~ "LDM-standard",
+          TRUE ~ model_name
+        ) |>
+        factor(levels = c("LDM-standard", paste0(3, "-", 2:5) |> hpmd_model_id_to_name_2()))
+    )
 
   res <-
     tibble::lst(
@@ -25,7 +43,7 @@ hpmd_stan_get_all_checks <- function(
                 leaching_check_stan_plot_ppc_combined(
                   y_name = "mass_relative_mass",
                   yrep_name = "m_rep",
-                  x_lab = "Remaining mass (mass %)",
+                  x_lab = "Remaining mass (%)",
                   x_scale = 100,
                   file = "figures/hpmd_plot_ppc_prior_m.pdf",
                   width = 10,
@@ -38,6 +56,15 @@ hpmd_stan_get_all_checks <- function(
           # phi: prior
           hpmd_plot_ppc_prior_phi =
             if(length(prior_models) > 0) {
+              leaching_d_models <-
+                hpmd_d_models %>%
+                dplyr::mutate(
+                  model_name =
+                    dplyr::case_when(
+                      model_name == "HPM-standard" ~ "LDM-standard",
+                      TRUE ~ model_name
+                    )
+                )
               prior_models %>%
                 leaching_check_stan_plot_ppc_combined(
                   y_name = "mass_relative_mass_precision",
@@ -111,25 +138,24 @@ hpmd_stan_get_all_checks <- function(
           # m_rep: posterior
           hpmd_plot_ppc_posterior_m =
             {
-              leaching_d_models <- hpmd_d_models
               posterior_models %>%
-                leaching_check_stan_plot_ppc_combined(
+                pdpm_check_stan_plot_ppc_combined(
                   y_name = "mass_relative_mass",
                   yrep_name = "m_rep",
-                  x_lab = "Remaining mass (mass %)",
+                  x_lab = "Remaining mass (%)",
                   x_scale = 100,
                   file = "figures/hpmd_plot_ppc_posterior_m.pdf",
                   width = 10,
                   height = 6,
-                  add_prefix_model = FALSE
+                  add_prefix_model = FALSE,
+                  hpmd_d_models = hpmd_d_models2
                 )
             },
           # phi: posterior
           hpmd_plot_ppc_posterior_phi =
             {
-              leaching_d_models <- hpmd_d_models
               posterior_models %>%
-                leaching_check_stan_plot_ppc_combined(
+                pdpm_check_stan_plot_ppc_combined(
                   y_name = "mass_relative_mass_precision",
                   yrep_name = "phi",
                   x_lab = "&Phi; (-)",
@@ -138,8 +164,9 @@ hpmd_stan_get_all_checks <- function(
                   width = 10,
                   height = 6,
                   add_prefix_model = FALSE,
-		  x_axis_use_log_scale = TRUE,
-		  x_axis_label_digits = 0
+                  x_axis_use_log_scale = TRUE,
+                  x_axis_label_digits = 0,
+                  hpmd_d_models = hpmd_d_models2
                 )
             },
           # hpm_k_2_rep: posterior
@@ -311,6 +338,55 @@ hpmd_stan_get_all_checks <- function(
     )
 
   res
+
+}
+
+
+
+#' Helper function to create density overlay plots
+#'
+#' This is the same as `leaching_check_stan_plot_ppc_combined()`, but modified
+#' such that model names can be directly supplied and are not taken from the
+#' global environment.
+#'
+#' @export
+pdpm_check_stan_plot_ppc_combined <- function(x, y_name, yrep_name, x_lab, x_scale = 1, file, width, height, add_prefix_model = TRUE, x_axis_use_log_scale = FALSE, x_axis_label_digits = 0, hpmd_d_models) {
+
+  res <-
+    x %>%
+    purrr::map(function(.x2) {
+
+      leaching_check_stan_plot_ppc(
+        x = .x2,
+        y_name = y_name,
+        yrep_name = yrep_name,
+        x_lab = x_lab,
+        x_scale = x_scale,
+        model_name =
+          hpmd_d_models %>%
+          dplyr::filter(id_fit == .x2$id_fit[[1]]) %>%
+          dplyr::pull(model_name),
+        add_prefix_model = add_prefix_model,
+        x_axis_use_log_scale = x_axis_use_log_scale,
+        x_axis_label_digits = x_axis_label_digits
+      )
+
+    }) %>%
+    patchwork::wrap_plots(ncol = 4L, byrow = TRUE) +
+    patchwork::plot_annotation(
+      tag_levels = c('a'),
+      tag_prefix = '(',
+      tag_suffix = ')'
+    )
+
+  ggplot2::ggsave(
+    filename = file,
+    plot = res,
+    width = width, height = height, dpi = 300,
+    device = cairo_pdf
+  )
+
+  file
 
 }
 

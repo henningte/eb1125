@@ -141,13 +141,27 @@
 \usepackage{xr} \externaldocument[main-]{hpmd-paper}
 \usepackage{tocloft}
 \setlength{\cftsecnumwidth}{5ex}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
 \title{Supporting information to: Peat Oxic and Anoxic Controls of \emph{Sphagnum} Decomposition Rates in the Holocene Peatland Model Decomposition Module Estimated from Litterbag Data}
 \author{Henning Teickner\textsuperscript{1,*} \and Edzer Pebesma\textsuperscript{2} \and Klaus-Holger Knorr\textsuperscript{1}}
-\date{23 January, 2025}
+\date{22 February, 2025}
 
 \begin{document}
 \maketitle
@@ -382,7 +396,7 @@ All computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-all. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-3}
+\caption{Marginal posterior distributions of HPM decomposition module parameters as estimated by HPM-all. (a) Marginal posterior distributions for \(c_1\), \(W_{opt}\), \(f_{min}\), and \(c_2\) (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). (b) Marginal posterior distributions for \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-3}
 \end{figure}
 
 
@@ -393,7 +407,7 @@ All computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-leaching. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-4}
+\caption{Marginal posterior distributions of HPM decomposition module parameters as estimated by HPM-leaching. (a) Marginal posterior distributions for \(c_1\), \(W_{opt}\), \(f_{min}\), and \(c_2\) (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). (b) Marginal posterior distributions for \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-4}
 \end{figure}
 
 
@@ -404,7 +418,7 @@ All computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-leaching during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) \(k_{0,i}\) estimated for each species for which data were removed during the cross-validation. (b) other HPM parameters (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details).}\label{fig:sup-hpmd-plot-5}
+\caption{Marginal posterior distributions of HPM decomposition module parameters as estimated by HPM-leaching during the cross-validation. During the cross-validation, one of the cross-validation folds was left out each time and the model was refitted, producing a marginal posterior distribution for each parameter and cross-validation block. (a) Marginal posterior distributions for \(c_1\), \(W_{opt}\), \(f_{min}\), and \(c_2\) (see Tab. \ref{main-tab:hpmd-m-tab-hpm-parameters-standard-values} in the main text for details). (b) Marginal posterior distributions for \(k_0\) estimated for each species for which data were removed during the cross-validation.}\label{fig:sup-hpmd-plot-5}
 \end{figure}
 
 \hypertarget{sup-8}{%
@@ -457,7 +471,7 @@ All computations were done in R (4.2.0) (\protect\hyperlink{ref-RCoreTeam.2022}{
 
 }
 
-\caption{Marginal posterior distributions of HPM decomposition model parameters as estimated by HPM-outlier. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-9}
+\caption{Marginal posterior distributions of HPM decomposition module parameters as estimated by HPM-outlier. (a) \(k_0\) estimated for each species. Species were assigned to HPM microhabitats as described in the Methods section in the main text. (b) other HPM parameters. Vertical black lines are the standard parameter values from Frolking et al. (\protect\hyperlink{ref-Frolking.2010}{2010}). \emph{Sphagnum} spec. are samples which have been identified only to the genus level.}\label{fig:sup-hpmd-plot-4-9}
 \end{figure}
 
 \hypertarget{sup-11}{%
