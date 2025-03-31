@@ -38,6 +38,8 @@ hpmd_get_table_prior_justification|function|884c1fd13d147485|||||||||||||||
 hpmd_get_yhat_fit_1|function|702eeb3f534a06dc|||||||||||||||
 hpmd_has_outlier|object|ba09ba8184ab26f1|||||||||||||||
 hpmd_identify_samples_for_hpm|function|d791c6e485c85547|||||||||||||||
+hpmd_key_figure_plot_1|stem|b2c677f01fee582b|2d94651091018f61|8b4e8d649e45f15c|-585170258||t20178.2444492405s|0b52c5847220add9|82|rds|local|vector|||68.086|1m22mUsing the size aesthetic with geom_ribbon was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. 1m22mUsing the size aesthetic with geom_line was deprecated in ggplot2 3.4.0.36mℹ39m Please use the linewidth aesthetic instead.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.. Unknown or uninitialised column linewidth.|
+hpmd_make_key_figure_plot_1|function|0d9808762695f2c7|||||||||||||||
 hpmd_mm39|stem|2d3731f368a251c4|2c41f3d748004ed6|fda1b3cb43aab95c|1079210868||t19859.5888633776s|9ee8a84263503773|51590402|rds|local|vector|||157.357||
 hpmd_mm39_file|stem|bbcbca2af9d959d3|8b775bda20927d5d|ea9ca750a094f609|1381282515|stan/mm39.stan|t19767.539987791s|08785a3a1f13d487|17919|file|local|vector|||0.102||
 hpmd_mm40|stem|16c02da0cc56c319|370f2f018781652d|398c23c3ec4b84cd|1935990614||t19765.4380827553s|7cdf2c6416b265d9|52245042|rds|local|vector|||188.654||

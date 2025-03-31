@@ -1165,6 +1165,115 @@ hpmd_get_plot_10 <- function(x_stan_draws) {
 }
 
 
+#' Generates the inset plot for the key figure
+#'
+#' @export
+hpmd_make_key_figure_plot_1 <- function(file_plot = "figures/hpmd_key_figure_plot_1.pdf") {
+
+  if(! requireNamespace(package = "hpmdpredict", quietly = TRUE)) {
+    stop("You need to install the 'hpmdpredict' to use this function.")
+  }
+
+  data("hpmd_stan_fit_4", package = "hpmdpredict")
+  data("hpmd_data_stan_4", package = "hpmdpredict")
+  data("hpmd_data_hpm_microhabitat2", package = "hpmdpredict")
+
+  newdata_1 <-
+    tibble::tibble(
+      incubation_duration = 1,
+      m0 = 1,
+      layer_water_table_depth_to_surface_1 = 60,
+      sample_depth_lower = seq(0, 120, by = 5),
+      layer_total_porosity_1 = 0.8,
+      layer_degree_of_saturation_1 =
+        hpmdpredict:::m7(
+          layer_depth_midpoint_1 = sample_depth_lower,
+          layer_total_porosity_1 = layer_total_porosity_1,
+          water_table_depth_to_surface_1 = unique(layer_water_table_depth_to_surface_1),
+          minimum_water_content_at_surface_1 = 0.05
+        ),
+      hpm_taxon_rank_value = "Sphagnum magellanicum",
+      l0 = 0
+    )
+
+  hpm_standard_parameter_values <- hpmd_get_hpm_standard_parameter_values()
+
+  res_1 <- hpmdpredict::hpmd_predict_fit_4(newdata = newdata_1)
+  res_2 <-
+    newdata_1 |>
+    dplyr::mutate(
+      alpha_2 = 2,
+      m69_p1 =
+        hpm_standard_parameter_values |>
+        dplyr::filter(variable == "m69_p1") |>
+        dplyr::pull(value),
+      m69_p2 =
+        hpm_standard_parameter_values |>
+        dplyr::filter(variable == "m69_p2") |>
+        dplyr::pull(value),
+      m68_p1 =
+        hpm_standard_parameter_values |>
+        dplyr::filter(variable == "m68_p1") |>
+        dplyr::pull(value),
+      m68_p2 =
+        hpm_standard_parameter_values |>
+        dplyr::filter(variable == "m68_p2") |>
+        dplyr::pull(value),
+      m68_p3_2 =
+        hpm_standard_parameter_values |>
+        dplyr::filter(variable == "m68_p3" & hpm_microhabitat == "Lawn") |>
+        dplyr::pull(value)
+    ) |>
+    hpmdpredict::hpmd_predict_fit_4()
+
+  res_plot <-
+    dplyr::bind_rows(
+      res_1 |>
+        dplyr::mutate(
+          variable = "Our estimate"
+        ),
+      res_2 |>
+        dplyr::mutate(
+          k0 = mean(k0),
+          variable = "Standard parameter values"
+        )
+    ) |>
+    dplyr::mutate(
+      variable = factor(variable, levels = c("Standard parameter values", "Our estimate"))
+    ) |>
+    ggplot() +
+    geom_hline(yintercept = c(min(mean(res_2$k0)), median(res_1$k0[[1]]), max(mean(res_1$k0))), color = "grey50") +
+    ggdist::stat_lineribbon(aes(ydist = k0, x = sample_depth_lower), show.legend = TRUE, alpha = 0.4) +
+    geom_vline(xintercept = 60) +
+    facet_wrap(~ variable) +
+    scale_fill_brewer() +
+    theme_classic() +
+    geom_text(x = 90, y = 0.15, label = "anoxic", family = "serif") +
+    geom_text(x = 25, y = 0.15, label = "oxic", family = "serif") +
+    guides(fill = guide_legend(title = "Prediction interval")) +
+    theme(
+      text = element_text(family = "serif"),
+      strip.background.x = element_blank(),
+      strip.text = ggtext::element_markdown(size = 14),
+      axis.title.y = ggtext::element_markdown(size = 12),
+      axis.title.x = ggtext::element_markdown(size = 12),
+      legend.position = "bottom"
+    ) +
+    labs(
+      y = "Decomposition rate (yr<sup>-1</sup>)",
+      x = "Depth to surface (cm)"
+    )
+
+  ggsave(
+    file_plot,
+    plot = res_plot,
+    width = 5.5, height = 3.5, dpi = 300,
+    device = cairo_pdf
+  )
+
+}
+
+
 
 #### Tables ####
 

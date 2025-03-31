@@ -565,6 +565,13 @@ list(
   tar_render(
     hpmd_paper,
     path = "hpmd-paper.Rmd"
+  ),
+  tar_target(
+    hpmd_key_figure_plot_1,
+    command =
+      hpmd_make_key_figure_plot_1(
+        file_plot = "figures/hpmd_key_figure_plot_1.pdf"
+      )
   )
 )
 
